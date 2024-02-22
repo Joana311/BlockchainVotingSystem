@@ -1,15 +1,32 @@
 package diplrad;
 
-import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public class Block {
 
-    private String hash;
-    private String previousHash;
-    private String data;
-    private long timeStamp;
     private int nonce;
+    private long timeStamp;
+    private String data;
+    private String previousHash;
+    private String hash;
 
+    public Block(String data, String previousHash) {
+        this.nonce = Constants.INITIAL_BLOCK_NONCE;
+        this.timeStamp = new Date().getTime();
+        this.data = data;
+        this.previousHash = previousHash;
+        updateHash();
+    }
+
+    public int getNonce() {
+        return nonce;
+    }
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+    public String getData() {
+        return data;
+    }
     public String getHash() {
         return hash;
     }
@@ -17,24 +34,24 @@ public class Block {
         return previousHash;
     }
 
-    public Block(String data, String previousHash, long timeStamp) {
-        this.data = data;
-        this.previousHash = previousHash;
-        this.timeStamp = timeStamp;
+    public String calculateHash() {
+        String dataToHash = previousHash + timeStamp + nonce + data;
+        return Cryptography.hashWithSha256(dataToHash);
+    }
+    
+    public void updateHash() {
         this.hash = calculateHash();
     }
 
-    public String calculateHash() {
-        String dataToHash = previousHash + timeStamp + nonce + data;
-        return Crypt.hashWithSha256(dataToHash);
+    public void incrementNonceAndRegenerateHash() {
+        this.nonce++;
+        updateHash();
     }
 
-    public void mineBlock(int prefix) {
-        String prefixString = new String(new char[prefix]).replace('\0', '0');
-        while (!hash.substring(0, prefix).equals(prefixString)) {
-            nonce++;
-            hash = calculateHash();
-        }
+    public boolean checkIfHashBeginsWithLeadingZeroes() {
+        int prefix = Constants.DIFFICULTY;
+        String leadingZeros = new String(new char[prefix]).replace('\0', '0');
+        return getHash().substring(0, prefix).equals(leadingZeros);
     }
 
 }

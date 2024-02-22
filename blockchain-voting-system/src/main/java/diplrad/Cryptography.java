@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class Crypt {
+public class Cryptography {
 
     public static String hashWithSha256(String input)
     {

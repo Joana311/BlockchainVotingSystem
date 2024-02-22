@@ -1,34 +1,25 @@
 package diplrad;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class BlockChain {
 
     private List<Block> blocks;
-    private int prefix;
-    private String prefixString;
 
-    public int getPrefix() {
-        return prefix;
-    }
-    public String getPrefixString() {
-        return prefixString;
-    }
-
-    private BlockChain(int prefix) {
+    private BlockChain() {
         this.blocks = new ArrayList<>();
-        this.prefix = prefix;
-        this.prefixString = new String(new char[prefix]).replace('\0', '0');
+        Block genesisBlock = new Block(Constants.GENESIS_BLOCK_DATA, Constants.GENESIS_BLOCK_PREVIOUS_HASH);
+        mineBlock(genesisBlock);
+        addBlock(genesisBlock);
     }
 
-    public static BlockChain createBlockChain(int prefix) {
-        BlockChain blockChain = new BlockChain(prefix);
-        Block genesisBlock = new Block("The is the Genesis Block.", "0", new Date().getTime());
-        genesisBlock.mineBlock(blockChain.getPrefix());
-        blockChain.addBlock(genesisBlock);
-        return blockChain;
+    public List<Block> getBlocks() {
+        return blocks;
+    }
+
+    public int size() {
+        return this.blocks.size();
     }
 
     public void addBlock(Block block) {
@@ -43,13 +34,20 @@ public class BlockChain {
         return getLastBlock().getHash();
     }
 
+    public void mineBlock(Block block) {
+        while(!block.checkIfHashBeginsWithLeadingZeroes()) {
+            block.incrementNonceAndRegenerateHash();
+        }
+        addBlock(block);
+    }
+
     public boolean validate() {
         boolean flag;
         for (int i = 0; i < blocks.size(); i++) {
             String previousHash = i == 0 ? "0" : blocks.get(i - 1).getHash();
             flag = blocks.get(i).getHash().equals(blocks.get(i).calculateHash()) // value stored in hash is actually the hash of the block
                     && previousHash.equals(blocks.get(i).getPreviousHash()) // value stored in previous hash is actually the hash of the previous block
-                    && blocks.get(i).getHash().substring(0, prefix).equals(prefixString); // hash of the block begins with prefixString
+                    && blocks.get(i).checkIfHashBeginsWithLeadingZeroes(); // hash of the block begins with prefixString
             if (!flag) {
                 return false;
             }

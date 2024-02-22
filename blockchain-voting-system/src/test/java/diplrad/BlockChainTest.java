@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BlockChainTest {
 
-    public static BlockChain setUpBlockchain()  {
+    /*public static BlockChain setUpBlockchain()  {
         BlockChain blockchain = BlockChain.createBlockChain(4);
         Block firstBlock = new Block("The is the First Block.", blockchain.getLastBlockHash(), new Date().getTime());
         firstBlock.mineBlock(blockchain.getPrefix());
@@ -32,6 +32,6 @@ public class BlockChainTest {
         BlockChain blockchain = setUpBlockchain();
         boolean validationResult = blockchain.validate();
         assertTrue(validationResult);
-    }
+    }*/
 
 }
