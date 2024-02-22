@@ -1,9 +1,6 @@
 package diplrad;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Block {
 
@@ -24,25 +21,19 @@ public class Block {
         this.data = data;
         this.previousHash = previousHash;
         this.timeStamp = timeStamp;
-        this.hash = calculateBlockHash();
+        this.hash = calculateHash();
     }
 
-    public String calculateBlockHash() throws NoSuchAlgorithmException {
+    public String calculateHash() {
         String dataToHash = previousHash + timeStamp + nonce + data;
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] bytes = digest.digest(dataToHash.getBytes(UTF_8));
-        StringBuilder buffer = new StringBuilder();
-        for (byte b : bytes) {
-            buffer.append(String.format("%02x", b));
-        }
-        return buffer.toString();
+        return Crypt.hashWithSha256(dataToHash);
     }
 
-    public void mineBlock(int prefix) throws NoSuchAlgorithmException {
+    public void mineBlock(int prefix) {
         String prefixString = new String(new char[prefix]).replace('\0', '0');
         while (!hash.substring(0, prefix).equals(prefixString)) {
             nonce++;
-            hash = calculateBlockHash();
+            hash = calculateHash();
         }
     }
 

@@ -1,6 +1,5 @@
 package diplrad;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +30,11 @@ public class Blockchain {
         return blocks.get(blocks.size() - 1);
     }
 
-    public boolean validate() throws NoSuchAlgorithmException {
+    public boolean validate() {
         boolean flag;
         for (int i = 0; i < blocks.size(); i++) {
             String previousHash = i == 0 ? "0" : blocks.get(i - 1).getHash();
-            flag = blocks.get(i).getHash().equals(blocks.get(i).calculateBlockHash()) // value stored in hash is actually the hash of the block
+            flag = blocks.get(i).getHash().equals(blocks.get(i).calculateHash()) // value stored in hash is actually the hash of the block
                     && previousHash.equals(blocks.get(i).getPreviousHash()) // value stored in previous hash is actually the hash of the previous block
                     && blocks.get(i).getHash().substring(0, prefix).equals(prefixString); // hash of the block begins with prefixString
             if (!flag) {
