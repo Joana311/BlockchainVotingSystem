@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>diplrad</groupId>
-    <artifactId>blockchain-poc</artifactId>
+    <artifactId>blockchain-voting-system</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>Blockchain Proof of Concept</name>
+    <name>Blockchain Voting System</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
