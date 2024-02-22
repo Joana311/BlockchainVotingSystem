@@ -17,7 +17,7 @@ public class Block {
         return previousHash;
     }
 
-    public Block(String data, String previousHash, long timeStamp) throws NoSuchAlgorithmException {
+    public Block(String data, String previousHash, long timeStamp) {
         this.data = data;
         this.previousHash = previousHash;
         this.timeStamp = timeStamp;

@@ -1,9 +1,10 @@
 package diplrad;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class Blockchain {
+public class BlockChain {
 
     private List<Block> blocks;
     private int prefix;
@@ -16,10 +17,18 @@ public class Blockchain {
         return prefixString;
     }
 
-    public Blockchain(int prefix) {
+    private BlockChain(int prefix) {
         this.blocks = new ArrayList<>();
         this.prefix = prefix;
         this.prefixString = new String(new char[prefix]).replace('\0', '0');
+    }
+
+    public static BlockChain createBlockChain(int prefix) {
+        BlockChain blockChain = new BlockChain(prefix);
+        Block genesisBlock = new Block("The is the Genesis Block.", "0", new Date().getTime());
+        genesisBlock.mineBlock(blockChain.getPrefix());
+        blockChain.addBlock(genesisBlock);
+        return blockChain;
     }
 
     public void addBlock(Block block) {
@@ -28,6 +37,10 @@ public class Blockchain {
 
     public Block getLastBlock() {
         return blocks.get(blocks.size() - 1);
+    }
+
+    public String getLastBlockHash() {
+        return getLastBlock().getHash();
     }
 
     public boolean validate() {

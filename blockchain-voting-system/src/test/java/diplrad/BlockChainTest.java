@@ -8,22 +8,19 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BlockchainTest {
+public class BlockChainTest {
 
-    public static Blockchain setUpBlockchain() throws NoSuchAlgorithmException {
-        Blockchain blockchain = new Blockchain(4);
-        Block genesisBlock = new Block("The is the Genesis Block.", "0", new Date().getTime());
-        genesisBlock.mineBlock(blockchain.getPrefix());
-        blockchain.addBlock(genesisBlock);
-        Block firstBlock = new Block("The is the First Block.", genesisBlock.getHash(), new Date().getTime());
+    public static BlockChain setUpBlockchain()  {
+        BlockChain blockchain = BlockChain.createBlockChain(4);
+        Block firstBlock = new Block("The is the First Block.", blockchain.getLastBlockHash(), new Date().getTime());
         firstBlock.mineBlock(blockchain.getPrefix());
         blockchain.addBlock(firstBlock);
         return blockchain;
     }
 
     @Test
-    public void givenBlockchain_whenNewBlockIsMined_thenItsHashBeginsWithPrefixString() throws NoSuchAlgorithmException {
-        Blockchain blockchain = setUpBlockchain();
+    public void givenBlockchain_whenNewBlockIsMined_thenItsHashBeginsWithPrefixString() {
+        BlockChain blockchain = setUpBlockchain();
         Block newBlock = new Block("The is a New Block.", blockchain.getLastBlock().getHash(), new Date().getTime());
         newBlock.mineBlock(blockchain.getPrefix());
         assertEquals(newBlock.getHash().substring(0, blockchain.getPrefix()), blockchain.getPrefixString());
@@ -31,8 +28,8 @@ public class BlockchainTest {
     }
 
     @Test
-    public void givenBlockchain_whenValidated_thenSuccess() throws NoSuchAlgorithmException {
-        Blockchain blockchain = setUpBlockchain();
+    public void givenBlockchain_whenValidated_thenSuccess() {
+        BlockChain blockchain = setUpBlockchain();
         boolean validationResult = blockchain.validate();
         assertTrue(validationResult);
     }
