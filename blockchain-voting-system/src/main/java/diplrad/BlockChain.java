@@ -44,9 +44,6 @@ public class BlockChain {
         boolean flag;
         for (int i = 0; i < blocks.size(); i++) {
             String previousHash = i == 0 ? "0" : blocks.get(i - 1).getHash();
-            var a = blocks.get(i).getHash().equals(blocks.get(i).calculateHash());
-            var b = previousHash.equals(blocks.get(i).getPreviousHash());
-            var c = blocks.get(i).checkIfHashBeginsWithLeadingZeroes();
             flag = blocks.get(i).getHash().equals(blocks.get(i).calculateHash()) // value stored in hash is actually the hash of the block
                     && previousHash.equals(blocks.get(i).getPreviousHash()) // value stored in previous hash is actually the hash of the previous block
                     && blocks.get(i).checkIfHashBeginsWithLeadingZeroes(); // hash of the block begins with prefixString
