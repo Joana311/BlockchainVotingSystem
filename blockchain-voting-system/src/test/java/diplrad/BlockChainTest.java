@@ -2,9 +2,8 @@ package diplrad;
 
 import org.junit.Test;
 
-import java.util.Date;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BlockChainTest {
@@ -27,10 +26,22 @@ public class BlockChainTest {
     }
 
     @Test
-    public void givenBlockchain_whenValidated_thenSuccess() {
+    public void givenBlockchain_whenNotChanged_thenValidationOk() {
         BlockChain blockchain = setUpBlockchain();
         boolean validationResult = blockchain.validate();
         assertTrue(validationResult);
+    }
+
+    @Test
+    public void givenBlockchain_whenChanged_thenValidationFailed() {
+        BlockChain blockchain = setUpBlockchain();
+        Block firstBlock = new Block("The is the First Block.", blockchain.getLastBlockHash());
+        blockchain.mineBlock(firstBlock);
+        Block secondBlock = new Block("The is a Second Block.", blockchain.getLastBlock().getHash());
+        blockchain.mineBlock(secondBlock);
+        firstBlock.setData("The is the changed First Block.");
+        boolean validationResult = blockchain.validate();
+        assertFalse(validationResult);
     }
 
 }

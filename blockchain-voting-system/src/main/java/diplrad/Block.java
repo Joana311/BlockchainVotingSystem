@@ -34,6 +34,10 @@ public class Block {
         return previousHash;
     }
 
+    public void setData(String data) {
+        this.data = data;
+    }
+
     public String calculateHash() {
         String dataToHash = previousHash + timeStamp + nonce + data;
         return Cryptography.hashWithSha256(dataToHash);
