@@ -42,6 +42,7 @@ build/
 *.ilk
 *.meta
 *.obj
+*.bin
 *.iobj
 *.pch
 *.pdb
