@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CentralPeerCoordinator.Services")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+867557ad45fae036a8b5d265c3fa5df3404c2640")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d43df77976280859d56c22b909d5b1dd62d23c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("CentralPeerCoordinator.Services")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CentralPeerCoordinator.Services")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj",
+      "projectUniqueName": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj",
       "projectName": "CentralPeerCoordinator.Data.Db",
-      "projectPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj",
+      "projectPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj",
       "packagesPath": "C:\\Users\\Ana\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Data.Db\\obj\\",
+      "outputPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.Data.Db\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ana\\AppData\\Roaming\\NuGet\\NuGet.Config",

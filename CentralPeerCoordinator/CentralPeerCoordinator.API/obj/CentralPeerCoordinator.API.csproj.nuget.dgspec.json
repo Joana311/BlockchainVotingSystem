@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj": {}
+    "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj": {
+    "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
+        "projectUniqueName": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
         "projectName": "CentralPeerCoordinator.API",
-        "projectPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
+        "projectPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
         "packagesPath": "C:\\Users\\Ana\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\obj\\",
+        "outputPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ana\\AppData\\Roaming\\NuGet\\NuGet.Config",
