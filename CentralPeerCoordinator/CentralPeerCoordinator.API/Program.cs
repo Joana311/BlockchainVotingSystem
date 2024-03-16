@@ -1,6 +1,11 @@
+using CentralPeerCoordinator.API.Validators;
+using CentralPeerCoordinator.Contracts.Entities;
+using CentralPeerCoordinator.Contracts.Services;
 using CentralPeerCoordinator.Contracts.UoW;
 using CentralPeerCoordinator.Data.Db.Context;
 using CentralPeerCoordinator.Data.Db.UoW;
+using CentralPeerCoordinator.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,10 +17,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
         opt => opt.MigrationsAssembly("CentralPeerCoordinator.Data.Db"));
 });
 
+builder.Services.AddValidatorsFromAssemblyContaining<PeerValidator>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPeerService, PeerService>();
 
 
 var app = builder.Build();
