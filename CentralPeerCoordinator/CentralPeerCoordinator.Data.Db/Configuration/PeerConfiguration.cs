@@ -8,7 +8,7 @@ public class PeerConfiguration : IEntityTypeConfiguration<Peer>
 {
     public void Configure(EntityTypeBuilder<Peer> builder)
     {
-        builder.ToTable("Professionals");
+        builder.ToTable("Peers");
 
         builder.HasKey(p => p.Id);
     }
