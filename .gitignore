@@ -34,8 +34,8 @@ build/
 
 ### Visual Studio 2022 ###
 .vs/
-*.bin/
-*.obj/
+.bin/
+.obj/
 
 ### Files built by Visual Studio 2022 ###
 *_i.c
