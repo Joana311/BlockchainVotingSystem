@@ -1,12 +1,11 @@
+using CentralPeerCoordinator.API.Middleware;
 using CentralPeerCoordinator.API.Validators;
-using CentralPeerCoordinator.Contracts.Entities;
 using CentralPeerCoordinator.Contracts.Services;
 using CentralPeerCoordinator.Contracts.UoW;
 using CentralPeerCoordinator.Data.Db.Context;
 using CentralPeerCoordinator.Data.Db.UoW;
 using CentralPeerCoordinator.Services;
 using FluentValidation;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("CentralPeerCoordinatorDb"),
         opt => opt.MigrationsAssembly("CentralPeerCoordinator.Data.Db"));
 });
+
+builder.Services.AddControllers();
 
 builder.Services.AddValidatorsFromAssemblyContaining<PeerValidator>();
 
