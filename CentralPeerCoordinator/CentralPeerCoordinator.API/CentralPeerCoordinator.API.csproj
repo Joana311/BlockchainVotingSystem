@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CentralPeerCoordinator.Common\CentralPeerCoordinator.Common.csproj" />
     <ProjectReference Include="..\CentralPeerCoordinator.Contracts\CentralPeerCoordinator.Contracts.csproj" />
     <ProjectReference Include="..\CentralPeerCoordinator.Data.Db\CentralPeerCoordinator.Data.Db.csproj" />
     <ProjectReference Include="..\CentralPeerCoordinator.Services\CentralPeerCoordinator.Services.csproj" />

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralPeerCoordinator.API", "CentralPeerCoordinator.API\CentralPeerCoordinator.API.csproj", "{D442FBAC-0EEE-4220-ABFA-02D1FC1BF0F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CentralPeerCoordinator.API", "CentralPeerCoordinator.API\CentralPeerCoordinator.API.csproj", "{D442FBAC-0EEE-4220-ABFA-02D1FC1BF0F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralPeerCoordinator.Contracts", "CentralPeerCoordinator.Contracts\CentralPeerCoordinator.Contracts.csproj", "{D6534557-6BD0-4DDB-97B8-1E844CAB515C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CentralPeerCoordinator.Contracts", "CentralPeerCoordinator.Contracts\CentralPeerCoordinator.Contracts.csproj", "{D6534557-6BD0-4DDB-97B8-1E844CAB515C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralPeerCoordinator.Services", "CentralPeerCoordinator.Services\CentralPeerCoordinator.Services.csproj", "{CB35E228-D0E0-438C-9168-DDCA254EC1A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CentralPeerCoordinator.Services", "CentralPeerCoordinator.Services\CentralPeerCoordinator.Services.csproj", "{CB35E228-D0E0-438C-9168-DDCA254EC1A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralPeerCoordinator.Data.Db", "CentralPeerCoordinator.Data.Db\CentralPeerCoordinator.Data.Db.csproj", "{939D80F0-9DF1-4D54-AABE-76CBA3E4B9ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CentralPeerCoordinator.Data.Db", "CentralPeerCoordinator.Data.Db\CentralPeerCoordinator.Data.Db.csproj", "{939D80F0-9DF1-4D54-AABE-76CBA3E4B9ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralPeerCoordinator.Common", "CentralPeerCoordinator.Common\CentralPeerCoordinator.Common.csproj", "{4BB5A2CD-86A0-464F-9766-2168C0644671}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{939D80F0-9DF1-4D54-AABE-76CBA3E4B9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{939D80F0-9DF1-4D54-AABE-76CBA3E4B9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{939D80F0-9DF1-4D54-AABE-76CBA3E4B9ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BB5A2CD-86A0-464F-9766-2168C0644671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BB5A2CD-86A0-464F-9766-2168C0644671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BB5A2CD-86A0-464F-9766-2168C0644671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BB5A2CD-86A0-464F-9766-2168C0644671}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

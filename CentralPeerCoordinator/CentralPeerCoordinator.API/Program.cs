@@ -1,5 +1,6 @@
 using CentralPeerCoordinator.API.Middleware;
 using CentralPeerCoordinator.API.Validators;
+using CentralPeerCoordinator.Common.Profiles;
 using CentralPeerCoordinator.Contracts.Services;
 using CentralPeerCoordinator.Contracts.UoW;
 using CentralPeerCoordinator.Data.Db.Context;
@@ -23,7 +24,10 @@ builder.Services.AddValidatorsFromAssemblyContaining<PeerValidator>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+}, AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPeerService, PeerService>();
