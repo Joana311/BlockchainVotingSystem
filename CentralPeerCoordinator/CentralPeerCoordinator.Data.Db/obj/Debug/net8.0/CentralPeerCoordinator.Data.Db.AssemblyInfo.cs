@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CentralPeerCoordinator.Data.Db")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d43df77976280859d56c22b909d5b1dd62d23c9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d1ea88deeff05385aebf3ac0794f9a26991be69")]
 [assembly: System.Reflection.AssemblyProductAttribute("CentralPeerCoordinator.Data.Db")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CentralPeerCoordinator.Data.Db")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

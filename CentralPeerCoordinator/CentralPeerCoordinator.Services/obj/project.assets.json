@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "CentralPeerCoordinator.Contracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CentralPeerCoordinator.Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CentralPeerCoordinator.Contracts.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "CentralPeerCoordinator.Contracts/1.0.0": {
+      "type": "project",
+      "path": "../CentralPeerCoordinator.Contracts/CentralPeerCoordinator.Contracts.csproj",
+      "msbuildProject": "../CentralPeerCoordinator.Contracts/CentralPeerCoordinator.Contracts.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "CentralPeerCoordinator.Contracts >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Ana\\.nuget\\packages\\": {}
@@ -33,7 +52,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj": {
+              "projectPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\10.semestar\\DIPLRAD\\BlockchainVotingSystem\\CentralPeerCoordinator\\CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
