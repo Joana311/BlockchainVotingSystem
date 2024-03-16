@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "IBwBvz2E5LuN9svu6bnFnvB9sqlMX4kQqvfF0FdHrl2iRigBLzXqZz4aw07YAdfdDYAUNe5WqEGrHUCBtELiYA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ana\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\Ana\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Ana\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\Ana\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\Ana\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "C:\\Users\\Ana\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

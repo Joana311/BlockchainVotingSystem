@@ -1,0 +1,109 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CB35E228-D0E0-438C-9168-DDCA254EC1A5}|CentralPeerCoordinator.Services\\CentralPeerCoordinator.Services.csproj|c:\\users\\ana\\desktop\\ana\\fer\\9.semestar\\resproj\\interaction-map-project\\centralpeercoordinator\\centralpeercoordinator.services\\centralpeercoordinator.services.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{CB35E228-D0E0-438C-9168-DDCA254EC1A5}|CentralPeerCoordinator.Services\\CentralPeerCoordinator.Services.csproj|solutionrelative:centralpeercoordinator.services\\centralpeercoordinator.services.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{939D80F0-9DF1-4D54-AABE-76CBA3E4B9ED}|CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj|c:\\users\\ana\\desktop\\ana\\fer\\9.semestar\\resproj\\interaction-map-project\\centralpeercoordinator\\centralpeercoordinator.data.db\\centralpeercoordinator.data.db.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{939D80F0-9DF1-4D54-AABE-76CBA3E4B9ED}|CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj|solutionrelative:centralpeercoordinator.data.db\\centralpeercoordinator.data.db.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6534557-6BD0-4DDB-97B8-1E844CAB515C}|CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj|c:\\users\\ana\\desktop\\ana\\fer\\9.semestar\\resproj\\interaction-map-project\\centralpeercoordinator\\centralpeercoordinator.contracts\\centralpeercoordinator.contracts.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D6534557-6BD0-4DDB-97B8-1E844CAB515C}|CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj|solutionrelative:centralpeercoordinator.contracts\\centralpeercoordinator.contracts.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D442FBAC-0EEE-4220-ABFA-02D1FC1BF0F0}|CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj|c:\\users\\ana\\desktop\\ana\\fer\\9.semestar\\resproj\\interaction-map-project\\centralpeercoordinator\\centralpeercoordinator.api\\centralpeercoordinator.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D442FBAC-0EEE-4220-ABFA-02D1FC1BF0F0}|CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj|solutionrelative:centralpeercoordinator.api\\centralpeercoordinator.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6534557-6BD0-4DDB-97B8-1E844CAB515C}|CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj|c:\\users\\ana\\desktop\\ana\\fer\\9.semestar\\resproj\\interaction-map-project\\centralpeercoordinator\\centralpeercoordinator.contracts\\peer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6534557-6BD0-4DDB-97B8-1E844CAB515C}|CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj|solutionrelative:centralpeercoordinator.contracts\\peer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 241,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CentralPeerCoordinator.Services",
+              "DocumentMoniker": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Services\\CentralPeerCoordinator.Services.csproj",
+              "RelativeDocumentMoniker": "CentralPeerCoordinator.Services\\CentralPeerCoordinator.Services.csproj",
+              "ToolTip": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Services\\CentralPeerCoordinator.Services.csproj",
+              "RelativeToolTip": "CentralPeerCoordinator.Services\\CentralPeerCoordinator.Services.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-03-16T21:49:41.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CentralPeerCoordinator.Data.Db",
+              "DocumentMoniker": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj",
+              "RelativeDocumentMoniker": "CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj",
+              "ToolTip": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj",
+              "RelativeToolTip": "CentralPeerCoordinator.Data.Db\\CentralPeerCoordinator.Data.Db.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-03-16T21:49:40.077Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CentralPeerCoordinator.Contracts",
+              "DocumentMoniker": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj",
+              "RelativeDocumentMoniker": "CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj",
+              "ToolTip": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj",
+              "RelativeToolTip": "CentralPeerCoordinator.Contracts\\CentralPeerCoordinator.Contracts.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-03-16T21:49:38.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CentralPeerCoordinator.API",
+              "DocumentMoniker": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
+              "RelativeDocumentMoniker": "CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
+              "ToolTip": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
+              "RelativeToolTip": "CentralPeerCoordinator.API\\CentralPeerCoordinator.API.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-03-16T21:49:36.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Peer.cs",
+              "DocumentMoniker": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Contracts\\Peer.cs",
+              "RelativeDocumentMoniker": "CentralPeerCoordinator.Contracts\\Peer.cs",
+              "ToolTip": "C:\\Users\\Ana\\Desktop\\Ana\\FER\\9.semestar\\RESPROJ\\Interaction-Map-Project\\CentralPeerCoordinator\\CentralPeerCoordinator.Contracts\\Peer.cs",
+              "RelativeToolTip": "CentralPeerCoordinator.Contracts\\Peer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-16T21:18:54.129Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
