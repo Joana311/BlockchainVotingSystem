@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CentralPeerCoordinator.Data.Db.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240316222354_CreatePeerTable")]
+    [Migration("20240316224245_CreatePeerTable")]
     partial class CreatePeerTable
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace CentralPeerCoordinator.Data.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Professionals", (string)null);
+                    b.ToTable("Peers", (string)null);
                 });
 #pragma warning restore 612, 618
         }

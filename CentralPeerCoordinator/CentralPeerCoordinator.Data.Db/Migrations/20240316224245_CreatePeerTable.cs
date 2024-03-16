@@ -12,7 +12,7 @@ namespace CentralPeerCoordinator.Data.Db.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Professionals",
+                name: "Peers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -21,7 +21,7 @@ namespace CentralPeerCoordinator.Data.Db.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Professionals", x => x.Id);
+                    table.PrimaryKey("PK_Peers", x => x.Id);
                 });
         }
 
@@ -29,7 +29,7 @@ namespace CentralPeerCoordinator.Data.Db.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Professionals");
+                name: "Peers");
         }
     }
 }

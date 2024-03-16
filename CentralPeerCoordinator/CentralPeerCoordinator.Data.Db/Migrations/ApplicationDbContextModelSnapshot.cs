@@ -37,7 +37,7 @@ namespace CentralPeerCoordinator.Data.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Professionals", (string)null);
+                    b.ToTable("Peers", (string)null);
                 });
 #pragma warning restore 612, 618
         }
