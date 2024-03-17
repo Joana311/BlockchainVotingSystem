@@ -6,7 +6,7 @@ namespace CentralPeerCoordinator.API.Validators;
 
 public class PeerValidator : AbstractValidator<PeerRequestDto>
 {
-    public PeerValidator()
+    public PeerValidator()   // TODO check that validation works
     {
         RuleFor(x => x.IpAddress)
             .NotNull().WithMessage("IP address is required.")
