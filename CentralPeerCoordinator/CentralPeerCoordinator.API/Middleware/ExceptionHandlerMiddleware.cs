@@ -32,6 +32,8 @@ public class ExceptionHandlerMiddleware
         {
             EntityNotFoundException =>
                 context.Response.StatusCode = (int)HttpStatusCode.NotFound,
+            IpAddressNotUniqueException =>
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest,
             _ => context.Response.StatusCode = (int)HttpStatusCode.InternalServerError
         };
 
