@@ -6,7 +6,7 @@ using CentralPeerCoordinator.Contracts.UoW;
 using CentralPeerCoordinator.Data.Db.Context;
 using CentralPeerCoordinator.Data.Db.UoW;
 using CentralPeerCoordinator.Services;
-using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +19,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddValidatorsFromAssemblyContaining<PeerValidator>();
+builder.Services
+    .AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true)
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PeerValidator>());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
