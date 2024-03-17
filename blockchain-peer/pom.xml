@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>diplrad</groupId>
-    <artifactId>blockchain-voting-system</artifactId>
+    <artifactId>blockchain-peer</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>Blockchain Voting System</name>
+    <name>Blockchain Peer</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
