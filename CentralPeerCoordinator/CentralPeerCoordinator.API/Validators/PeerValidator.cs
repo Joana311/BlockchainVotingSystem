@@ -17,8 +17,9 @@ public class PeerValidator : AbstractValidator<PeerRequestDto>
             .InclusiveBetween(0, 65535).WithMessage("Port must be valid.");
     }
 
-    private static bool ValidateIPv4(string ipString)
+    private static bool ValidateIPv4(string? ipString)
     {
+        if (ipString == null) return true;
         if (ipString.Count(c => c == '.') != 3) return false;
         return IPAddress.TryParse(ipString, out _);
     }

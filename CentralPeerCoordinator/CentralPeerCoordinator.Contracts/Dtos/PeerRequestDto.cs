@@ -2,7 +2,7 @@
 
 public class PeerRequestDto
 {
-    public string IpAddress { get; set; } = default!;
+    public string? IpAddress { get; set; }
 
-    public int Port { get; set; }
+    public int? Port { get; set; }
 }
