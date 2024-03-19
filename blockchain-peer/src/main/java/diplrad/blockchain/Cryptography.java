@@ -1,4 +1,4 @@
-package diplrad;
+package diplrad.blockchain;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

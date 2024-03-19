@@ -1,4 +1,4 @@
-package diplrad;
+package diplrad.http;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;

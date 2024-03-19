@@ -1,5 +1,12 @@
 package diplrad;
 
+import diplrad.blockchain.Block;
+import diplrad.blockchain.BlockChain;
+import diplrad.blockchain.VotingBlockChain;
+import diplrad.http.HttpSender;
+import diplrad.peer.Peer;
+import diplrad.peer.PeerRequest;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;

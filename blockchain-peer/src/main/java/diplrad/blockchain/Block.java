@@ -1,4 +1,6 @@
-package diplrad;
+package diplrad.blockchain;
+
+import diplrad.Constants;
 
 import java.util.Date;
 

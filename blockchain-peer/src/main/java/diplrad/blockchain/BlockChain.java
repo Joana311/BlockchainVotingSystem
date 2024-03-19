@@ -1,4 +1,7 @@
-package diplrad;
+package diplrad.blockchain;
+
+import diplrad.Constants;
+import diplrad.blockchain.Block;
 
 import java.util.ArrayList;
 import java.util.List;

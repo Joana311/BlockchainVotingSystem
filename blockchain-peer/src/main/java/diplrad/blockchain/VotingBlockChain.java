@@ -1,4 +1,8 @@
-package diplrad;
+package diplrad.blockchain;
+
+import diplrad.Constants;
+import diplrad.blockchain.Block;
+import diplrad.blockchain.BlockChain;
 
 import java.util.HashSet;
 import java.util.List;
