@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CentralPeerCoordinator.API.Controllers;
 
 [ApiController]
-[Route("api/peer")]
+[Route("api/peers")]
 public class PeerController : ControllerBase
 {
     private readonly IPeerService _peerService;
@@ -15,7 +15,7 @@ public class PeerController : ControllerBase
         _peerService = peerService;
     }
 
-    [HttpGet("all", Name = "GetAllPeers")]
+    [HttpGet(Name = "GetAllPeers")]
     public async Task<IActionResult> GetAllAsync()
     {
         return Ok(await _peerService.GetAllAsync());
