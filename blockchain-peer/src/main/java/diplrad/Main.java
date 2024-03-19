@@ -1,6 +1,7 @@
 package diplrad;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,6 +12,13 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
+
+        PeerRequest peerRequest = new PeerRequest(InetAddress.getLoopbackAddress(), 8080);
+
+        HttpSender httpSender = new HttpSender();
+        Peer peer = httpSender.registerPeer(peerRequest);
+        List<Peer> peers = httpSender.getPeers();
+
         List<String> candidates = null;
         List<String> voters = null;
         try {
@@ -39,6 +47,7 @@ public class Main {
         blockchain.mineBlock(thirdVote);
 
         System.out.println("Blockchain is valid: " + blockchain.validate());
+
     }
 
     private static String getRandomCandidate(List<String> candidates) {

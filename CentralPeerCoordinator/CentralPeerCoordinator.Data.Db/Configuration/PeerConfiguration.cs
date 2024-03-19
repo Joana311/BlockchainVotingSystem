@@ -11,6 +11,9 @@ public class PeerConfiguration : IEntityTypeConfiguration<Peer>
         builder.ToTable("Peers");
 
         builder.HasKey(p => p.Id);
+
+        builder.HasIndex(p => p.IpAddress)
+            .IsUnique();
     }
 }
 
