@@ -1,10 +1,15 @@
-package diplrad;
+package diplrad.blockchain;
+
+import com.google.gson.annotations.Expose;
+import diplrad.Constants;
+import diplrad.blockchain.Block;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlockChain {
 
+    @Expose(serialize = true)
     private List<Block> blocks;
 
     public BlockChain() {

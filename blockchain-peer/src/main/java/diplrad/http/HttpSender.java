@@ -1,7 +1,10 @@
-package diplrad;
+package diplrad.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diplrad.peer.Peer;
+import diplrad.peer.PeerRequest;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;

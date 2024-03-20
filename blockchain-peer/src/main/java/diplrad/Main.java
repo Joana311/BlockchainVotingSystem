@@ -1,7 +1,18 @@
 package diplrad;
 
+import diplrad.blockchain.Block;
+import diplrad.blockchain.BlockChain;
+import diplrad.blockchain.VotingBlockChain;
+import diplrad.http.HttpSender;
+import diplrad.peer.Peer;
+import diplrad.peer.PeerRequest;
+import diplrad.tcp.TcpServer;
+
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,10 +24,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        PeerRequest peerRequest = new PeerRequest(InetAddress.getLoopbackAddress(), 8080);
+        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
+        t.start();
+
+        PeerRequest peerRequest = new PeerRequest(getOwnIpAddress(), Constants.TCP_SERVER_PORT);
 
         HttpSender httpSender = new HttpSender();
-        Peer peer = httpSender.registerPeer(peerRequest);
+        Peer ownPeer = httpSender.registerPeer(peerRequest);
         List<Peer> peers = httpSender.getPeers();
 
         List<String> candidates = null;
@@ -48,6 +62,17 @@ public class Main {
 
         System.out.println("Blockchain is valid: " + blockchain.validate());
 
+    }
+
+    private static InetAddress getOwnIpAddress() {
+        try (final DatagramSocket datagramSocket = new DatagramSocket()) {
+            datagramSocket.connect(InetAddress.getByName("8.8.8.8"), 12345);
+            return datagramSocket.getLocalAddress();
+        } catch (SocketException | UnknownHostException e) {
+            System.out.println("Unable to fetch own IP address.");
+            System.exit(1);
+        }
+        return null;
     }
 
     private static String getRandomCandidate(List<String> candidates) {

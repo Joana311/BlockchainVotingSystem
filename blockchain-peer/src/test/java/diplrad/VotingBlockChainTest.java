@@ -1,5 +1,8 @@
 package diplrad;
 
+import diplrad.blockchain.Block;
+import diplrad.blockchain.BlockChain;
+import diplrad.blockchain.VotingBlockChain;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,7 +19,7 @@ public class VotingBlockChainTest {
 
     @Test
     public void givenBlockchain_whenNotChanged_thenValidationOk() {
-        BlockChain blockchain = setUpBlockchain();
+        VotingBlockChain blockchain = setUpBlockchain();
         Block firstBlock = new Block("Candidate1", blockchain.getLastBlockHash());
         blockchain.mineBlock(firstBlock);
         Block secondBlock = new Block("Candidate2", blockchain.getLastBlock().getHash());

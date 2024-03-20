@@ -1,8 +1,8 @@
 package diplrad;
 
+import diplrad.blockchain.Block;
+import diplrad.blockchain.BlockChain;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
