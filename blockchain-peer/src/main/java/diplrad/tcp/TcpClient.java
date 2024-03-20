@@ -33,31 +33,4 @@ public class TcpClient {
         clientSocket.close();
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-
-        TcpClient client = new TcpClient();
-        client.startConnection("127.0.0.1", Constants.TCP_SERVER_PORT);
-
-        System.out.println("Client started");
-
-        List<String> candidates = List.of("Candidate1", "Candidate2", "Candidate3");
-        VotingBlockChain blockchain = new VotingBlockChain(candidates);
-        Block firstBlock = new Block("Candidate1", blockchain.getLastBlockHash());
-        blockchain.mineBlock(firstBlock);
-        Block secondBlock = new Block("Candidate2", blockchain.getLastBlock().getHash());
-        blockchain.mineBlock(secondBlock);
-
-        System.out.println("Blockchain built");
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
-        String json = gson.toJson(blockchain);
-
-        while (true){
-            String output = client.sendMessage(json);
-            System.out.println("Message sent");
-            Thread.sleep(10000);
-        }
-
-    }
-
 }

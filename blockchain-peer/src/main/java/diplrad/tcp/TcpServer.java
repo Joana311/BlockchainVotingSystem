@@ -35,7 +35,8 @@ public class TcpServer {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Unable to stop TCP server.");
+            System.exit(1);
         }
 
     }
@@ -64,7 +65,8 @@ public class TcpServer {
                 clientSocket.close();
 
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println("An error occurred while handling a client.");
+                System.exit(1);
             }
         }
     }

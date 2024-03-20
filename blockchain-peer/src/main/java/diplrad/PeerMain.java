@@ -4,12 +4,12 @@ import diplrad.constants.Constants;
 import diplrad.http.HttpSender;
 import diplrad.models.Peer;
 import diplrad.models.PeerRequest;
-import diplrad.models.VotingBlockChain;
+import diplrad.tcp.BlockchainTcpClient;
 import diplrad.tcp.TcpServer;
 
+import java.io.IOException;
 import java.util.List;
 
-import static diplrad.helpers.FileReader.readCandidatesFromFile;
 import static diplrad.helpers.IpHelper.getOwnIpAddress;
 
 public class PeerMain {
@@ -26,7 +26,16 @@ public class PeerMain {
         List<Peer> peers = httpSender.getPeers();
 
         for (Peer peer : peers) {
-            // TODO get blockchain from peer
+
+            try {
+                BlockchainTcpClient client = new BlockchainTcpClient();
+                client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
+                client.sendBlockchainRequest();
+            } catch (IOException e) {
+                System.out.println("Unable to start TCP client.");
+                System.exit(1);
+            }
+
         }
 
     }

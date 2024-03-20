@@ -9,4 +9,11 @@ public class Peer {
     private InetAddress ipAddress;
     private int port;
 
+    public InetAddress getIpAddress() {
+        return ipAddress;
+    }
+
+    public int getPort() {
+        return port;
+    }
 }
