@@ -54,7 +54,6 @@ public class TcpClient {
 
         while (true){
             String output = client.sendMessage(json);
-            System.out.println(output);
             System.out.println("Message sent");
             Thread.sleep(10000);
         }

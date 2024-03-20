@@ -15,6 +15,7 @@ public class TcpServer {
     public void start(int port) {
         try {
             serverSocket = new ServerSocket(port);
+            serverSocket.getInetAddress();
             while (true)
                 new TcpClientHandler(serverSocket.accept()).start();
         } catch (IOException e) {
@@ -60,6 +61,13 @@ public class TcpServer {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
+
+    public static class TcpServerThread extends Thread {
+        public void run() {
+            TcpServer server = new TcpServer();
+            server.start(Constants.TCP_SERVER_PORT);
         }
     }
 
