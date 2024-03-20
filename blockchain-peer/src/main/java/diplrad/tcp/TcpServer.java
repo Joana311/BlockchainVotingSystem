@@ -1,6 +1,6 @@
 package diplrad.tcp;
 
-import diplrad.Constants;
+import diplrad.constants.Constants;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

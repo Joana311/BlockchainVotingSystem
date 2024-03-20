@@ -2,9 +2,9 @@ package diplrad.tcp;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import diplrad.Constants;
-import diplrad.blockchain.Block;
-import diplrad.blockchain.VotingBlockChain;
+import diplrad.constants.Constants;
+import diplrad.models.Block;
+import diplrad.models.VotingBlockChain;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;

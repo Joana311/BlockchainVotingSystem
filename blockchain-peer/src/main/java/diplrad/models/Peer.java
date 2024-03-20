@@ -1,4 +1,4 @@
-package diplrad.peer;
+package diplrad.models;
 
 import java.net.InetAddress;
 import java.util.UUID;

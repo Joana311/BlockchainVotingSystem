@@ -1,8 +1,8 @@
-package diplrad;
+package diplrad.models;
 
-import diplrad.blockchain.Block;
-import diplrad.blockchain.BlockChain;
-import diplrad.blockchain.VotingBlockChain;
+import diplrad.models.Block;
+import diplrad.models.BlockChain;
+import diplrad.models.VotingBlockChain;
 import org.junit.Test;
 
 import java.util.List;

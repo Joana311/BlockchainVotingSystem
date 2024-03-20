@@ -1,7 +1,8 @@
-package diplrad;
+package diplrad.models;
 
-import diplrad.blockchain.Block;
-import diplrad.blockchain.BlockChain;
+import diplrad.constants.Constants;
+import diplrad.models.Block;
+import diplrad.models.BlockChain;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

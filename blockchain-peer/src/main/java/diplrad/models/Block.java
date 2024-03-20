@@ -1,7 +1,8 @@
-package diplrad.blockchain;
+package diplrad.models;
 
 import com.google.gson.annotations.Expose;
-import diplrad.Constants;
+import diplrad.constants.Constants;
+import diplrad.helpers.CryptographyHelper;
 
 import java.util.Date;
 
@@ -48,7 +49,7 @@ public class Block {
 
     public String calculateHash() {
         String dataToHash = previousHash + timeStamp + nonce + data;
-        return Cryptography.hashWithSha256(dataToHash);
+        return CryptographyHelper.hashWithSha256(dataToHash);
     }
     
     public void updateHash() {

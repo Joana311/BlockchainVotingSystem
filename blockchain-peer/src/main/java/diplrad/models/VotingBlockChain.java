@@ -1,19 +1,21 @@
-package diplrad.blockchain;
+package diplrad.models;
 
-import diplrad.Constants;
-import diplrad.blockchain.Block;
-import diplrad.blockchain.BlockChain;
+import diplrad.constants.Constants;
 
 import java.util.HashSet;
 import java.util.List;
 
 public class VotingBlockChain extends BlockChain {
 
-    public List<String> candidates;
+    private List<String> candidates;
 
     public VotingBlockChain(List<String> candidates) {
         super();
         this.candidates = candidates;
+    }
+
+    public List<String> getCandidates() {
+        return candidates;
     }
 
     @Override

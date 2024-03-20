@@ -1,8 +1,7 @@
-package diplrad.blockchain;
+package diplrad.models;
 
 import com.google.gson.annotations.Expose;
-import diplrad.Constants;
-import diplrad.blockchain.Block;
+import diplrad.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
