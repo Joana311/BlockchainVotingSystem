@@ -1,10 +1,10 @@
 package diplrad;
 
 import diplrad.constants.Constants;
-import diplrad.models.VotingBlockChain;
 import diplrad.http.HttpSender;
 import diplrad.models.Peer;
 import diplrad.models.PeerRequest;
+import diplrad.models.VotingBlockChain;
 import diplrad.tcp.TcpServer;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 import static diplrad.helpers.FileReader.readCandidatesFromFile;
 import static diplrad.helpers.IpHelper.getOwnIpAddress;
 
-public class BlockchainCreatorMain {
+public class PeerMain {
 
     public static void main(String[] args) {
 
@@ -25,10 +25,8 @@ public class BlockchainCreatorMain {
         Peer ownPeer = httpSender.registerPeer(peerRequest);
         List<Peer> peers = httpSender.getPeers();
 
-        VotingBlockChain blockchain = new VotingBlockChain(readCandidatesFromFile());
-
         for (Peer peer : peers) {
-            // TODO send blockchain to peer
+            // TODO get blockchain from peer
         }
 
     }
