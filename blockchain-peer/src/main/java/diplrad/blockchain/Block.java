@@ -1,15 +1,21 @@
 package diplrad.blockchain;
 
+import com.google.gson.annotations.Expose;
 import diplrad.Constants;
 
 import java.util.Date;
 
 public class Block {
 
+    @Expose(serialize = true)
     private int nonce;
+    @Expose(serialize = true)
     private long timeStamp;
+    @Expose(serialize = true)
     private String data;
+    @Expose(serialize = true)
     private String previousHash;
+    @Expose(serialize = true)
     private String hash;
 
     public Block(String data, String previousHash) {

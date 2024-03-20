@@ -1,5 +1,6 @@
 package diplrad.tcp;
 
+import diplrad.Constants;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,16 +45,16 @@ public class TcpServer {
 
         public void run() {
             try {
-                //out = new PrintWriter(clientSocket.getOutputStream(), true);
+                out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
-                    //out.println(inputLine);
-                    System.out.println(inputLine);
+                    System.out.println("Received: " + inputLine);
+                    out.println(inputLine);
                 }
 
                 in.close();
-                //out.close();
+                out.close();
                 clientSocket.close();
 
             } catch (IOException e) {
@@ -64,7 +65,7 @@ public class TcpServer {
 
     public static void main(String[] args) {
         TcpServer server = new TcpServer();
-        server.start(5555);
+        server.start(Constants.TCP_SERVER_PORT);
     }
 
 }

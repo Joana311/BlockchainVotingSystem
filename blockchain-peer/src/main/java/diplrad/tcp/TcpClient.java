@@ -2,6 +2,7 @@ package diplrad.tcp;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diplrad.Constants;
 import diplrad.blockchain.Block;
 import diplrad.blockchain.VotingBlockChain;
 import java.io.*;
@@ -35,7 +36,9 @@ public class TcpClient {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         TcpClient client = new TcpClient();
-        client.startConnection("127.0.0.1", 5555);
+        client.startConnection("127.0.0.1", Constants.TCP_SERVER_PORT);
+
+        System.out.println("Client started");
 
         List<String> candidates = List.of("Candidate1", "Candidate2", "Candidate3");
         VotingBlockChain blockchain = new VotingBlockChain(candidates);
@@ -44,11 +47,14 @@ public class TcpClient {
         Block secondBlock = new Block("Candidate2", blockchain.getLastBlock().getHash());
         blockchain.mineBlock(secondBlock);
 
+        System.out.println("Blockchain built");
+
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
-        String json = gson.toJson(gson);
+        String json = gson.toJson(blockchain);
 
         while (true){
-            client.sendMessage(json);
+            String output = client.sendMessage(json);
+            System.out.println(output);
             System.out.println("Message sent");
             Thread.sleep(10000);
         }
