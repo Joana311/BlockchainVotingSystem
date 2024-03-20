@@ -8,5 +8,4 @@ public class Constants {
     public static final int TCP_SERVER_PORT = 5556;
     public static final String CANDIDATES_FILE_PATH = "./src/main/resources/candidates.txt";
     public static final String VOTERS_FILE_PATH = "./src/main/resources/voters.txt";
-    public static final String BLOCKCHAIN_REQUEST_MESSAGE = "REQ";
 }

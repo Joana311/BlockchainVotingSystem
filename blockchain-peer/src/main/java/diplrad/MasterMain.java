@@ -27,14 +27,15 @@ public class MasterMain {
         Peer ownPeer = httpSender.registerPeer(peerRequest);
         List<Peer> peers = httpSender.getPeers();
 
-        VotingBlockChain blockchain = new VotingBlockChain(readCandidatesFromFile());
+        VotingBlockChain.createInstance(readCandidatesFromFile());
 
         for (Peer peer : peers) {
 
             try {
                 BlockchainTcpClient client = new BlockchainTcpClient();
                 client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
-                client.sendBlockchain(blockchain);
+                client.sendBlockchain(VotingBlockChain.getInstance());
+                client.stopConnection();
             } catch (IOException e) {
                 System.out.println("Unable to start TCP client.");
                 System.exit(1);

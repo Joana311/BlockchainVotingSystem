@@ -4,21 +4,26 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
 import diplrad.models.Block;
+import diplrad.models.Peer;
 import diplrad.models.VotingBlockChain;
 
 import java.io.IOException;
 import java.util.List;
 
-import static diplrad.constants.Constants.BLOCKCHAIN_REQUEST_MESSAGE;
-
 public class BlockchainTcpClient extends TcpClient {
 
-    public void sendBlockchainRequest() throws IOException {
-        sendMessage(BLOCKCHAIN_REQUEST_MESSAGE);
+    private Gson gson;
+
+    public BlockchainTcpClient() {
+        gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+    }
+
+    public void sendBlockchainRequest(Peer peer) throws IOException {
+        String json = gson.toJson(peer);
+        sendMessage(json);
     }
 
     public void sendBlockchain(VotingBlockChain blockchain) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(blockchain);
         sendMessage(json);
     }

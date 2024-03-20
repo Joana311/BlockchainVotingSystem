@@ -1,5 +1,7 @@
 package diplrad.tcp;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,17 +10,25 @@ import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TcpServer {
 
     private ServerSocket serverSocket;
+    private List<TcpClientHandler> clientHandlers;
 
     public void start(int port) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         try {
             serverSocket = new ServerSocket(port);
-            serverSocket.getInetAddress();
-            while (true)
-                new TcpClientHandler(serverSocket.accept()).start();
+            while (true) {
+                TcpClientHandler clientHandler = new TcpClientHandler(serverSocket.accept());
+                clientHandlers.add(clientHandler);
+                TcpMessageHandler messageHandler = new TcpMessageHandler(gson);
+                clientHandler.addObserver(messageHandler);
+                clientHandler.start();
+            }
         } catch (BindException e) {
             System.out.println("Unable to start TCP server because port is already in use.");
             System.exit(1);
@@ -28,7 +38,6 @@ public class TcpServer {
         } finally {
             stop();
         }
-
     }
 
     public void stop() {
@@ -42,12 +51,18 @@ public class TcpServer {
     }
 
     private static class TcpClientHandler extends Thread {
+
         private Socket clientSocket;
         private PrintWriter out;
         private BufferedReader in;
+        private final List<TcpMessageObserver> observers = new ArrayList<>();
 
         public TcpClientHandler(Socket socket) {
             this.clientSocket = socket;
+        }
+
+        public synchronized void addObserver(TcpMessageObserver observer) {
+            this.observers.add(observer);
         }
 
         public void run() {
@@ -58,6 +73,9 @@ public class TcpServer {
                 while ((inputLine = in.readLine()) != null) {
                     System.out.println("Received: " + inputLine);
                     out.println(inputLine);
+                    for (TcpMessageObserver observer : observers) {
+                        observer.messageReceived(inputLine);
+                    }
                 }
 
                 in.close();
