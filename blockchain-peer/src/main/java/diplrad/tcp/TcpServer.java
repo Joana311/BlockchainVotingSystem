@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -18,8 +19,12 @@ public class TcpServer {
             serverSocket.getInetAddress();
             while (true)
                 new TcpClientHandler(serverSocket.accept()).start();
+        } catch (BindException e) {
+            System.out.println("Unable to start TCP server because port is already in use.");
+            System.exit(1);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Unable to start TCP server.");
+            System.exit(1);
         } finally {
             stop();
         }
