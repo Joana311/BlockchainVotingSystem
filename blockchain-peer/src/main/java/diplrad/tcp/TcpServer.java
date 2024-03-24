@@ -3,6 +3,8 @@ package diplrad.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
+import diplrad.tcp.blockchain.BlockchainTcpMessageObserver;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

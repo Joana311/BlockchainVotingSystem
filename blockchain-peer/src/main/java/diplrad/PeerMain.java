@@ -2,9 +2,9 @@ package diplrad;
 
 import diplrad.constants.Constants;
 import diplrad.http.HttpSender;
-import diplrad.models.Peer;
-import diplrad.models.PeerRequest;
-import diplrad.tcp.BlockchainTcpClient;
+import diplrad.models.peer.Peer;
+import diplrad.models.peer.PeerRequest;
+import diplrad.tcp.blockchain.BlockchainTcpClient;
 import diplrad.tcp.TcpServer;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package diplrad.models;
+package diplrad.models.peer;
 
 import java.io.Serializable;
 import java.net.InetAddress;

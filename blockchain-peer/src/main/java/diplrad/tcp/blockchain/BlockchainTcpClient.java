@@ -1,6 +1,7 @@
-package diplrad.tcp;
+package diplrad.tcp.blockchain;
 
 import diplrad.constants.Constants;
+import diplrad.tcp.TcpClient;
 
 import java.io.IOException;
 

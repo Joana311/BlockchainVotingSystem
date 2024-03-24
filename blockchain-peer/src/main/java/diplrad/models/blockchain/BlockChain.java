@@ -1,4 +1,4 @@
-package diplrad.models;
+package diplrad.models.blockchain;
 
 import com.google.gson.annotations.Expose;
 import diplrad.constants.Constants;

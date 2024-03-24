@@ -2,9 +2,9 @@ package diplrad;
 
 import diplrad.constants.Constants;
 import diplrad.http.HttpSender;
-import diplrad.models.Peer;
-import diplrad.models.PeerRequest;
-import diplrad.models.VotingBlockChain;
+import diplrad.models.peer.Peer;
+import diplrad.models.peer.PeerRequest;
+import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.tcp.TcpServer;
 
 import static diplrad.helpers.FileReader.readCandidatesFromFile;

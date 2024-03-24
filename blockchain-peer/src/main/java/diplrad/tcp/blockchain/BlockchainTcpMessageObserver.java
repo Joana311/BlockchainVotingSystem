@@ -1,8 +1,9 @@
-package diplrad.tcp;
+package diplrad.tcp.blockchain;
 
 import com.google.gson.Gson;
 import diplrad.constants.Constants;
-import diplrad.models.VotingBlockChain;
+import diplrad.models.blockchain.VotingBlockChain;
+import diplrad.tcp.ITcpMessageObserver;
 
 public class BlockchainTcpMessageObserver implements ITcpMessageObserver {
 
