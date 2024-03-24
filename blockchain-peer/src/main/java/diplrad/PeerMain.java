@@ -29,7 +29,7 @@ public class PeerMain {
             try {
                 BlockchainTcpClient client = new BlockchainTcpClient();
                 client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
-                client.sendBlockchainRequest(ownPeer);
+                client.sendBlockchainRequest();
                 client.stopConnection();
             } catch (IOException e) {
                 System.out.println("Unable to start TCP client.");

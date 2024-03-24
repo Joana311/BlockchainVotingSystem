@@ -1,51 +1,39 @@
 package diplrad.tcp;
 
 import com.google.gson.Gson;
-import diplrad.models.Peer;
+import diplrad.constants.Constants;
 import diplrad.models.VotingBlockChain;
 
-import java.io.IOException;
-
-public class TcpMessageHandler implements TcpMessageObserver {
+public class BlockchainTcpMessageObserver implements ITcpMessageObserver {
 
     private final Gson gson;
 
-    public TcpMessageHandler(Gson gson) {
+    public BlockchainTcpMessageObserver(Gson gson) {
         this.gson = gson;
     }
 
     @Override
-    public void messageReceived(String inputLine) {
+    public String messageReceived(String message) {
 
-        VotingBlockChain blockchain = gson.fromJson(inputLine, VotingBlockChain.class);
-        if (blockchain != null) {
-            blockChainMessageReceived(blockchain);
-            return;
+        if (message.equals(Constants.BLOCKCHAIN_REQUEST)) {
+            return blockChainRequestMessageReceived(gson);
         }
-        Peer peer = gson.fromJson(inputLine, Peer.class);
-        if (peer != null) {
-            blockChainRequestMessageReceived(peer);
-            return;
+        VotingBlockChain blockchain = gson.fromJson(message, VotingBlockChain.class);
+        if (blockchain != null) {
+            return blockChainMessageReceived(blockchain);
         }
 
         System.out.println("Invalid message received.");
         System.exit(1);
+        return null;
 
     }
 
-    public void blockChainRequestMessageReceived(Peer peer) {
-        try {
-            BlockchainTcpClient client = new BlockchainTcpClient();
-            client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
-            client.sendBlockchain(VotingBlockChain.getInstance());
-            client.stopConnection();
-        } catch (IOException e) {
-            System.out.println("Unable to start TCP client.");
-            System.exit(1);
-        }
+    public String blockChainRequestMessageReceived(Gson gson) {
+        return gson.toJson(VotingBlockChain.getInstance());
     }
 
-    public void blockChainMessageReceived(VotingBlockChain blockchain) {
+    public String blockChainMessageReceived(VotingBlockChain blockchain) {
 
         // we are overriding our current instance with the received one if it is valid
         // and contains exactly one block more than our current instance
@@ -59,6 +47,8 @@ public class TcpMessageHandler implements TcpMessageObserver {
         } else {
             System.out.println("Received blockchain is invalid.");
         }
+
+        return null;
 
     }
 

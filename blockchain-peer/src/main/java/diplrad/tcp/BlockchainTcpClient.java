@@ -18,9 +18,8 @@ public class BlockchainTcpClient extends TcpClient {
         gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     }
 
-    public void sendBlockchainRequest(Peer peer) throws IOException {
-        String json = gson.toJson(peer);
-        sendMessage(json);
+    public void sendBlockchainRequest() throws IOException {
+        sendMessage(Constants.BLOCKCHAIN_REQUEST);
     }
 
     public void sendBlockchain(VotingBlockChain blockchain) throws IOException {
@@ -36,7 +35,7 @@ public class BlockchainTcpClient extends TcpClient {
         System.out.println("Client started");
 
         List<String> candidates = List.of("Candidate1", "Candidate2", "Candidate3");
-        VotingBlockChain blockchain = new VotingBlockChain(candidates);
+        VotingBlockChain blockchain = VotingBlockChain.createInstance(candidates);
         Block firstBlock = new Block("Candidate1", blockchain.getLastBlockHash());
         blockchain.mineBlock(firstBlock);
         Block secondBlock = new Block("Candidate2", blockchain.getLastBlock().getHash());
