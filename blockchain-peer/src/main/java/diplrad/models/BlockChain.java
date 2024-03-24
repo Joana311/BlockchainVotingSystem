@@ -29,6 +29,10 @@ public class BlockChain {
         blocks.add(block);
     }
 
+    public Block getBlock(int index) {
+        return blocks.get(index);
+    }
+
     public Block getLastBlock() {
         return blocks.get(blocks.size() - 1);
     }
@@ -56,6 +60,26 @@ public class BlockChain {
             }
         }
         return true;
+    }
+
+    public boolean validateAgainstCurrent(BlockChain currentBlockChain) {
+        if (this.size() == currentBlockChain.size() + 1) {
+            for (int i = 0; i < currentBlockChain.size(); i++) {
+                if (this.getBlock(i).equals(currentBlockChain.blocks.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        if (this.size() == currentBlockChain.size()) {
+            for (int i = 0; i < currentBlockChain.size() - 1; i++) {
+                if (this.getBlock(i).equals(currentBlockChain.blocks.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
 }

@@ -5,6 +5,7 @@ import diplrad.constants.Constants;
 import diplrad.helpers.CryptographyHelper;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Block {
 
@@ -45,6 +46,14 @@ public class Block {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Block block = (Block) o;
+        return nonce == block.nonce && timeStamp == block.timeStamp && Objects.equals(data, block.data) && Objects.equals(previousHash, block.previousHash) && Objects.equals(hash, block.hash);
     }
 
     public String calculateHash() {

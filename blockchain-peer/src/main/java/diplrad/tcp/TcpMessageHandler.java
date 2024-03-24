@@ -19,12 +19,12 @@ public class TcpMessageHandler implements TcpMessageObserver {
 
         VotingBlockChain blockchain = gson.fromJson(inputLine, VotingBlockChain.class);
         if (blockchain != null) {
-            blockchainMessageReceived(blockchain);
+            blockChainMessageReceived(blockchain);
             return;
         }
         Peer peer = gson.fromJson(inputLine, Peer.class);
         if (peer != null) {
-            blockchainRequestMessageReceived(peer);
+            blockChainRequestMessageReceived(peer);
             return;
         }
 
@@ -33,7 +33,7 @@ public class TcpMessageHandler implements TcpMessageObserver {
 
     }
 
-    public void blockchainRequestMessageReceived(Peer peer) {
+    public void blockChainRequestMessageReceived(Peer peer) {
         try {
             BlockchainTcpClient client = new BlockchainTcpClient();
             client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
@@ -45,15 +45,17 @@ public class TcpMessageHandler implements TcpMessageObserver {
         }
     }
 
-    public void blockchainMessageReceived(VotingBlockChain blockchain) {
+    public void blockChainMessageReceived(VotingBlockChain blockchain) {
 
-        if (blockchain.validate()) {
-            // TODO validate blockchain by comparing it to current instance
-            // TODO must have all the same blocks 
-            // TODO either has one block more than current instance
-            // TODO or has the same length and the last block is different
-            // TODO if the have the same length, compare the last block timestamp
-            // TODO if the received blockchain is valid, replace the current instance with it
+        // we are overriding our current instance with the received one if it is valid
+        // and contains exactly one block more than our current instance
+        // or if it is the same length as our current instance, but the last block was added before the last block of our current instance
+        if (blockchain.validate() && blockchain.validateAgainstCurrent(VotingBlockChain.getInstance())) {
+            if (blockchain.size() == VotingBlockChain.getInstance().size() + 1
+                || (blockchain.size() == VotingBlockChain.getInstance().size()
+                    && blockchain.getTimeStampOfLastBlock() < VotingBlockChain.getInstance().getTimeStampOfLastBlock())) {
+                VotingBlockChain.setInstance(blockchain);
+            }
         } else {
             System.out.println("Received blockchain is invalid.");
         }
