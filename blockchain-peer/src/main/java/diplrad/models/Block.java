@@ -1,9 +1,11 @@
-package diplrad.blockchain;
+package diplrad.models;
 
 import com.google.gson.annotations.Expose;
-import diplrad.Constants;
+import diplrad.constants.Constants;
+import diplrad.helpers.CryptographyHelper;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Block {
 
@@ -46,9 +48,17 @@ public class Block {
         this.data = data;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Block block = (Block) o;
+        return nonce == block.nonce && timeStamp == block.timeStamp && Objects.equals(data, block.data) && Objects.equals(previousHash, block.previousHash) && Objects.equals(hash, block.hash);
+    }
+
     public String calculateHash() {
         String dataToHash = previousHash + timeStamp + nonce + data;
-        return Cryptography.hashWithSha256(dataToHash);
+        return CryptographyHelper.hashWithSha256(dataToHash);
     }
     
     public void updateHash() {

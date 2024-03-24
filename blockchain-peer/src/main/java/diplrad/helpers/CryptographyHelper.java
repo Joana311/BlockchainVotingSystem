@@ -1,11 +1,11 @@
-package diplrad.blockchain;
+package diplrad.helpers;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class Cryptography {
+public class CryptographyHelper {
 
     public static String hashWithSha256(String input)
     {

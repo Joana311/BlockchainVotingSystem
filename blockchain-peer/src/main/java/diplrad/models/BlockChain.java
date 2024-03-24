@@ -1,8 +1,7 @@
-package diplrad.blockchain;
+package diplrad.models;
 
 import com.google.gson.annotations.Expose;
-import diplrad.Constants;
-import diplrad.blockchain.Block;
+import diplrad.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,10 @@ public class BlockChain {
 
     private void addBlock(Block block) {
         blocks.add(block);
+    }
+
+    public Block getBlock(int index) {
+        return blocks.get(index);
     }
 
     public Block getLastBlock() {
@@ -57,6 +60,26 @@ public class BlockChain {
             }
         }
         return true;
+    }
+
+    public boolean validateAgainstCurrent(BlockChain currentBlockChain) {
+        if (this.size() == currentBlockChain.size() + 1) {
+            for (int i = 0; i < currentBlockChain.size(); i++) {
+                if (this.getBlock(i).equals(currentBlockChain.blocks.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        if (this.size() == currentBlockChain.size()) {
+            for (int i = 0; i < currentBlockChain.size() - 1; i++) {
+                if (this.getBlock(i).equals(currentBlockChain.blocks.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
 }

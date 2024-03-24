@@ -1,4 +1,4 @@
-package diplrad.peer;
+package diplrad.models;
 
 import java.net.InetAddress;
 import java.util.UUID;
@@ -9,4 +9,11 @@ public class Peer {
     private InetAddress ipAddress;
     private int port;
 
+    public InetAddress getIpAddress() {
+        return ipAddress;
+    }
+
+    public int getPort() {
+        return port;
+    }
 }

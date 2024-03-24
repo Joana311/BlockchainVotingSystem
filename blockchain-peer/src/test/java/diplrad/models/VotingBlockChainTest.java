@@ -1,8 +1,5 @@
-package diplrad;
+package diplrad.models;
 
-import diplrad.blockchain.Block;
-import diplrad.blockchain.BlockChain;
-import diplrad.blockchain.VotingBlockChain;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,7 +11,7 @@ public class VotingBlockChainTest {
 
     public static VotingBlockChain setUpBlockchain()  {
         List<String> candidates = List.of("Candidate1", "Candidate2", "Candidate3");
-        return new VotingBlockChain(candidates);
+        return VotingBlockChain.createInstance(candidates);
     }
 
     @Test
