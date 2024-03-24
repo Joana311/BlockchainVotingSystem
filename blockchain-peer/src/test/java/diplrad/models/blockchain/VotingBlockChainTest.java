@@ -1,4 +1,4 @@
-package diplrad.models;
+package diplrad.models.blockchain;
 
 import diplrad.models.blockchain.Block;
 import diplrad.models.blockchain.BlockChain;
