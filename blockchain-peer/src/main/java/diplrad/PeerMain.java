@@ -19,10 +19,9 @@ public class PeerMain {
         TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
         t.start();
 
-        PeerRequest peerRequest = new PeerRequest(getOwnIpAddress(), Constants.TCP_SERVER_PORT);
-
         HttpSender httpSender = new HttpSender();
-        Peer ownPeer = httpSender.registerPeer(peerRequest);
+        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress(), Constants.TCP_SERVER_PORT);
+        Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         List<Peer> peers = httpSender.getPeers();
 
         for (Peer peer : peers) {
