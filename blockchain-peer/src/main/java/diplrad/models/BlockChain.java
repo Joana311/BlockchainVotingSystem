@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BlockChain {
 
-    @Expose(serialize = true)
+    @Expose
     private List<Block> blocks;
 
     public BlockChain() {
@@ -39,6 +39,10 @@ public class BlockChain {
 
     public String getLastBlockHash() {
         return getLastBlock().getHash();
+    }
+
+    public long getLastBlockTimeStamp() {
+        return getLastBlock().getTimeStamp();
     }
 
     public void mineBlock(Block block) {

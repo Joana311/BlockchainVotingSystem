@@ -26,10 +26,6 @@ public class VotingBlockChain extends BlockChain {
         INSTANCE = instance;
     }
 
-    public long getTimeStampOfLastBlock() {
-        return getLastBlock().getTimeStamp();
-    }
-
     private List<String> candidates;
 
     private VotingBlockChain(List<String> candidates) {

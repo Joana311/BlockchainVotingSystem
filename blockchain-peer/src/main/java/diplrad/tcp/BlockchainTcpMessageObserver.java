@@ -41,7 +41,7 @@ public class BlockchainTcpMessageObserver implements ITcpMessageObserver {
         if (blockchain.validate() && blockchain.validateAgainstCurrent(VotingBlockChain.getInstance())) {
             if (blockchain.size() == VotingBlockChain.getInstance().size() + 1
                 || (blockchain.size() == VotingBlockChain.getInstance().size()
-                    && blockchain.getTimeStampOfLastBlock() < VotingBlockChain.getInstance().getTimeStampOfLastBlock())) {
+                    && blockchain.getLastBlockTimeStamp() < VotingBlockChain.getInstance().getLastBlockTimeStamp())) {
                 VotingBlockChain.setInstance(blockchain);
             }
         } else {

@@ -9,15 +9,15 @@ import java.util.Objects;
 
 public class Block {
 
-    @Expose(serialize = true)
+    @Expose
     private int nonce;
-    @Expose(serialize = true)
+    @Expose
     private long timeStamp;
-    @Expose(serialize = true)
+    @Expose
     private String data;
-    @Expose(serialize = true)
+    @Expose
     private String previousHash;
-    @Expose(serialize = true)
+    @Expose
     private String hash;
 
     public Block(String data, String previousHash) {
