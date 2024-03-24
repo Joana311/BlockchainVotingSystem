@@ -3,6 +3,8 @@ package diplrad.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
+import diplrad.tcp.blockchain.BlockchainTcpMessageObserver;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +18,6 @@ import java.util.List;
 public class TcpServer {
 
     private ServerSocket serverSocket;
-    private List<TcpClientHandler> clientHandlers;
 
     public void start(int port) {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
@@ -24,8 +25,7 @@ public class TcpServer {
             serverSocket = new ServerSocket(port);
             while (true) {
                 TcpClientHandler clientHandler = new TcpClientHandler(serverSocket.accept());
-                clientHandlers.add(clientHandler);
-                TcpMessageHandler messageHandler = new TcpMessageHandler(gson);
+                BlockchainTcpMessageObserver messageHandler = new BlockchainTcpMessageObserver(gson);
                 clientHandler.addObserver(messageHandler);
                 clientHandler.start();
             }
@@ -55,13 +55,13 @@ public class TcpServer {
         private Socket clientSocket;
         private PrintWriter out;
         private BufferedReader in;
-        private final List<TcpMessageObserver> observers = new ArrayList<>();
+        private final List<ITcpMessageObserver> observers = new ArrayList<>();
 
         public TcpClientHandler(Socket socket) {
             this.clientSocket = socket;
         }
 
-        public synchronized void addObserver(TcpMessageObserver observer) {
+        public synchronized void addObserver(ITcpMessageObserver observer) {
             this.observers.add(observer);
         }
 
@@ -69,19 +69,21 @@ public class TcpServer {
             try {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
                     System.out.println("Received: " + inputLine);
-                    out.println(inputLine);
-                    for (TcpMessageObserver observer : observers) {
-                        observer.messageReceived(inputLine);
+                    for (ITcpMessageObserver observer : observers) {
+                        String observerResponse = observer.messageReceived(inputLine);
+                        if (observerResponse != null) {
+                            out.println(observerResponse);
+                        }
                     }
                 }
 
                 in.close();
                 out.close();
                 clientSocket.close();
-
             } catch (IOException e) {
                 System.out.println("An error occurred while handling a client.");
                 System.exit(1);
@@ -94,11 +96,6 @@ public class TcpServer {
             TcpServer server = new TcpServer();
             server.start(Constants.TCP_SERVER_PORT);
         }
-    }
-
-    public static void main(String[] args) {
-        TcpServer server = new TcpServer();
-        server.start(Constants.TCP_SERVER_PORT);
     }
 
 }

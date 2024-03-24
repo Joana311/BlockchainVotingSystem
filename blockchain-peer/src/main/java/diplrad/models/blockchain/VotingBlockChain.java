@@ -1,4 +1,4 @@
-package diplrad.models;
+package diplrad.models.blockchain;
 
 import diplrad.constants.Constants;
 
@@ -24,10 +24,6 @@ public class VotingBlockChain extends BlockChain {
 
     public static void setInstance(VotingBlockChain instance) {
         INSTANCE = instance;
-    }
-
-    public long getTimeStampOfLastBlock() {
-        return getLastBlock().getTimeStamp();
     }
 
     private List<String> candidates;

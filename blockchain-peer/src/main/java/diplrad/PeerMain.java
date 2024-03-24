@@ -2,9 +2,9 @@ package diplrad;
 
 import diplrad.constants.Constants;
 import diplrad.http.HttpSender;
-import diplrad.models.Peer;
-import diplrad.models.PeerRequest;
-import diplrad.tcp.BlockchainTcpClient;
+import diplrad.models.peer.Peer;
+import diplrad.models.peer.PeerRequest;
+import diplrad.tcp.blockchain.BlockchainTcpClient;
 import diplrad.tcp.TcpServer;
 
 import java.io.IOException;
@@ -19,10 +19,9 @@ public class PeerMain {
         TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
         t.start();
 
-        PeerRequest peerRequest = new PeerRequest(getOwnIpAddress(), Constants.TCP_SERVER_PORT);
-
         HttpSender httpSender = new HttpSender();
-        Peer ownPeer = httpSender.registerPeer(peerRequest);
+        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress(), Constants.TCP_SERVER_PORT);
+        Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         List<Peer> peers = httpSender.getPeers();
 
         for (Peer peer : peers) {
@@ -30,7 +29,7 @@ public class PeerMain {
             try {
                 BlockchainTcpClient client = new BlockchainTcpClient();
                 client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
-                client.sendBlockchainRequest(ownPeer);
+                client.sendBlockchainRequest();
                 client.stopConnection();
             } catch (IOException e) {
                 System.out.println("Unable to start TCP client.");

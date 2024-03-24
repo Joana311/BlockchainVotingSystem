@@ -1,7 +1,7 @@
 package diplrad.helpers;
 
-import diplrad.models.Block;
-import diplrad.models.VotingBlockChain;
+import diplrad.models.blockchain.Block;
+import diplrad.models.blockchain.VotingBlockChain;
 import java.util.List;
 
 public class VoteMocker {
