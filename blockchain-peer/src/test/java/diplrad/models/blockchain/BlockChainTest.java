@@ -17,35 +17,57 @@ public class BlockChainTest {
 
     @Test
     public void givenBlockchain_whenNewBlockIsMined_thenItsHashBeginsWithPrefixString() {
+
+        // Arrange
         BlockChain blockchain = setUpBlockchain();
         Block newBlock = new Block("The is a New Block.", blockchain.getLastBlock().getHash());
-        blockchain.mineBlock(newBlock);
         int prefix = Constants.DIFFICULTY;
-        String leadingZeros = new String(new char[prefix]).replace('\0', '0');
-        assertEquals(newBlock.getHash().substring(0, prefix), leadingZeros);
+        String expected = new String(new char[prefix]).replace('\0', '0');
+
+        // Act
+        blockchain.mineBlock(newBlock);
+
+        // Assert
+        String actual = newBlock.getHash().substring(0, prefix);
+        assertEquals(actual, expected);
+
     }
 
     @Test
     public void givenBlockchain_whenNotChanged_thenValidationOk() {
+
+        // Arrange
         BlockChain blockchain = setUpBlockchain();
         Block firstBlock = new Block("The is the First Block.", blockchain.getLastBlockHash());
         blockchain.mineBlock(firstBlock);
         Block secondBlock = new Block("The is a Second Block.", blockchain.getLastBlock().getHash());
         blockchain.mineBlock(secondBlock);
+
+        // Act
+
+        // Assert
         boolean validationResult = blockchain.validate();
         assertTrue(validationResult);
+
     }
 
     @Test
     public void givenBlockchain_whenChanged_thenValidationFailed() {
+
+        // Arrange
         BlockChain blockchain = setUpBlockchain();
         Block firstBlock = new Block("The is the First Block.", blockchain.getLastBlockHash());
         blockchain.mineBlock(firstBlock);
         Block secondBlock = new Block("The is a Second Block.", blockchain.getLastBlock().getHash());
         blockchain.mineBlock(secondBlock);
+
+        // Act
         firstBlock.setData("The is the changed First Block.");
+
+        // Assert
         boolean validationResult = blockchain.validate();
         assertFalse(validationResult);
+
     }
 
 }

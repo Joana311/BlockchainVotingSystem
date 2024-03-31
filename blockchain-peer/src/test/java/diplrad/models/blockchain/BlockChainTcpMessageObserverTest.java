@@ -14,13 +14,17 @@ public class BlockChainTcpMessageObserverTest {
     @Test
     public void givenBlockchain_whenNewBlockIsMined_thenItsHashBeginsWithPrefixString() {
 
+        // Arrange
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         BlockChainTcpMessageObserver observer = new BlockChainTcpMessageObserver(gson);
+        String expected = gson.toJson(VotingBlockChainSingleton.getInstance());
 
-        String actualResponse = observer.messageReceived(Constants.BLOCKCHAIN_REQUEST);
-        String expectedResponse = gson.toJson(VotingBlockChainSingleton.getInstance());
+        // Act
+        String actual = observer.messageReceived(Constants.BLOCKCHAIN_REQUEST);
 
-        assertEquals(actualResponse, expectedResponse);
+        // Assert
+        assertEquals(actual, expected);
+        
     }
 
 }
