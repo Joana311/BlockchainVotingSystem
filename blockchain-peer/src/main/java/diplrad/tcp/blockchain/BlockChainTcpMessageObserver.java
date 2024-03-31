@@ -6,11 +6,11 @@ import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.tcp.ITcpMessageObserver;
 
-public class BlockchainTcpMessageObserver implements ITcpMessageObserver {
+public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
     private final Gson gson;
 
-    public BlockchainTcpMessageObserver(Gson gson) {
+    public BlockChainTcpMessageObserver(Gson gson) {
         this.gson = gson;
     }
 
