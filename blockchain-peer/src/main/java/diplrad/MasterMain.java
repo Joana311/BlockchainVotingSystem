@@ -2,9 +2,9 @@ package diplrad;
 
 import diplrad.constants.Constants;
 import diplrad.http.HttpSender;
+import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.models.peer.Peer;
 import diplrad.models.peer.PeerRequest;
-import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.tcp.TcpServer;
 
 import static diplrad.helpers.FileReader.readCandidatesFromFile;
@@ -14,7 +14,7 @@ public class MasterMain {
 
     public static void main(String[] args) {
 
-        VotingBlockChain.createInstance(readCandidatesFromFile());
+        VotingBlockChainSingleton.createInstance(readCandidatesFromFile());
 
         TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
         t.start();
