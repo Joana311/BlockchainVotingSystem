@@ -26,7 +26,7 @@ public class BlockChainTcpMessageObserverTest {
         String actual = observer.messageReceived(Constants.BLOCKCHAIN_REQUEST);
 
         // Assert
-        assertEquals(actual, expected);
+        assertEquals(actual, expected); // TODO instead of this assert that getInstance was called once
 
     }
 
