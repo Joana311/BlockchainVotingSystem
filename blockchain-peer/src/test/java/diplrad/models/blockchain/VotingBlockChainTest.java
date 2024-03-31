@@ -11,25 +11,26 @@ public class VotingBlockChainTest {
 
     public static VotingBlockChain setUpBlockchain()  {
         List<String> candidates = List.of("Candidate1", "Candidate2", "Candidate3");
-        return VotingBlockChainSingleton.createInstance(candidates);
+        VotingBlockChain blockChain = VotingBlockChainSingleton.createInstance(candidates);
+        Block firstBlock = new Block("Candidate1", blockChain.getLastBlockHash());
+        blockChain.mineBlock(firstBlock);
+        Block secondBlock = new Block("Candidate2", blockChain.getLastBlock().getHash());
+        blockChain.mineBlock(secondBlock);
+        Block thirdBlock = new Block("Candidate3", blockChain.getLastBlock().getHash());
+        blockChain.mineBlock(thirdBlock);
+        return blockChain;
     }
 
     @Test
     public void givenBlockchain_whenNotChanged_thenValidationOk() {
 
         // Arrange
-        VotingBlockChain blockchain = setUpBlockchain();
-        Block firstBlock = new Block("Candidate1", blockchain.getLastBlockHash());
-        blockchain.mineBlock(firstBlock);
-        Block secondBlock = new Block("Candidate2", blockchain.getLastBlock().getHash());
-        blockchain.mineBlock(secondBlock);
-        Block thirdBlock = new Block("Candidate3", blockchain.getLastBlock().getHash());
-        blockchain.mineBlock(thirdBlock);
+        VotingBlockChain blockChain = setUpBlockchain();
 
         // Act
 
         // Assert
-        boolean validationResult = blockchain.validate();
+        boolean validationResult = blockChain.validate();
         assertTrue(validationResult);
 
     }
@@ -38,20 +39,14 @@ public class VotingBlockChainTest {
     public void givenBlockchain_whenChanged_thenValidationFailed() {
 
         // Arrange
-        BlockChain blockchain = setUpBlockchain();
-        Block firstBlock = new Block("Candidate1", blockchain.getLastBlockHash());
-        blockchain.mineBlock(firstBlock);
-        Block secondBlock = new Block("Candidate2", blockchain.getLastBlock().getHash());
-        blockchain.mineBlock(secondBlock);
-        Block thirdBlock = new Block("Candidate3", blockchain.getLastBlock().getHash());
-        blockchain.mineBlock(thirdBlock);
+        BlockChain blockChain = setUpBlockchain();
 
         // Act
-        firstBlock.setData("Candidate3");
-        secondBlock.setData("Candidate3");
+        blockChain.getBlock(1).setData("Candidate3");
+        blockChain.getBlock(2).setData("Candidate3");
 
         // Assert
-        boolean validationResult = blockchain.validate();
+        boolean validationResult = blockChain.validate();
         assertFalse(validationResult);
 
     }
@@ -60,14 +55,14 @@ public class VotingBlockChainTest {
     public void givenBlockchain_whenDataNotCandidate_thenValidationFailed() {
 
         // Arrange
-        BlockChain blockchain = setUpBlockchain();
+        BlockChain blockChain = setUpBlockchain();
 
         // Act
-        Block firstBlock = new Block("Candidate4", blockchain.getLastBlockHash());
-        blockchain.mineBlock(firstBlock);
+        Block invalidDataBlock = new Block("Candidate4", blockChain.getLastBlockHash());
+        blockChain.mineBlock(invalidDataBlock);
 
         // Assert
-        boolean validationResult = blockchain.validate();
+        boolean validationResult = blockChain.validate();
         assertFalse(validationResult);
 
     }

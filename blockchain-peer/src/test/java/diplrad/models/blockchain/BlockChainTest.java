@@ -12,20 +12,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class BlockChainTest {
 
     public static BlockChain setUpBlockchain()  {
-        return new BlockChain();
+        BlockChain blockChain = new BlockChain();
+        Block firstBlock = new Block("The is the First Block.", blockChain.getLastBlockHash());
+        blockChain.mineBlock(firstBlock);
+        Block secondBlock = new Block("The is a Second Block.", blockChain.getLastBlock().getHash());
+        blockChain.mineBlock(secondBlock);
+        return blockChain;
     }
 
     @Test
     public void givenBlockchain_whenNewBlockIsMined_thenItsHashBeginsWithPrefixString() {
 
         // Arrange
-        BlockChain blockchain = setUpBlockchain();
-        Block newBlock = new Block("The is a New Block.", blockchain.getLastBlock().getHash());
+        BlockChain blockChain = setUpBlockchain();
+        Block newBlock = new Block("The is a New Block.", blockChain.getLastBlock().getHash());
         int prefix = Constants.DIFFICULTY;
         String expected = new String(new char[prefix]).replace('\0', '0');
 
         // Act
-        blockchain.mineBlock(newBlock);
+        blockChain.mineBlock(newBlock);
 
         // Assert
         String actual = newBlock.getHash().substring(0, prefix);
@@ -37,16 +42,12 @@ public class BlockChainTest {
     public void givenBlockchain_whenNotChanged_thenValidationOk() {
 
         // Arrange
-        BlockChain blockchain = setUpBlockchain();
-        Block firstBlock = new Block("The is the First Block.", blockchain.getLastBlockHash());
-        blockchain.mineBlock(firstBlock);
-        Block secondBlock = new Block("The is a Second Block.", blockchain.getLastBlock().getHash());
-        blockchain.mineBlock(secondBlock);
+        BlockChain blockChain = setUpBlockchain();
 
         // Act
 
         // Assert
-        boolean validationResult = blockchain.validate();
+        boolean validationResult = blockChain.validate();
         assertTrue(validationResult);
 
     }
@@ -55,17 +56,13 @@ public class BlockChainTest {
     public void givenBlockchain_whenChanged_thenValidationFailed() {
 
         // Arrange
-        BlockChain blockchain = setUpBlockchain();
-        Block firstBlock = new Block("The is the First Block.", blockchain.getLastBlockHash());
-        blockchain.mineBlock(firstBlock);
-        Block secondBlock = new Block("The is a Second Block.", blockchain.getLastBlock().getHash());
-        blockchain.mineBlock(secondBlock);
+        BlockChain blockChain = setUpBlockchain();
 
         // Act
-        firstBlock.setData("The is the changed First Block.");
+        blockChain.getBlock(1).setData("The is the changed First Block.");
 
         // Assert
-        boolean validationResult = blockchain.validate();
+        boolean validationResult = blockChain.validate();
         assertFalse(validationResult);
 
     }
