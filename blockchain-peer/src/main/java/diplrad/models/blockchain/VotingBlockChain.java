@@ -7,28 +7,9 @@ import java.util.List;
 
 public class VotingBlockChain extends BlockChain {
 
-    private static VotingBlockChain INSTANCE;
-
-    public static VotingBlockChain createInstance(List<String> candidates) {
-        if (INSTANCE != null) {
-            System.out.println("VotingBlockChain already created");
-            return INSTANCE;
-        }
-        INSTANCE = new VotingBlockChain(candidates);
-        return INSTANCE;
-    }
-
-    public static VotingBlockChain getInstance() {
-        return INSTANCE;
-    }
-
-    public static void setInstance(VotingBlockChain instance) {
-        INSTANCE = instance;
-    }
-
     private List<String> candidates;
 
-    private VotingBlockChain(List<String> candidates) {
+    VotingBlockChain(List<String> candidates) {
         super();
         this.candidates = candidates;
     }
