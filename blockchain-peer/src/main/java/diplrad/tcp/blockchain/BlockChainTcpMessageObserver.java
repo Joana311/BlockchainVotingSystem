@@ -46,14 +46,17 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
             return null;
         }
 
-        if (blockchain.size() == VotingBlockChainSingleton.getInstance().size() + 1) {
+        int currentBlockChainSize = VotingBlockChainSingleton.getInstance().size();
+        int incomingBlockChainSize = blockchain.size();
+
+        if (incomingBlockChainSize == currentBlockChainSize + 1) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), VotingBlockChainSingleton.getInstance().size())) {
                 System.out.println("Received blockchain is incompatible with the current instance.");
                 return null;
             }
             VotingBlockChainSingleton.setInstance(blockchain);
             return null;
-        } else if (blockchain.size() == VotingBlockChainSingleton.getInstance().size()) {
+        } else if (incomingBlockChainSize == currentBlockChainSize) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), VotingBlockChainSingleton.getInstance().size() - 1)){
                 System.out.println("Received blockchain is incompatible with the current instance.");
                 return null;
@@ -64,10 +67,13 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
             }
             VotingBlockChainSingleton.setInstance(blockchain);
             return null;
+        } else if (incomingBlockChainSize < currentBlockChainSize) {
+            System.out.println("Received blockchain is too small.");
+            return null;
+        } else {
+            System.out.println("Received blockchain is too big.");
+            return null;
         }
-
-        System.out.println("Received blockchain is too small or too big.");
-        return null;
 
     }
 
