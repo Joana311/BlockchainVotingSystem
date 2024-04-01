@@ -49,6 +49,11 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
         int currentBlockChainSize = VotingBlockChainSingleton.getInstance().size();
         int incomingBlockChainSize = blockchain.size();
 
+        if (currentBlockChainSize == 1) {
+            VotingBlockChainSingleton.setInstance(blockchain);
+            return null;
+        }
+
         if (incomingBlockChainSize == currentBlockChainSize + 1) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), VotingBlockChainSingleton.getInstance().size())) {
                 System.out.println("Received blockchain is incompatible with the current instance.");
