@@ -11,7 +11,7 @@ public class VotingBlockChainTest {
 
     public static VotingBlockChain setUpBlockchain()  {
         List<String> candidates = List.of("Candidate1", "Candidate2", "Candidate3");
-        VotingBlockChain blockChain = VotingBlockChainSingleton.createInstance(candidates);
+        VotingBlockChain blockChain = new VotingBlockChain(candidates);
         Block firstBlock = new Block("Candidate1", blockChain.getLastBlockHash());
         blockChain.mineBlock(firstBlock);
         Block secondBlock = new Block("Candidate2", blockChain.getLastBlock().getHash());
