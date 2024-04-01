@@ -25,13 +25,16 @@ public class PeerMain {
         TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
         t.start();
 
+        System.out.println("TCP server started");
+
         HttpSender httpSender = new HttpSender();
         PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress(), Constants.TCP_SERVER_PORT);
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         List<Peer> peers = httpSender.getPeers();
 
-        for (Peer peer : peers) {
+        System.out.println("Registered peer");
 
+        for (Peer peer : peers) {
             try {
                 BlockChainTcpClient client = new BlockChainTcpClient();
                 client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
@@ -41,25 +44,28 @@ public class PeerMain {
                 System.out.println("Unable to start TCP client.");
                 System.exit(1);
             }
-
         }
+
+        System.out.println("Sent blockchain requests and updated current blockchain:" + gson.toJson(VotingBlockChainSingleton.getInstance()));
 
         try {
 
-            Thread.sleep((long)(Math.random() * 100000));
+            for (int i = 0; i < 5; i++) {
 
-            VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
+                Thread.sleep((long)(Math.random() * 100000));
 
-            for (Peer peer : peers) {
+                VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
 
-                try {
-                    BlockChainTcpClient client = new BlockChainTcpClient();
-                    client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
-                    client.sendBlockchain(gson);
-                    client.stopConnection();
-                } catch (IOException e) {
-                    System.out.println("Unable to start TCP client.");
-                    System.exit(1);
+                for (Peer peer : peers) {
+                    try {
+                        BlockChainTcpClient client = new BlockChainTcpClient();
+                        client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
+                        client.sendBlockchain(gson);
+                        client.stopConnection();
+                    } catch (IOException e) {
+                        System.out.println("Unable to start TCP client.");
+                        System.exit(1);
+                    }
                 }
 
             }
