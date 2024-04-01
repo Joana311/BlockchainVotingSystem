@@ -1,8 +1,6 @@
 package diplrad.models.blockchain;
 
 import diplrad.constants.Constants;
-import diplrad.models.blockchain.Block;
-import diplrad.models.blockchain.BlockChain;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BlockChainTest {
 
-    public static BlockChain setUpBlockchain()  {
+    public static BlockChain setUpBlockChain()  {
         BlockChain blockChain = new BlockChain();
         Block firstBlock = new Block("The is the First Block.", blockChain.getLastBlockHash());
         blockChain.mineBlock(firstBlock);
@@ -21,10 +19,10 @@ public class BlockChainTest {
     }
 
     @Test
-    public void givenBlockchain_whenNewBlockIsMined_thenItsHashBeginsWithPrefixString() {
+    public void givenBlockChain_whenNewBlockIsMined_thenItsHashBeginsWithPrefixString() {
 
         // Arrange
-        BlockChain blockChain = setUpBlockchain();
+        BlockChain blockChain = setUpBlockChain();
         Block newBlock = new Block("The is a New Block.", blockChain.getLastBlock().getHash());
         int prefix = Constants.DIFFICULTY;
         String expected = new String(new char[prefix]).replace('\0', '0');
@@ -39,10 +37,10 @@ public class BlockChainTest {
     }
 
     @Test
-    public void givenBlockchain_whenNotChanged_thenValidationOk() {
+    public void givenBlockChain_whenNotChanged_thenValidationOk() {
 
         // Arrange
-        BlockChain blockChain = setUpBlockchain();
+        BlockChain blockChain = setUpBlockChain();
 
         // Act
 
@@ -53,10 +51,10 @@ public class BlockChainTest {
     }
 
     @Test
-    public void givenBlockchain_whenChanged_thenValidationFailed() {
+    public void givenBlockChain_whenChanged_thenValidationFailed() {
 
         // Arrange
-        BlockChain blockChain = setUpBlockchain();
+        BlockChain blockChain = setUpBlockChain();
 
         // Act
         blockChain.getBlock(1).setData("The is the changed First Block.");
