@@ -4,7 +4,7 @@ import diplrad.constants.Constants;
 import diplrad.http.HttpSender;
 import diplrad.models.peer.Peer;
 import diplrad.models.peer.PeerRequest;
-import diplrad.tcp.blockchain.BlockchainTcpClient;
+import diplrad.tcp.blockchain.BlockChainTcpClient;
 import diplrad.tcp.TcpServer;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class PeerMain {
         for (Peer peer : peers) {
 
             try {
-                BlockchainTcpClient client = new BlockchainTcpClient();
+                BlockChainTcpClient client = new BlockChainTcpClient();
                 client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
                 client.sendBlockchainRequest();
                 client.stopConnection();

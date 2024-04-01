@@ -3,7 +3,7 @@ package diplrad.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
-import diplrad.tcp.blockchain.BlockchainTcpMessageObserver;
+import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class TcpServer {
             serverSocket = new ServerSocket(port);
             while (true) {
                 TcpClientHandler clientHandler = new TcpClientHandler(serverSocket.accept());
-                BlockchainTcpMessageObserver messageHandler = new BlockchainTcpMessageObserver(gson);
+                BlockChainTcpMessageObserver messageHandler = new BlockChainTcpMessageObserver(gson);
                 clientHandler.addObserver(messageHandler);
                 clientHandler.start();
             }

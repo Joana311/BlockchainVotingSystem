@@ -17,6 +17,15 @@ public class BlockChain {
         mineBlock(genesisBlock);
     }
 
+    private BlockChain(Block genesisBlock) {
+        this.blocks = new ArrayList<>();
+        mineBlock(genesisBlock);
+    }
+
+    BlockChain(List<Block> blocks) {
+        this.blocks = blocks;
+    }
+
     public List<Block> getBlocks() {
         return blocks;
     }
@@ -66,24 +75,21 @@ public class BlockChain {
         return true;
     }
 
-    public boolean validateAgainstCurrent(BlockChain currentBlockChain) {
-        if (this.size() == currentBlockChain.size() + 1) {
-            for (int i = 0; i < currentBlockChain.size(); i++) {
-                if (this.getBlock(i).equals(currentBlockChain.blocks.get(i))) {
-                    return false;
-                }
+    public boolean validateAgainstCurrent(BlockChain currentBlockChain, int lengthOfBlockToBeChecked) {
+        for (int i = 0; i < lengthOfBlockToBeChecked; i++) {
+            if (!this.getBlock(i).equals(currentBlockChain.blocks.get(i))) {
+                return false;
             }
-            return true;
         }
-        if (this.size() == currentBlockChain.size()) {
-            for (int i = 0; i < currentBlockChain.size() - 1; i++) {
-                if (this.getBlock(i).equals(currentBlockChain.blocks.get(i))) {
-                    return false;
-                }
-            }
-            return true;
+        return true;
+    }
+
+    public BlockChain copy() {
+        BlockChain copy = new BlockChain(this.getBlock(0));
+        for (Block block : blocks.subList(1, blocks.size())) {
+            copy.mineBlock(block);
         }
-        return false;
+        return copy;
     }
 
 }
