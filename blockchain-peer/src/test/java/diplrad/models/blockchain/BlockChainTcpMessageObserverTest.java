@@ -13,7 +13,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 
-
 public class BlockChainTcpMessageObserverTest {
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
@@ -24,9 +23,9 @@ public class BlockChainTcpMessageObserverTest {
         VotingBlockChain blockChain = new VotingBlockChain(candidates);
         Block firstBlock = new Block("Candidate1", blockChain.getLastBlockHash());
         blockChain.mineBlock(firstBlock);
-        Block secondBlock = new Block("Candidate2", blockChain.getLastBlock().getHash());
+        Block secondBlock = new Block("Candidate2", blockChain.getLastBlockHash());
         blockChain.mineBlock(secondBlock);
-        Block thirdBlock = new Block("Candidate3", blockChain.getLastBlock().getHash());
+        Block thirdBlock = new Block("Candidate3", blockChain.getLastBlockHash());
         blockChain.mineBlock(thirdBlock);
         return blockChain;
     }
@@ -55,13 +54,68 @@ public class BlockChainTcpMessageObserverTest {
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
             // Arrange
-            mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(setUpBlockChain());
+            VotingBlockChain currentBlockChain = setUpBlockChain();
+            mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(currentBlockChain);
 
-            VotingBlockChain incomingBlockChain = setUpBlockChain();
-            Block fourthBlock = new Block("Candidate3", incomingBlockChain.getLastBlock().getHash());
+            VotingBlockChain incomingBlockChain = currentBlockChain.copy();
+            Block fourthBlock = new Block("Candidate3", incomingBlockChain.getLastBlockHash());
             incomingBlockChain.mineBlock(fourthBlock);
             incomingBlockChain.getBlock(1).setData("Candidate3");
             incomingBlockChain.getBlock(2).setData("Candidate3");
+
+            // Act
+            observer.messageReceived(gson.toJson(incomingBlockChain));
+
+            // Assert
+            mockedStatic.verify(() -> VotingBlockChainSingleton.setInstance(any(VotingBlockChain.class)), times(0));
+
+        }
+
+    }
+
+    @Test
+    public void messageReceived_whenMessageIsInvalidBlockChainAgainstCurrentBlockchainOfBiggerSize_thenDoNothing() {
+
+        try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
+
+            // Arrange
+            VotingBlockChain currentBlockChain = setUpBlockChain();
+            VotingBlockChain incomingBlockChain = currentBlockChain.copy();
+
+            Block fourthBlockCurrentBlockChain = new Block("Candidate1", currentBlockChain.getLastBlock().getHash());
+            currentBlockChain.mineBlock(fourthBlockCurrentBlockChain);
+            mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(currentBlockChain);
+
+            Block fourthBlockIncomingBlockChain = new Block("Candidate3", incomingBlockChain.getLastBlockHash());
+            incomingBlockChain.mineBlock(fourthBlockIncomingBlockChain);
+            Block fifthBlockIncomingBlockChain = new Block("Candidate2", incomingBlockChain.getLastBlockHash());
+            incomingBlockChain.mineBlock(fifthBlockIncomingBlockChain);
+
+            // Act
+            observer.messageReceived(gson.toJson(incomingBlockChain));
+
+            // Assert
+            mockedStatic.verify(() -> VotingBlockChainSingleton.setInstance(any(VotingBlockChain.class)), times(0));
+
+        }
+
+    }
+
+    @Test
+    public void messageReceived_whenMessageIsInvalidBlockChainAgainstCurrentBlockchainOfSameSize_thenDoNothing() {
+
+        try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
+
+            // Arrange
+            VotingBlockChain currentBlockChain = setUpBlockChain();
+            VotingBlockChain incomingBlockChain = currentBlockChain.copy();
+
+            Block fourthBlockCurrentBlockChain = new Block("Candidate1", currentBlockChain.getLastBlockHash());
+            currentBlockChain.mineBlock(fourthBlockCurrentBlockChain);
+            mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(currentBlockChain);
+
+            Block fourthBlockIncomingBlockChain = new Block("Candidate3", incomingBlockChain.getLastBlockHash());
+            incomingBlockChain.mineBlock(fourthBlockIncomingBlockChain);
 
             // Act
             observer.messageReceived(gson.toJson(incomingBlockChain));
@@ -79,10 +133,11 @@ public class BlockChainTcpMessageObserverTest {
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
             // Arrange
-            mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(setUpBlockChain());
+            VotingBlockChain currentBlockChain = setUpBlockChain();
+            mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(currentBlockChain);
 
-            VotingBlockChain incomingBlockChain = setUpBlockChain();
-            Block fourthBlock = new Block("Candidate3", incomingBlockChain.getLastBlock().getHash());
+            VotingBlockChain incomingBlockChain = currentBlockChain.copy();
+            Block fourthBlock = new Block("Candidate3", incomingBlockChain.getLastBlockHash());
             incomingBlockChain.mineBlock(fourthBlock);
 
             // Act

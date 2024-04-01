@@ -16,6 +16,12 @@ public class VotingBlockChain extends BlockChain {
         this.candidates = candidates;
     }
 
+    private VotingBlockChain(List<String> candidates, List<Block> blocks) {
+        super(blocks);
+        this.candidates = candidates;
+    }
+
+
     public List<String> getCandidates() {
         return candidates;
     }
@@ -28,4 +34,9 @@ public class VotingBlockChain extends BlockChain {
         return isGenesisBlockDataCorrect && areOtherBlockDataCorrect && super.validate();
     }
 
+    @Override
+    public VotingBlockChain copy() {
+        BlockChain baseBlockChain = super.copy();
+        return new VotingBlockChain(candidates, baseBlockChain.getBlocks());
+    }
 }

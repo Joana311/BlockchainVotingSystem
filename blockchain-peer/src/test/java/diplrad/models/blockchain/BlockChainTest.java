@@ -13,7 +13,7 @@ public class BlockChainTest {
         BlockChain blockChain = new BlockChain();
         Block firstBlock = new Block("The is the First Block.", blockChain.getLastBlockHash());
         blockChain.mineBlock(firstBlock);
-        Block secondBlock = new Block("The is a Second Block.", blockChain.getLastBlock().getHash());
+        Block secondBlock = new Block("The is a Second Block.", blockChain.getLastBlockHash());
         blockChain.mineBlock(secondBlock);
         return blockChain;
     }
@@ -23,7 +23,7 @@ public class BlockChainTest {
 
         // Arrange
         BlockChain blockChain = setUpBlockChain();
-        Block newBlock = new Block("The is a New Block.", blockChain.getLastBlock().getHash());
+        Block newBlock = new Block("The is a New Block.", blockChain.getLastBlockHash());
         int prefix = Constants.DIFFICULTY;
         String expected = new String(new char[prefix]).replace('\0', '0');
 

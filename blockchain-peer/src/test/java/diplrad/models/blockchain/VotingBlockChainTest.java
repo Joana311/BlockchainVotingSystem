@@ -14,9 +14,9 @@ public class VotingBlockChainTest {
         VotingBlockChain blockChain = new VotingBlockChain(candidates);
         Block firstBlock = new Block("Candidate1", blockChain.getLastBlockHash());
         blockChain.mineBlock(firstBlock);
-        Block secondBlock = new Block("Candidate2", blockChain.getLastBlock().getHash());
+        Block secondBlock = new Block("Candidate2", blockChain.getLastBlockHash());
         blockChain.mineBlock(secondBlock);
-        Block thirdBlock = new Block("Candidate3", blockChain.getLastBlock().getHash());
+        Block thirdBlock = new Block("Candidate3", blockChain.getLastBlockHash());
         blockChain.mineBlock(thirdBlock);
         return blockChain;
     }
