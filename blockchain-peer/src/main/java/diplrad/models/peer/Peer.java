@@ -6,10 +6,16 @@ import java.util.UUID;
 public class Peer {
 
     private UUID id;
-    private InetAddress ipAddress;
+    private String ipAddress;
     private int port;
 
-    public InetAddress getIpAddress() {
+    public Peer(UUID id, String ipAddress, int port) {
+        this.id = id;
+        this.ipAddress = ipAddress;
+        this.port = port;
+    }
+
+    public String getIpAddress() {
         return ipAddress;
     }
 

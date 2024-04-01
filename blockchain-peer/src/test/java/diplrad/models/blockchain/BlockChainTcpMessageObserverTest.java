@@ -75,6 +75,35 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
+    public void messageReceived_whenMessageIsBlockChainButCurrentIsEmpty_thenSetInstance() {
+
+        try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
+
+            // Arrange
+            List<String> candidates = List.of("Candidate1", "Candidate2", "Candidate3");
+            VotingBlockChain currentBlockChain = new VotingBlockChain(candidates);
+            VotingBlockChain incomingBlockChain = currentBlockChain.copy();
+
+            mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(currentBlockChain);
+
+            Block firstBlockIncomingBlockChain = new Block("Candidate1", incomingBlockChain.getLastBlockHash());
+            incomingBlockChain.mineBlock(firstBlockIncomingBlockChain);
+            Block secondBlockIncomingBlockChain = new Block("Candidate2", incomingBlockChain.getLastBlockHash());
+            incomingBlockChain.mineBlock(secondBlockIncomingBlockChain);
+            Block thirdBlockIncomingBlockChain = new Block("Candidate3", incomingBlockChain.getLastBlockHash());
+            incomingBlockChain.mineBlock(thirdBlockIncomingBlockChain);
+
+            // Act
+            observer.messageReceived(gson.toJson(incomingBlockChain));
+
+            // Assert
+            mockedStatic.verify(() -> VotingBlockChainSingleton.setInstance(any(VotingBlockChain.class)), times(1));
+
+        }
+
+    }
+
+    @Test
     public void messageReceived_whenMessageIsBlockChainBiggerAndIncompatibleWithCurrent_thenDoNotSetInstance() {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {

@@ -6,18 +6,12 @@ import java.util.List;
 
 public class VoteMocker {
 
-    private static void generateRandomVotes(VotingBlockChain blockchain)
+    public static void generateRandomVotes(VotingBlockChain blockchain)
     {
         List<String> candidates = blockchain.getCandidates();
-
-        Block firstVote = new Block(getRandomCandidate(candidates), blockchain.getLastBlockHash());
-        blockchain.mineBlock(firstVote);
-        Block secondVote = new Block(getRandomCandidate(candidates), blockchain.getLastBlockHash());
-        blockchain.mineBlock(secondVote);
-        Block thirdVote = new Block(getRandomCandidate(candidates), blockchain.getLastBlockHash());
-        blockchain.mineBlock(thirdVote);
-
-        System.out.println("Blockchain is valid: " + blockchain.validate());
+        Block block = new Block(getRandomCandidate(candidates), blockchain.getLastBlockHash());
+        blockchain.mineBlock(block);
+        System.out.println("Vote for " + block.getData() + " added to blockchain.");
     }
 
     private static String getRandomCandidate(List<String> candidates) {
