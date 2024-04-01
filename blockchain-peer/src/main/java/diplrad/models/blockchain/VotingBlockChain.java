@@ -1,5 +1,6 @@
 package diplrad.models.blockchain;
 
+import com.google.gson.annotations.Expose;
 import diplrad.constants.Constants;
 
 import java.util.HashSet;
@@ -7,6 +8,7 @@ import java.util.List;
 
 public class VotingBlockChain extends BlockChain {
 
+    @Expose
     private List<String> candidates;
 
     VotingBlockChain(List<String> candidates) {
