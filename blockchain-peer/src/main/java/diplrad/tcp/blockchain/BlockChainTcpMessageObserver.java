@@ -40,16 +40,33 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
         // we are overriding our current instance with the received one if it is valid
         // and contains exactly one block more than our current instance
         // or if it is the same length as our current instance, but the last block was added before the last block of our current instance
-        if (blockchain.validate() && blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance())) {
-            if (blockchain.size() == VotingBlockChainSingleton.getInstance().size() + 1
-                || (blockchain.size() == VotingBlockChainSingleton.getInstance().size()
-                    && blockchain.getLastBlockTimeStamp() < VotingBlockChainSingleton.getInstance().getLastBlockTimeStamp())) {
-                VotingBlockChainSingleton.setInstance(blockchain);
-            }
-        } else {
+
+        if (!blockchain.validate()) {
             System.out.println("Received blockchain is invalid.");
+            return null;
         }
 
+        if (blockchain.size() == VotingBlockChainSingleton.getInstance().size() + 1) {
+            if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), VotingBlockChainSingleton.getInstance().size())) {
+                System.out.println("Received blockchain is incompatible with the current instance.");
+                return null;
+            }
+            VotingBlockChainSingleton.setInstance(blockchain);
+            return null;
+        } else if (blockchain.size() == VotingBlockChainSingleton.getInstance().size()) {
+            if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), VotingBlockChainSingleton.getInstance().size() - 1)){
+                System.out.println("Received blockchain is incompatible with the current instance.");
+                return null;
+            }
+            if (blockchain.getLastBlockTimeStamp() > VotingBlockChainSingleton.getInstance().getLastBlockTimeStamp()) {
+                System.out.println("Received blockchain's last block was added after current instance's last block.");
+                return null;
+            }
+            VotingBlockChainSingleton.setInstance(blockchain);
+            return null;
+        }
+
+        System.out.println("Received blockchain is too small or too big.");
         return null;
 
     }

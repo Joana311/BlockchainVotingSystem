@@ -75,8 +75,8 @@ public class BlockChain {
         return true;
     }
 
-    public boolean validateAgainstCurrent(BlockChain currentBlockChain) {
-        for (int i = 0; i < currentBlockChain.size(); i++) {
+    public boolean validateAgainstCurrent(BlockChain currentBlockChain, int lengthOfBlockToBeChecked) {
+        for (int i = 0; i < lengthOfBlockToBeChecked; i++) {
             if (!this.getBlock(i).equals(currentBlockChain.blocks.get(i))) {
                 return false;
             }
