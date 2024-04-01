@@ -2,6 +2,7 @@ package diplrad.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diplrad.helpers.ListSerializationHelper;
 import diplrad.models.peer.Peer;
 import diplrad.models.peer.PeerRequest;
 
@@ -83,7 +84,7 @@ public class HttpSender {
                 System.exit(1);
             }
 
-            List<Peer> peers = gson.fromJson(responseBody, List.class);
+            List<Peer> peers = ListSerializationHelper.getList(responseBody, Peer.class);
             if (peers == null) {
                 System.out.println("Unable to parse peers.");
                 System.exit(1);

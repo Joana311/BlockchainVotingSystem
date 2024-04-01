@@ -5,10 +5,10 @@ import java.net.InetAddress;
 
 public class PeerRequest implements Serializable {
 
-    private InetAddress ipAddress;
+    private String ipAddress;
     private int port;
 
-    public PeerRequest(InetAddress ipAddress, int port) {
+    public PeerRequest(String ipAddress, int port) {
         this.ipAddress = ipAddress;
         this.port = port;
     }

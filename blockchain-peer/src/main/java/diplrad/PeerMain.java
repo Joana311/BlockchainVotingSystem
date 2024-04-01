@@ -28,7 +28,7 @@ public class PeerMain {
         System.out.println("TCP server started");
 
         HttpSender httpSender = new HttpSender();
-        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress(), Constants.TCP_SERVER_PORT);
+        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         List<Peer> peers = httpSender.getPeers();
 
@@ -37,7 +37,7 @@ public class PeerMain {
         for (Peer peer : peers) {
             try {
                 BlockChainTcpClient client = new BlockChainTcpClient();
-                client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
+                client.startConnection(peer.getIpAddress(), peer.getPort());
                 client.sendBlockchainRequest(gson);
                 client.stopConnection();
             } catch (IOException e) {
@@ -59,7 +59,7 @@ public class PeerMain {
                 for (Peer peer : peers) {
                     try {
                         BlockChainTcpClient client = new BlockChainTcpClient();
-                        client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
+                        client.startConnection(peer.getIpAddress(), peer.getPort());
                         client.sendBlockchain(gson);
                         client.stopConnection();
                     } catch (IOException e) {

@@ -33,7 +33,7 @@ public class MasterMain {
         System.out.println("TCP server started");
 
         HttpSender httpSender = new HttpSender();
-        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress(), Constants.TCP_SERVER_PORT);
+        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         List<Peer> peers = httpSender.getPeers();
 
@@ -43,14 +43,14 @@ public class MasterMain {
 
             for (int i = 0; i < 5; i++) {
 
-                Thread.sleep((long)(Math.random() * 100000));
+                Thread.sleep((long)(Math.random() * 1000));
 
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
 
                 for (Peer peer : peers) {
                     try {
                         BlockChainTcpClient client = new BlockChainTcpClient();
-                        client.startConnection(peer.getIpAddress().getHostAddress(), peer.getPort());
+                        client.startConnection(peer.getIpAddress(), peer.getPort());
                         client.sendBlockchain(gson);
                         client.stopConnection();
                     } catch (IOException e) {
