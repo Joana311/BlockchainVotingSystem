@@ -8,6 +8,7 @@ import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.models.peer.Peer;
 import diplrad.models.peer.PeerRequest;
+import diplrad.models.peer.PeersInstance;
 import diplrad.tcp.blockchain.BlockChainTcpClient;
 import diplrad.tcp.TcpServer;
 
@@ -31,11 +32,11 @@ public class PeerMain {
         //PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
         PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), 5558); // TODO: remove (this is for testing purposes)
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
-        List<Peer> peers = httpSender.getPeers(ownPeer);
+        PeersInstance.createInstance(httpSender.getPeers(ownPeer));
 
         System.out.println("Registered peer");
 
-        for (Peer peer : peers) {
+        for (Peer peer : PeersInstance.getInstance()) {
             try {
                 BlockChainTcpClient client = new BlockChainTcpClient();
                 client.startConnection(peer.getIpAddress(), peer.getPort());
@@ -57,7 +58,7 @@ public class PeerMain {
 
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
 
-                for (Peer peer : peers) {
+                for (Peer peer : PeersInstance.getInstance()) {
                     try {
                         BlockChainTcpClient client = new BlockChainTcpClient();
                         client.startConnection(peer.getIpAddress(), peer.getPort());
