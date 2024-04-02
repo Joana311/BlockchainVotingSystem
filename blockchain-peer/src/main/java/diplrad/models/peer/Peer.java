@@ -15,6 +15,10 @@ public class Peer {
         this.port = port;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public String getIpAddress() {
         return ipAddress;
     }

@@ -67,7 +67,7 @@ public class HttpSender {
         return null;
     }
 
-    public List<Peer> getPeers()
+    public List<Peer> getPeers(Peer ownPeer)
     {
         try {
             HttpRequest request = HttpRequest.newBuilder()
@@ -89,6 +89,8 @@ public class HttpSender {
                 System.out.println("Unable to parse peers.");
                 System.exit(1);
             }
+            
+            peers = peers.stream().filter(peer -> !peer.getId().equals(ownPeer.getId())).toList();
 
             return peers;
         } catch (URISyntaxException e) {

@@ -30,7 +30,7 @@ public class PeerMain {
         HttpSender httpSender = new HttpSender();
         PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
-        List<Peer> peers = httpSender.getPeers();
+        List<Peer> peers = httpSender.getPeers(ownPeer);
 
         System.out.println("Registered peer");
 
