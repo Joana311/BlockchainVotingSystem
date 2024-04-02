@@ -84,7 +84,7 @@ public class HttpSender {
                 System.exit(1);
             }
 
-            List<Peer> peers = ListSerializationHelper.getList(responseBody, Peer.class);
+            List<Peer> peers = ListSerializationHelper.deserializeList(responseBody, Peer.class);
             if (peers == null) {
                 System.out.println("Unable to parse peers.");
                 System.exit(1);

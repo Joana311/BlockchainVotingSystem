@@ -44,7 +44,7 @@ public class PeerService : IPeerService
         }
         catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx && sqlEx.Number == 2601)
         {
-            throw new IpAddressNotUniqueException("There is already a peer with that IP address.");
+            throw new IpAddressNotUniqueException("IP address and port combination is taken.");
         }
     }
 

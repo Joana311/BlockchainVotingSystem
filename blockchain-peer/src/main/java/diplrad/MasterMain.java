@@ -33,7 +33,8 @@ public class MasterMain {
         System.out.println("TCP server started");
 
         HttpSender httpSender = new HttpSender();
-        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
+        //PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
+        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), 5557); // TODO: remove (this is for testing purposes)
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         List<Peer> peers = httpSender.getPeers(ownPeer);
 
