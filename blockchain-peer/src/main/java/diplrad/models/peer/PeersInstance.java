@@ -8,7 +8,7 @@ public class PeersInstance {
     private static List<Peer> INSTANCE = new ArrayList<>();
 
     public static List<Peer> createInstance(List<Peer> peers) {
-        if (INSTANCE != null) {
+        if (!INSTANCE.isEmpty()) {
             System.out.println("List of peers already created");
             return INSTANCE;
         }
