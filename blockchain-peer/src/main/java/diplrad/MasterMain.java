@@ -19,7 +19,7 @@ import static diplrad.helpers.IpHelper.getOwnIpAddress;
 
 public class MasterMain {
 
-    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static Gson gson = new GsonBuilder().create();
 
     public static void main(String[] args) {
 

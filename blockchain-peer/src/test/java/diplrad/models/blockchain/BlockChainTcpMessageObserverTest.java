@@ -18,7 +18,7 @@ import static org.mockito.Mockito.times;
 
 public class BlockChainTcpMessageObserverTest {
 
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+    private final Gson gson = new GsonBuilder().create();
     private final BlockChainTcpMessageObserver observer = new BlockChainTcpMessageObserver(gson);
 
     public VotingBlockChain setUpBlockChain()  {
