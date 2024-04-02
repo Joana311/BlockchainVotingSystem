@@ -1,9 +1,10 @@
 package diplrad.tcp.blockchain;
 
 import com.google.gson.Gson;
-import diplrad.constants.Constants;
 import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
+import diplrad.models.peer.Peer;
+import diplrad.models.peer.PeersInstance;
 import diplrad.tcp.ITcpMessageObserver;
 
 public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
@@ -17,9 +18,11 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
     @Override
     public String messageReceived(String message) {
 
-        if (message.equals(Constants.BLOCKCHAIN_REQUEST)) {
-            return blockChainRequestMessageReceived(gson);
+        Peer peer = gson.fromJson(message, Peer.class);
+        if (peer != null) {
+            return blockChainRequestMessageReceived(peer, gson);
         }
+
         VotingBlockChain blockchain = gson.fromJson(message, VotingBlockChain.class);
         if (blockchain != null) {
             return blockChainMessageReceived(blockchain);
@@ -31,7 +34,8 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
     }
 
-    public String blockChainRequestMessageReceived(Gson gson) {
+    public String blockChainRequestMessageReceived(Peer peer, Gson gson) {
+        PeersInstance.addPeer(peer);
         return gson.toJson(VotingBlockChainSingleton.getInstance());
     }
 
