@@ -42,7 +42,7 @@ public class PeerMain {
                 client.sendBlockchainRequest(gson, ownPeer);
                 client.stopConnection();
             } catch (IOException e) {
-                System.out.println("Unable to start TCP client.");
+                System.out.println("TCP client encountered an error");
                 System.exit(1);
             }
         }
@@ -64,7 +64,7 @@ public class PeerMain {
                         client.sendBlockchain(gson);
                         client.stopConnection();
                     } catch (IOException e) {
-                        System.out.println("Unable to start TCP client.");
+                        System.out.println("TCP client encountered an error");
                         System.exit(1);
                     }
                 }
