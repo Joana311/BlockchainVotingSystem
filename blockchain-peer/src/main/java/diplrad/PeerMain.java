@@ -22,7 +22,7 @@ public class PeerMain {
 
     public static void main(String[] args) {
 
-        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
+        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread(5556);
         t.start();
 
         System.out.println("TCP server started");

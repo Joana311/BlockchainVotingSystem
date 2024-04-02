@@ -27,7 +27,7 @@ public class MasterMain {
 
         System.out.println("Created a blockchain:" + gson.toJson(VotingBlockChainSingleton.getInstance()));
 
-        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
+        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread(5555);
         t.start();
 
         System.out.println("TCP server started");

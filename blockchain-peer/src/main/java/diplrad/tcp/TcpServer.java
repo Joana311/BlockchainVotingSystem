@@ -92,9 +92,17 @@ public class TcpServer {
     }
 
     public static class TcpServerThread extends Thread {
+
+        private int port;
+
+        public TcpServerThread(int port) {
+            this.port = port;
+        }
+
         public void run() {
             TcpServer server = new TcpServer();
-            server.start(Constants.TCP_SERVER_PORT);
+            //server.start(Constants.TCP_SERVER_PORT);
+            server.start(port); // TODO: remove (this is for testing purposes)
         }
     }
 

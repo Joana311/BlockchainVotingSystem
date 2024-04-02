@@ -44,7 +44,7 @@ public class HttpSender {
 
             String responseBody = response.body();
             int responseStatusCode = response.statusCode();
-            if (responseStatusCode != 200) {
+            if (responseStatusCode == 400) {
                 System.out.println("Sending HTTP request was unsuccessful.");
                 System.exit(1);
             }
@@ -89,7 +89,7 @@ public class HttpSender {
                 System.out.println("Unable to parse peers.");
                 System.exit(1);
             }
-            
+
             peers = peers.stream().filter(peer -> !peer.getId().equals(ownPeer.getId())).toList();
 
             return peers;
