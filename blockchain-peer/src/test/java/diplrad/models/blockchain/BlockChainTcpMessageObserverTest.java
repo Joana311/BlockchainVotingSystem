@@ -3,8 +3,10 @@ package diplrad.models.blockchain;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.models.peer.Peer;
+import diplrad.models.peer.PeersInstance;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.mockito.MockedStatic;
 
 import java.util.List;
@@ -31,6 +33,15 @@ public class BlockChainTcpMessageObserverTest {
         return blockChain;
     }
 
+    @BeforeAll
+    public static void setUpPeers() {
+        Peer peer1 = new Peer(UUID.randomUUID(), "168.198.2.23", 5000);
+        Peer peer2 = new Peer(UUID.randomUUID(), "168.198.2.24", 5000);
+        Peer peer3 = new Peer(UUID.randomUUID(), "168.198.2.25", 5000);
+        List<Peer> peers = List.of(peer1, peer2, peer3);
+        PeersInstance.createInstance(peers);
+    }
+
     @Test
     public void messageReceived_whenMessageIsBlockChainRequest_thenRespondWithBlockChainInstance() {
 
@@ -40,6 +51,7 @@ public class BlockChainTcpMessageObserverTest {
             mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(setUpBlockChain());
             Peer peer = new Peer(UUID.randomUUID(), "168.182.1.11", 5000);
 
+            var a = gson.toJson(peer);
             // Act
             observer.messageReceived(gson.toJson(peer));
 

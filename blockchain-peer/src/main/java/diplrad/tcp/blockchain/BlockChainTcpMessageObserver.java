@@ -19,12 +19,12 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
     public String messageReceived(String message) {
 
         Peer peer = gson.fromJson(message, Peer.class);
-        if (peer != null) {
+        if (peer != null && peer.getId() != null) {
             return blockChainRequestMessageReceived(peer, gson);
         }
 
         VotingBlockChain blockchain = gson.fromJson(message, VotingBlockChain.class);
-        if (blockchain != null) {
+        if (blockchain != null && blockchain.getBlock(0) != null) {
             return blockChainMessageReceived(blockchain);
         }
 

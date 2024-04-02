@@ -1,12 +1,17 @@
 package diplrad.models.peer;
 
+import com.google.gson.annotations.Expose;
+
 import java.net.InetAddress;
 import java.util.UUID;
 
 public class Peer {
 
+    @Expose
     private UUID id;
+    @Expose
     private String ipAddress;
+    @Expose
     private int port;
 
     public Peer(UUID id, String ipAddress, int port) {

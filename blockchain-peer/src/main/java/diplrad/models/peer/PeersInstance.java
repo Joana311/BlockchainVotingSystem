@@ -1,10 +1,11 @@
 package diplrad.models.peer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PeersInstance {
 
-    private static List<Peer> INSTANCE;
+    private static List<Peer> INSTANCE = new ArrayList<>();
 
     public static List<Peer> createInstance(List<Peer> peers) {
         if (INSTANCE != null) {
