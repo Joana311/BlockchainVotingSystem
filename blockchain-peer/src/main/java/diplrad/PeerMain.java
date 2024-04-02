@@ -23,14 +23,13 @@ public class PeerMain {
 
     public static void main(String[] args) {
 
-        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread(5556);
+        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
         t.start();
 
         System.out.println("TCP server started");
 
         HttpSender httpSender = new HttpSender();
-        //PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
-        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), 5558); // TODO: remove (this is for testing purposes)
+        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         PeersInstance.createInstance(httpSender.getPeers(ownPeer));
 

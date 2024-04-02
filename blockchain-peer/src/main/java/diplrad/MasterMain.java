@@ -13,7 +13,6 @@ import diplrad.tcp.TcpServer;
 import diplrad.tcp.blockchain.BlockChainTcpClient;
 
 import java.io.IOException;
-import java.util.List;
 
 import static diplrad.helpers.FileReader.readCandidatesFromFile;
 import static diplrad.helpers.IpHelper.getOwnIpAddress;
@@ -28,14 +27,13 @@ public class MasterMain {
 
         System.out.println("Created a blockchain:" + gson.toJson(VotingBlockChainSingleton.getInstance()));
 
-        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread(5555);
+        TcpServer.TcpServerThread t = new TcpServer.TcpServerThread();
         t.start();
 
         System.out.println("TCP server started");
 
         HttpSender httpSender = new HttpSender();
-        //PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
-        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), 5557); // TODO: remove (this is for testing purposes)
+        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         PeersInstance.createInstance(httpSender.getPeers(ownPeer));
 
