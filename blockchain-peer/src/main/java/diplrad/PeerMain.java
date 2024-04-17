@@ -46,7 +46,7 @@ public class PeerMain {
             }
         }
 
-        System.out.println("Sent blockchain requests and updated current blockchain:" + gson.toJson(VotingBlockChainSingleton.getInstance()));
+        System.out.println("Sent blockchain requests and updated current blockchain: " + gson.toJson(VotingBlockChainSingleton.getInstance()));
 
         // this is vote mocker part, used only for testing purposes
 
@@ -54,7 +54,7 @@ public class PeerMain {
 
             for (int i = 0; i < 5; i++) {
 
-                Thread.sleep((long)(Math.random() * 100000));
+                Thread.sleep((long)(Math.random() * 10000));
 
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
 

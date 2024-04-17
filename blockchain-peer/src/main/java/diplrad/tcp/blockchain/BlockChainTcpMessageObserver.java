@@ -47,7 +47,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
         if (!blockchain.validate()) {
             System.out.println("Received blockchain is invalid.");
-            return null;
+            return "Received blockchain is invalid.";
         }
 
         int currentBlockChainSize;
@@ -60,33 +60,33 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
         if (currentBlockChainSize == 1) {
             VotingBlockChainSingleton.setInstance(blockchain);
-            return null;
+            return "OK";
         }
 
         if (incomingBlockChainSize == currentBlockChainSize + 1) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize)) {
                 System.out.println("Received blockchain is incompatible with the current instance.");
-                return null;
+                return "Received blockchain is incompatible with the current instance.";
             }
             VotingBlockChainSingleton.setInstance(blockchain);
             return null;
         } else if (incomingBlockChainSize == currentBlockChainSize) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize - 1)){
                 System.out.println("Received blockchain is incompatible with the current instance.");
-                return null;
+                return "Received blockchain is incompatible with the current instance.";
             }
             if (blockchain.getLastBlockTimeStamp() > VotingBlockChainSingleton.getInstance().getLastBlockTimeStamp()) {
                 System.out.println("Received blockchain's last block was added after current instance's last block.");
-                return null;
+                return "Received blockchain's last block was added after current instance's last block.";
             }
             VotingBlockChainSingleton.setInstance(blockchain);
-            return null;
+            return "OK";
         } else if (incomingBlockChainSize < currentBlockChainSize) {
             System.out.println("Received blockchain is too small.");
-            return null;
+            return "Received blockchain is too small.";
         } else {
             System.out.println("Received blockchain is too big.");
-            return null;
+            return "Received blockchain is too big.";
         }
 
     }
