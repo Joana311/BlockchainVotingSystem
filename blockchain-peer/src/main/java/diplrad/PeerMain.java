@@ -6,6 +6,8 @@ import diplrad.constants.Constants;
 import diplrad.exceptions.HttpException;
 import diplrad.exceptions.IpException;
 import diplrad.exceptions.ParseException;
+import diplrad.exceptions.TcpException;
+import diplrad.helpers.BlockChainTcpClientHelper;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
@@ -38,19 +40,11 @@ public class PeerMain {
             System.out.println("Registered peer");
 
             for (Peer peer : PeersSingleton.getInstance()) {
-                try {
-                    BlockChainTcpClient client = new BlockChainTcpClient();
-                    client.startConnection(peer.getIpAddress(), peer.getPort());
-                    client.sendBlockchainRequest(gson, ownPeer);
-                    client.stopConnection();
-                } catch (IOException e) {
-                    System.out.println("TCP client encountered an error");
-                    System.exit(1);
-                }
+                BlockChainTcpClientHelper.CreateTcpClientAndSendBlockChainRequest(gson, peer, ownPeer);
             }
             System.out.println("Sent blockchain requests and updated current blockchain: " + gson.toJson(VotingBlockChainSingleton.getInstance()));
 
-        } catch (IpException | ParseException | HttpException e) {
+        } catch (IpException | ParseException | HttpException | TcpException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
