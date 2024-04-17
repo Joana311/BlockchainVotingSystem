@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
 import diplrad.exceptions.InvalidFileException;
+import diplrad.exceptions.IpException;
 import diplrad.exceptions.ReadFromFileException;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
@@ -39,8 +40,16 @@ public class MasterMain {
 
         System.out.println("TCP server started");
 
+        String ownIpAddress = null;
+        try {
+            ownIpAddress = getOwnIpAddress().getHostAddress();
+        } catch (IpException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+
         HttpSender httpSender = new HttpSender();
-        PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
+        PeerRequest ownPeerRequest = new PeerRequest(ownIpAddress, Constants.TCP_SERVER_PORT);
         Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
         PeersSingleton.createInstance(httpSender.getPeers(ownPeer));
 

@@ -1,5 +1,7 @@
 package diplrad.helpers;
 
+import diplrad.exceptions.IpException;
+
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
@@ -7,15 +9,13 @@ import java.net.UnknownHostException;
 
 public class IpHelper {
 
-    public static InetAddress getOwnIpAddress() {
+    public static InetAddress getOwnIpAddress() throws IpException {
         try (final DatagramSocket datagramSocket = new DatagramSocket()) {
             datagramSocket.connect(InetAddress.getByName("8.8.8.8"), 12345);
             return datagramSocket.getLocalAddress();
         } catch (SocketException | UnknownHostException e) {
-            System.out.println("Unable to fetch own IP address.");
-            System.exit(1);
+            throw new IpException("Unable to fetch own IP address.");
         }
-        return null;
     }
 
 }
