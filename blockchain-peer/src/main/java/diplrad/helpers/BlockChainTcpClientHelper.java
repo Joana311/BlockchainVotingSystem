@@ -16,6 +16,12 @@ public class BlockChainTcpClientHelper {
         }
     }
 
+    public static void CreateTcpClientsAndSendBlockChains(Gson gson) throws TcpException {
+        for (Peer peer : PeersSingleton.getInstance()) {
+            CreateTcpClientAndSendBlockChain(gson, peer);
+        }
+    }
+
     public static void CreateTcpClientAndSendBlockChainRequest(Gson gson, Peer peer, Peer ownPeer) throws TcpException {
         try {
             BlockChainTcpClient client = new BlockChainTcpClient();
@@ -24,6 +30,17 @@ public class BlockChainTcpClientHelper {
             client.stopConnection();
         } catch (IOException e) {
             throw new TcpException("Unable to send blockchain request to a peer");
+        }
+    }
+
+    public static void CreateTcpClientAndSendBlockChain(Gson gson, Peer peer) throws TcpException {
+        try {
+            BlockChainTcpClient client = new BlockChainTcpClient();
+            client.startConnection(peer.getIpAddress(), peer.getPort());
+            client.sendBlockchain(gson);
+            client.stopConnection();
+        } catch (IOException e) {
+            throw new TcpException("Unable to send blockchain to a peer");
         }
     }
 

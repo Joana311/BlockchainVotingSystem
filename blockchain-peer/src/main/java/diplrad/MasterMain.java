@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
 import diplrad.exceptions.*;
+import diplrad.helpers.BlockChainTcpClientHelper;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
@@ -47,27 +48,16 @@ public class MasterMain {
         // this is vote mocker part, used only for testing purposes
 
         try {
-
             for (int i = 0; i < 5; i++) {
 
-                Thread.sleep((long)(Math.random() * 100000));
-
+                Thread.sleep((long)(Math.random() * 10000));
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
-
-                for (Peer peer : PeersSingleton.getInstance()) {
-                    try {
-                        BlockChainTcpClient client = new BlockChainTcpClient();
-                        client.startConnection(peer.getIpAddress(), peer.getPort());
-                        client.sendBlockchain(gson);
-                        client.stopConnection();
-                    } catch (IOException e) {
-                        System.out.println("TCP client encountered an error");
-                        System.exit(1);
-                    }
-                }
+                BlockChainTcpClientHelper.CreateTcpClientsAndSendBlockChains(gson);
 
             }
-
+        } catch (TcpException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
