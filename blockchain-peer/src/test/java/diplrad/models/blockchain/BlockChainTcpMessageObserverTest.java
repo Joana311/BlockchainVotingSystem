@@ -2,6 +2,7 @@ package diplrad.models.blockchain;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diplrad.exceptions.TcpException;
 import diplrad.models.peer.Peer;
 import diplrad.models.peer.PeersSingleton;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
@@ -43,7 +44,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainRequest_thenRespondWithBlockChainInstance() {
+    public void messageReceived_whenMessageIsBlockChainRequest_thenRespondWithBlockChainInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -63,7 +64,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainInvalid_thenDoNotSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainInvalid_thenDoNotSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -89,7 +90,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainButCurrentIsEmpty_thenSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainButCurrentIsEmpty_thenSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -118,7 +119,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainBiggerAndIncompatibleWithCurrent_thenDoNotSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainBiggerAndIncompatibleWithCurrent_thenDoNotSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -146,7 +147,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainBiggerThanCurrent_thenSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainBiggerThanCurrent_thenSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -170,7 +171,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainOfSameSizeAndIncompatibleWithCurrent_thenDoNotSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainOfSameSizeAndIncompatibleWithCurrent_thenDoNotSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -200,7 +201,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainOfSameSizeAsCurrentWithBiggerLastBlockTimeStamp_thenDoNotSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainOfSameSizeAsCurrentWithBiggerLastBlockTimeStamp_thenDoNotSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -226,7 +227,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainOfSameSizeAsCurrentWithSmallerLastBlockTimeStamp_thenSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainOfSameSizeAsCurrentWithSmallerLastBlockTimeStamp_thenSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -252,7 +253,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainTooSmall_thenDoNotSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainTooSmall_thenDoNotSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
@@ -275,7 +276,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainTooBig_thenDoNotSetInstance() {
+    public void messageReceived_whenMessageIsBlockChainTooBig_thenDoNotSetInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 

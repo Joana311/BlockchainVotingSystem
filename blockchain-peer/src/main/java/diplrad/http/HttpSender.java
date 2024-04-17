@@ -21,7 +21,7 @@ public class HttpSender {
     private final Gson gson;
     private final HttpClient client;
 
-    public HttpSender() {
+    public HttpSender() throws HttpException {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.client = new SslDisabledHttpClient().getClient();
     }
