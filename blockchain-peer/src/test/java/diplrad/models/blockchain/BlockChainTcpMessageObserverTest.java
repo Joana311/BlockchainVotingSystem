@@ -3,7 +3,7 @@ package diplrad.models.blockchain;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.models.peer.Peer;
-import diplrad.models.peer.PeersInstance;
+import diplrad.models.peer.PeersSingleton;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -39,7 +39,7 @@ public class BlockChainTcpMessageObserverTest {
         Peer peer2 = new Peer(UUID.randomUUID(), "168.198.2.24", 5000);
         Peer peer3 = new Peer(UUID.randomUUID(), "168.198.2.25", 5000);
         List<Peer> peers = List.of(peer1, peer2, peer3);
-        PeersInstance.createInstance(peers);
+        PeersSingleton.createInstance(peers);
     }
 
     @Test

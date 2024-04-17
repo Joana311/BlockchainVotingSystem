@@ -3,7 +3,7 @@ package diplrad.models.peer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PeersInstance {
+public class PeersSingleton {
 
     private static List<Peer> INSTANCE = new ArrayList<>();
 

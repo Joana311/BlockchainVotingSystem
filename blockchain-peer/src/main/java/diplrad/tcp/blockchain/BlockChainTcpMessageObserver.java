@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.models.peer.Peer;
-import diplrad.models.peer.PeersInstance;
+import diplrad.models.peer.PeersSingleton;
 import diplrad.tcp.ITcpMessageObserver;
 
 public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
@@ -35,7 +35,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
     }
 
     public String blockChainRequestMessageReceived(Peer peer, Gson gson) {
-        PeersInstance.addPeer(peer);
+        PeersSingleton.addPeer(peer);
         return gson.toJson(VotingBlockChainSingleton.getInstance());
     }
 
