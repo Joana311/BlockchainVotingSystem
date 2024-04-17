@@ -39,6 +39,8 @@ public class MasterMain {
 
         System.out.println("Registered peer");
 
+        // this is vote mocker part, used only for testing purposes
+
         try {
 
             for (int i = 0; i < 5; i++) {
