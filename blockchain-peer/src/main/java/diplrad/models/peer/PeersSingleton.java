@@ -12,7 +12,7 @@ public class PeersSingleton {
             System.out.println("List of peers already created");
             return INSTANCE;
         }
-        INSTANCE = peers;
+        INSTANCE = new ArrayList<>(peers);
         return INSTANCE;
     }
 
