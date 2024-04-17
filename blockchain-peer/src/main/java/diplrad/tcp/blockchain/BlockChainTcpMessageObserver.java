@@ -60,6 +60,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
         if (currentBlockChainSize == 0 || currentBlockChainSize == 1) {
             VotingBlockChainSingleton.setInstance(blockchain);
+            System.out.println("Overridden current blockchain with the received instance.");
             return "OK";
         }
 
@@ -80,6 +81,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
                 return "Received blockchain's last block was added after current instance's last block.";
             }
             VotingBlockChainSingleton.setInstance(blockchain);
+            System.out.println("Overridden current blockchain with the received instance. Last block was added before the last block of the current instance.");
             return "OK";
         } else if (incomingBlockChainSize < currentBlockChainSize) {
             System.out.println("Received blockchain is too small.");
