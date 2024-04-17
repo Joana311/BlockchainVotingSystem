@@ -44,7 +44,7 @@ public class HttpSender {
 
             String responseBody = response.body();
             int responseStatusCode = response.statusCode();
-            if (responseStatusCode != 200) {
+            if (responseStatusCode == 400) {
                 System.out.println("Sending HTTP request was unsuccessful.");
                 System.exit(1);
             }
@@ -67,7 +67,7 @@ public class HttpSender {
         return null;
     }
 
-    public List<Peer> getPeers()
+    public List<Peer> getPeers(Peer ownPeer)
     {
         try {
             HttpRequest request = HttpRequest.newBuilder()
@@ -84,11 +84,13 @@ public class HttpSender {
                 System.exit(1);
             }
 
-            List<Peer> peers = ListSerializationHelper.getList(responseBody, Peer.class);
+            List<Peer> peers = ListSerializationHelper.deserializeList(responseBody, Peer.class);
             if (peers == null) {
                 System.out.println("Unable to parse peers.");
                 System.exit(1);
             }
+
+            peers = peers.stream().filter(peer -> !peer.getId().equals(ownPeer.getId())).toList();
 
             return peers;
         } catch (URISyntaxException e) {

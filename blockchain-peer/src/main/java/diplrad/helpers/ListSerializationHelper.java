@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ListSerializationHelper {
 
-    public static <T> List<T> getList(String jsonArray, Class<T> clazz) {
+    public static <T> List<T> deserializeList(String jsonArray, Class<T> clazz) {
         Type typeOfT = TypeToken.getParameterized(List.class, clazz).getType();
         return new Gson().fromJson(jsonArray, typeOfT);
     }

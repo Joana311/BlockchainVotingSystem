@@ -12,7 +12,7 @@ public class PeerConfiguration : IEntityTypeConfiguration<Peer>
 
         builder.HasKey(p => p.Id);
 
-        builder.HasIndex(p => p.IpAddress)
+        builder.HasIndex(p => new { p.IpAddress, p.Port })
             .IsUnique();
     }
 }

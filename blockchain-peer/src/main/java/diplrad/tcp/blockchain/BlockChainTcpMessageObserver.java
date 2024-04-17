@@ -1,9 +1,10 @@
 package diplrad.tcp.blockchain;
 
 import com.google.gson.Gson;
-import diplrad.constants.Constants;
 import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
+import diplrad.models.peer.Peer;
+import diplrad.models.peer.PeersSingleton;
 import diplrad.tcp.ITcpMessageObserver;
 
 public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
@@ -17,11 +18,13 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
     @Override
     public String messageReceived(String message) {
 
-        if (message.equals(Constants.BLOCKCHAIN_REQUEST)) {
-            return blockChainRequestMessageReceived(gson);
+        Peer peer = gson.fromJson(message, Peer.class);
+        if (peer != null && peer.getId() != null) {
+            return blockChainRequestMessageReceived(peer, gson);
         }
+
         VotingBlockChain blockchain = gson.fromJson(message, VotingBlockChain.class);
-        if (blockchain != null) {
+        if (blockchain != null && blockchain.getBlock(0) != null) {
             return blockChainMessageReceived(blockchain);
         }
 
@@ -31,7 +34,8 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
     }
 
-    public String blockChainRequestMessageReceived(Gson gson) {
+    public String blockChainRequestMessageReceived(Peer peer, Gson gson) {
+        PeersSingleton.addPeer(peer);
         return gson.toJson(VotingBlockChainSingleton.getInstance());
     }
 
@@ -43,41 +47,48 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
         if (!blockchain.validate()) {
             System.out.println("Received blockchain is invalid.");
-            return null;
+            return "Received blockchain is invalid.";
         }
 
-        int currentBlockChainSize = VotingBlockChainSingleton.getInstance().size();
+        int currentBlockChainSize;
+        if (VotingBlockChainSingleton.getInstance() == null) {
+            currentBlockChainSize = 0;
+        } else {
+            currentBlockChainSize = VotingBlockChainSingleton.getInstance().size();
+        }
         int incomingBlockChainSize = blockchain.size();
 
-        if (currentBlockChainSize == 1) {
+        if (currentBlockChainSize == 0 || currentBlockChainSize == 1) {
             VotingBlockChainSingleton.setInstance(blockchain);
-            return null;
+            System.out.println("Overridden current blockchain with the received instance.");
+            return "OK";
         }
 
         if (incomingBlockChainSize == currentBlockChainSize + 1) {
-            if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), VotingBlockChainSingleton.getInstance().size())) {
+            if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize)) {
                 System.out.println("Received blockchain is incompatible with the current instance.");
-                return null;
+                return "Received blockchain is incompatible with the current instance.";
             }
             VotingBlockChainSingleton.setInstance(blockchain);
             return null;
         } else if (incomingBlockChainSize == currentBlockChainSize) {
-            if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), VotingBlockChainSingleton.getInstance().size() - 1)){
+            if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize - 1)){
                 System.out.println("Received blockchain is incompatible with the current instance.");
-                return null;
+                return "Received blockchain is incompatible with the current instance.";
             }
             if (blockchain.getLastBlockTimeStamp() > VotingBlockChainSingleton.getInstance().getLastBlockTimeStamp()) {
                 System.out.println("Received blockchain's last block was added after current instance's last block.");
-                return null;
+                return "Received blockchain's last block was added after current instance's last block.";
             }
             VotingBlockChainSingleton.setInstance(blockchain);
-            return null;
+            System.out.println("Overridden current blockchain with the received instance. Last block was added before the last block of the current instance.");
+            return "OK";
         } else if (incomingBlockChainSize < currentBlockChainSize) {
             System.out.println("Received blockchain is too small.");
-            return null;
+            return "Received blockchain is too small.";
         } else {
             System.out.println("Received blockchain is too big.");
-            return null;
+            return "Received blockchain is too big.";
         }
 
     }

@@ -20,7 +20,7 @@ public class TcpServer {
     private ServerSocket serverSocket;
 
     public void start(int port) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+        Gson gson = new GsonBuilder().create();
         try {
             serverSocket = new ServerSocket(port);
             while (true) {
@@ -92,6 +92,7 @@ public class TcpServer {
     }
 
     public static class TcpServerThread extends Thread {
+
         public void run() {
             TcpServer server = new TcpServer();
             server.start(Constants.TCP_SERVER_PORT);
