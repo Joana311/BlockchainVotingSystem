@@ -1,6 +1,8 @@
 package diplrad.helpers;
 
 import diplrad.constants.Constants;
+import diplrad.exceptions.InvalidFileException;
+import diplrad.exceptions.ReadFromFileException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -12,28 +14,26 @@ import java.util.Set;
 
 public class FileReader {
 
-    public static List<String> readCandidatesFromFile() {
+    public static List<String> readCandidatesFromFile() throws InvalidFileException, ReadFromFileException {
         return readPeopleFromFile(Constants.CANDIDATES_FILE_PATH);
     }
 
-    public static List<String> readVotersFromFile() {
+    public static List<String> readVotersFromFile() throws InvalidFileException, ReadFromFileException {
         return readPeopleFromFile(Constants.VOTERS_FILE_PATH);
     }
 
-    private static List<String> readPeopleFromFile(String filePath) {
+    private static List<String> readPeopleFromFile(String filePath) throws ReadFromFileException, InvalidFileException {
         List<String> candidates = null;
         try {
             candidates = Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            System.out.println("Unable to read from file.");
-            System.exit(1);
+            throw new ReadFromFileException("Unable to read from file.");
         }
 
         Set<String> candidatesUnique = new HashSet<>(candidates);
 
         if (candidates.size() != candidatesUnique.size()) {
-            System.out.println("Duplicate entries found in the file.");
-            System.exit(1);
+            throw new InvalidFileException("Duplicate entries found in the file.");
         }
 
         return candidates;

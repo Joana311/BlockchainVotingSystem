@@ -3,6 +3,8 @@ package diplrad;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
+import diplrad.exceptions.InvalidFileException;
+import diplrad.exceptions.ReadFromFileException;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
@@ -23,7 +25,12 @@ public class MasterMain {
 
     public static void main(String[] args) {
 
-        VotingBlockChainSingleton.createInstance(readCandidatesFromFile());
+        try {
+            VotingBlockChainSingleton.createInstance(readCandidatesFromFile());
+        } catch (InvalidFileException | ReadFromFileException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
 
         System.out.println("Created a blockchain:" + gson.toJson(VotingBlockChainSingleton.getInstance()));
 
