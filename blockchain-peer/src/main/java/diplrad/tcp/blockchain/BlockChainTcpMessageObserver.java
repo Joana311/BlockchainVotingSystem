@@ -1,6 +1,7 @@
 package diplrad.tcp.blockchain;
 
 import com.google.gson.Gson;
+import diplrad.exceptions.TcpException;
 import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.models.peer.Peer;
@@ -16,7 +17,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
     }
 
     @Override
-    public String messageReceived(String message) {
+    public String messageReceived(String message) throws TcpException {
 
         Peer peer = gson.fromJson(message, Peer.class);
         if (peer != null && peer.getId() != null) {
@@ -28,9 +29,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
             return blockChainMessageReceived(blockchain);
         }
 
-        System.out.println("Invalid message received.");
-        System.exit(1);
-        return null;
+        throw new TcpException("Invalid message received.");
 
     }
 

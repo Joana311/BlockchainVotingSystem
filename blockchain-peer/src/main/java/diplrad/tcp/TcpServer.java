@@ -3,6 +3,7 @@ package diplrad.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
+import diplrad.exceptions.TcpException;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 
 import java.io.BufferedReader;
@@ -19,7 +20,7 @@ public class TcpServer {
 
     private ServerSocket serverSocket;
 
-    public void start(int port) {
+    public void start(int port) throws TcpException {
         Gson gson = new GsonBuilder().create();
         try {
             serverSocket = new ServerSocket(port);
@@ -30,22 +31,19 @@ public class TcpServer {
                 clientHandler.start();
             }
         } catch (BindException e) {
-            System.out.println("Unable to start TCP server because port is already in use.");
-            System.exit(1);
+            throw new TcpException("Unable to start TCP server because port is already in use.");
         } catch (IOException e) {
-            System.out.println("Unable to start TCP server.");
-            System.exit(1);
+            throw new TcpException("Unable to start TCP server.");
         } finally {
             stop();
         }
     }
 
-    public void stop() {
+    public void stop() throws TcpException {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            System.out.println("Unable to stop TCP server.");
-            System.exit(1);
+            throw new TcpException("Unable to stop TCP server.");
         }
 
     }
@@ -84,6 +82,9 @@ public class TcpServer {
                 in.close();
                 out.close();
                 clientSocket.close();
+            } catch (TcpException e) {
+                System.out.println(e.getMessage());
+                System.exit(1);
             } catch (IOException e) {
                 System.out.println("An error occurred while handling a client.");
                 System.exit(1);
@@ -95,7 +96,12 @@ public class TcpServer {
 
         public void run() {
             TcpServer server = new TcpServer();
-            server.start(Constants.TCP_SERVER_PORT);
+            try {
+                server.start(Constants.TCP_SERVER_PORT);
+            } catch (TcpException e) {
+                System.out.println(e.getMessage());
+                System.exit(1);
+            }
         }
     }
 
