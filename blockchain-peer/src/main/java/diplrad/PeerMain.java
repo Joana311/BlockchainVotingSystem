@@ -39,9 +39,7 @@ public class PeerMain {
             PeersSingleton.createInstance(httpSender.getPeers(ownPeer));
             System.out.println("Registered peer");
 
-            for (Peer peer : PeersSingleton.getInstance()) {
-                BlockChainTcpClientHelper.CreateTcpClientAndSendBlockChainRequest(gson, peer, ownPeer);
-            }
+            BlockChainTcpClientHelper.CreateTcpClientsAndSendBlockChainRequests(gson, ownPeer);
             System.out.println("Sent blockchain requests and updated current blockchain: " + gson.toJson(VotingBlockChainSingleton.getInstance()));
 
         } catch (IpException | ParseException | HttpException | TcpException e) {
