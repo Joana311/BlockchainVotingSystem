@@ -1,5 +1,6 @@
 package diplrad.http;
 
+import diplrad.constants.ErrorMessages;
 import diplrad.exceptions.HttpException;
 
 import javax.net.ssl.SSLContext;
@@ -55,7 +56,7 @@ public class SslDisabledHttpClient {
             sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, new TrustManager[]{trustManager}, new SecureRandom());
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
-            throw new HttpException("Unable to build HTTP client.");
+            throw new HttpException(ErrorMessages.httpClientBuildErrorMessage);
         }
 
         this.client = HttpClient.newBuilder()

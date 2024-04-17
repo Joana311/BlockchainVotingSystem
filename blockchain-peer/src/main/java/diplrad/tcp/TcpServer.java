@@ -3,6 +3,7 @@ package diplrad.tcp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
+import diplrad.constants.ErrorMessages;
 import diplrad.exceptions.TcpException;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 
@@ -31,9 +32,9 @@ public class TcpServer {
                 clientHandler.start();
             }
         } catch (BindException e) {
-            throw new TcpException("Unable to start TCP server because port is already in use.");
+            throw new TcpException(ErrorMessages.cannotStartTcpServerPortInUseErrorMessage);
         } catch (IOException e) {
-            throw new TcpException("Unable to start TCP server.");
+            throw new TcpException(ErrorMessages.cannotStartTcpServerErrorMessage);
         } finally {
             stop();
         }
@@ -43,7 +44,7 @@ public class TcpServer {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            throw new TcpException("Unable to stop TCP server.");
+            throw new TcpException(ErrorMessages.cannotStopTcpServerErrorMessage);
         }
 
     }
@@ -86,7 +87,7 @@ public class TcpServer {
                 System.out.println(e.getMessage());
                 System.exit(1);
             } catch (IOException e) {
-                System.out.println("An error occurred while handling a client.");
+                System.out.println(ErrorMessages.handleClientErrorMessage);
                 System.exit(1);
             }
         }

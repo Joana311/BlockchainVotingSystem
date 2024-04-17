@@ -1,5 +1,6 @@
 package diplrad.helpers;
 
+import diplrad.constants.ErrorMessages;
 import diplrad.exceptions.IpException;
 
 import java.net.DatagramSocket;
@@ -14,7 +15,7 @@ public class IpHelper {
             datagramSocket.connect(InetAddress.getByName("8.8.8.8"), 12345);
             return datagramSocket.getLocalAddress();
         } catch (SocketException | UnknownHostException e) {
-            throw new IpException("Unable to fetch own IP address.");
+            throw new IpException(ErrorMessages.getOwnIpAddressErrorMessage);
         }
     }
 
