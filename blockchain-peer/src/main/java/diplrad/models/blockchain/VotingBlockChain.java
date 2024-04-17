@@ -3,6 +3,7 @@ package diplrad.models.blockchain;
 import com.google.gson.annotations.Expose;
 import diplrad.constants.Constants;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 

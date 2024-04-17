@@ -50,7 +50,12 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
             return null;
         }
 
-        int currentBlockChainSize = VotingBlockChainSingleton.getInstance().size();
+        int currentBlockChainSize;
+        if (VotingBlockChainSingleton.getInstance() == null) {
+            currentBlockChainSize = 0;
+        } else {
+            currentBlockChainSize = VotingBlockChainSingleton.getInstance().size();
+        }
         int incomingBlockChainSize = blockchain.size();
 
         if (currentBlockChainSize == 1) {
