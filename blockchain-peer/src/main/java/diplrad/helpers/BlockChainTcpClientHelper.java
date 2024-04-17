@@ -1,6 +1,7 @@
 package diplrad.helpers;
 
 import com.google.gson.Gson;
+import diplrad.constants.ErrorMessages;
 import diplrad.exceptions.TcpException;
 import diplrad.models.peer.Peer;
 import diplrad.models.peer.PeersSingleton;
@@ -29,7 +30,7 @@ public class BlockChainTcpClientHelper {
             client.sendBlockchainRequest(gson, ownPeer);
             client.stopConnection();
         } catch (IOException e) {
-            throw new TcpException("Unable to send blockchain request to a peer");
+            throw new TcpException(ErrorMessages.sendBlockChainRequestErrorMessage);
         }
     }
 
@@ -40,7 +41,7 @@ public class BlockChainTcpClientHelper {
             client.sendBlockchain(gson);
             client.stopConnection();
         } catch (IOException e) {
-            throw new TcpException("Unable to send blockchain to a peer");
+            throw new TcpException(ErrorMessages.sendBlockChainErrorMessage);
         }
     }
 

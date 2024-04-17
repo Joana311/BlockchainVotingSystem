@@ -1,5 +1,7 @@
 package diplrad.models.blockchain;
 
+import diplrad.constants.LogMessages;
+
 import java.util.List;
 
 public class VotingBlockChainSingleton {
@@ -8,7 +10,7 @@ public class VotingBlockChainSingleton {
 
     public static VotingBlockChain createInstance(List<String> candidates) {
         if (INSTANCE != null) {
-            System.out.println("VotingBlockChain already created");
+            System.out.println(LogMessages.votingBlockChainAlreadyCreatedMessage);
             return INSTANCE;
         }
         INSTANCE = new VotingBlockChain(candidates);

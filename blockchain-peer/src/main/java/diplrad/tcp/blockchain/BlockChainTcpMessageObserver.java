@@ -1,6 +1,9 @@
 package diplrad.tcp.blockchain;
 
 import com.google.gson.Gson;
+import diplrad.constants.ErrorMessages;
+import diplrad.constants.LogMessages;
+import diplrad.constants.ReceivedBlockChainResponseMessages;
 import diplrad.exceptions.TcpException;
 import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
@@ -29,7 +32,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
             return blockChainMessageReceived(blockchain);
         }
 
-        throw new TcpException("Invalid message received.");
+        throw new TcpException(ErrorMessages.invalidTcpMessageReceivedErrorMessage);
 
     }
 
@@ -45,8 +48,8 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
         // or if it is the same length as our current instance, but the last block was added before the last block of our current instance
 
         if (!blockchain.validate()) {
-            System.out.println("Received blockchain is invalid.");
-            return "Received blockchain is invalid.";
+            System.out.println(LogMessages.invalidBlockChainReceivedMessage);
+            return ReceivedBlockChainResponseMessages.invalidBlockChainReceivedMessage;
         }
 
         int currentBlockChainSize;
@@ -59,35 +62,35 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
         if (currentBlockChainSize == 0 || currentBlockChainSize == 1) {
             VotingBlockChainSingleton.setInstance(blockchain);
-            System.out.println("Overridden current blockchain with the received instance.");
-            return "OK";
+            System.out.println(LogMessages.overrideBlockChainMessage);
+            return ReceivedBlockChainResponseMessages.okMessage;
         }
 
         if (incomingBlockChainSize == currentBlockChainSize + 1) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize)) {
-                System.out.println("Received blockchain is incompatible with the current instance.");
-                return "Received blockchain is incompatible with the current instance.";
+                System.out.println(LogMessages.incompatibleBlockChainMessage);
+                return ReceivedBlockChainResponseMessages.incompatibleBlockChainMessage;
             }
             VotingBlockChainSingleton.setInstance(blockchain);
             return null;
         } else if (incomingBlockChainSize == currentBlockChainSize) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize - 1)){
-                System.out.println("Received blockchain is incompatible with the current instance.");
-                return "Received blockchain is incompatible with the current instance.";
+                System.out.println(LogMessages.incompatibleBlockChainMessage);
+                return ReceivedBlockChainResponseMessages.incompatibleBlockChainMessage;
             }
             if (blockchain.getLastBlockTimeStamp() > VotingBlockChainSingleton.getInstance().getLastBlockTimeStamp()) {
-                System.out.println("Received blockchain's last block was added after current instance's last block.");
-                return "Received blockchain's last block was added after current instance's last block.";
+                System.out.println(LogMessages.incompatibleBlockChainLastBlockMessage);
+                return ReceivedBlockChainResponseMessages.incompatibleBlockChainLastBlockMessage;
             }
             VotingBlockChainSingleton.setInstance(blockchain);
-            System.out.println("Overridden current blockchain with the received instance. Last block was added before the last block of the current instance.");
-            return "OK";
+            System.out.println(LogMessages.overrideBlockChainDiscardLastBlockMessage);
+            return ReceivedBlockChainResponseMessages.okMessage;
         } else if (incomingBlockChainSize < currentBlockChainSize) {
-            System.out.println("Received blockchain is too small.");
-            return "Received blockchain is too small.";
+            System.out.println(LogMessages.receivedBlockChainTooSmallMessage);
+            return ReceivedBlockChainResponseMessages.receivedBlockChainTooSmallMessage;
         } else {
-            System.out.println("Received blockchain is too big.");
-            return "Received blockchain is too big.";
+            System.out.println(LogMessages.receivedBlockChainTooBigMessage);
+            return ReceivedBlockChainResponseMessages.receivedBlockChainTooBigMessage;
         }
 
     }

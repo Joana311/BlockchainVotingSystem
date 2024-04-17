@@ -2,6 +2,7 @@ package diplrad.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diplrad.constants.ErrorMessages;
 import diplrad.exceptions.HttpException;
 import diplrad.exceptions.ParseException;
 import diplrad.helpers.ListSerializationHelper;
@@ -30,7 +31,7 @@ public class HttpSender {
         try {
             String json = gson.toJson(peerRequest);
             if (json == null) {
-                throw new ParseException("Unable to parse peer request.");
+                throw new ParseException(ErrorMessages.parsePeerRequestErrorMessage);
             }
             byte[] bytes = json.getBytes();
 
@@ -45,19 +46,19 @@ public class HttpSender {
             String responseBody = response.body();
             int responseStatusCode = response.statusCode();
             if (responseStatusCode == 400) {
-                throw new HttpException("Sending HTTP request was unsuccessful.");
+                throw new HttpException(ErrorMessages.unsuccessfulHttpRequestErrorMessage);
             }
 
             Peer peer = gson.fromJson(responseBody, Peer.class);
             if (peer == null) {
-                throw new ParseException("Unable to parse peer.");
+                throw new ParseException(ErrorMessages.parsePeerErrorMessage);
             }
 
             return peer;
         } catch (URISyntaxException e) {
-            throw new HttpException("Url is incorrect.");
+            throw new HttpException(ErrorMessages.incorrectUrlErrorMessage);
         } catch (IOException | InterruptedException e) {
-            throw new HttpException("Unable to send HTTP request.");
+            throw new HttpException(ErrorMessages.sendHttpRequestErrorMessage);
         }
     }
 

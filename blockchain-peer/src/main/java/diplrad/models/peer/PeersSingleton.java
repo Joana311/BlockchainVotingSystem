@@ -1,5 +1,7 @@
 package diplrad.models.peer;
 
+import diplrad.constants.LogMessages;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ public class PeersSingleton {
 
     public static List<Peer> createInstance(List<Peer> peers) {
         if (!INSTANCE.isEmpty()) {
-            System.out.println("List of peers already created");
+            System.out.println(LogMessages.listOfPeersAlreadyCreatedMessage);
             return INSTANCE;
         }
         INSTANCE = new ArrayList<>(peers);

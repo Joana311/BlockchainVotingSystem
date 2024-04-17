@@ -1,6 +1,7 @@
 package diplrad.helpers;
 
 import diplrad.constants.Constants;
+import diplrad.constants.ErrorMessages;
 import diplrad.exceptions.InvalidFileException;
 import diplrad.exceptions.ReadFromFileException;
 
@@ -27,13 +28,13 @@ public class FileReader {
         try {
             candidates = Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new ReadFromFileException("Unable to read from file.");
+            throw new ReadFromFileException(ErrorMessages.readFromFileErrorMessage);
         }
 
         Set<String> candidatesUnique = new HashSet<>(candidates);
 
         if (candidates.size() != candidatesUnique.size()) {
-            throw new InvalidFileException("Duplicate entries found in the file.");
+            throw new InvalidFileException(ErrorMessages.duplicateEntriesInFileErrorMessage);
         }
 
         return candidates;
