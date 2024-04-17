@@ -2,6 +2,8 @@ package diplrad.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diplrad.exceptions.HttpException;
+import diplrad.exceptions.ParseException;
 import diplrad.helpers.ListSerializationHelper;
 import diplrad.models.peer.Peer;
 import diplrad.models.peer.PeerRequest;
@@ -24,13 +26,11 @@ public class HttpSender {
         this.client = new SslDisabledHttpClient().getClient();
     }
 
-    public Peer registerPeer(PeerRequest peerRequest)
-    {
+    public Peer registerPeer(PeerRequest peerRequest) throws ParseException, HttpException {
         try {
             String json = gson.toJson(peerRequest);
             if (json == null) {
-                System.out.println("Unable to parse peer request.");
-                System.exit(1);
+                throw new ParseException("Unable to parse peer request.");
             }
             byte[] bytes = json.getBytes();
 
@@ -45,30 +45,23 @@ public class HttpSender {
             String responseBody = response.body();
             int responseStatusCode = response.statusCode();
             if (responseStatusCode == 400) {
-                System.out.println("Sending HTTP request was unsuccessful.");
-                System.exit(1);
+                throw new HttpException("Sending HTTP request was unsuccessful.");
             }
 
             Peer peer = gson.fromJson(responseBody, Peer.class);
             if (peer == null) {
-                System.out.println("Unable to parse peer.");
-                System.exit(1);
+                throw new ParseException("Unable to parse peer.");
             }
 
             return peer;
         } catch (URISyntaxException e) {
-            System.out.println("Url is incorrect.");
-            System.exit(1);
+            throw new HttpException("Url is incorrect.");
         } catch (IOException | InterruptedException e) {
-            System.out.println("Unable to send HTTP request.");
-            System.exit(1);
+            throw new HttpException("Unable to send HTTP request.");
         }
-
-        return null;
     }
 
-    public List<Peer> getPeers(Peer ownPeer)
-    {
+    public List<Peer> getPeers(Peer ownPeer) throws HttpException, ParseException {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI("https://localhost:7063/api/peers"))
@@ -80,28 +73,22 @@ public class HttpSender {
             String responseBody = response.body();
             int responseStatusCode = response.statusCode();
             if (responseStatusCode != 200) {
-                System.out.println("Sending HTTP request was unsuccessful.");
-                System.exit(1);
+                throw new HttpException("Sending HTTP request was unsuccessful.");
             }
 
             List<Peer> peers = ListSerializationHelper.deserializeList(responseBody, Peer.class);
             if (peers == null) {
-                System.out.println("Unable to parse peers.");
-                System.exit(1);
+                throw new ParseException("Unable to parse peers.");
             }
 
             peers = peers.stream().filter(peer -> !peer.getId().equals(ownPeer.getId())).toList();
 
             return peers;
         } catch (URISyntaxException e) {
-            System.out.println("Url is incorrect.");
-            System.exit(1);
+            throw new HttpException("Url is incorrect.");
         } catch (IOException | InterruptedException e) {
-            System.out.println("Unable to send HTTP request.");
-            System.exit(1);
+            throw new HttpException("Unable to send HTTP request.");
         }
-
-        return null;
     }
 
 }
