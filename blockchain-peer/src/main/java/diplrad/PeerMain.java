@@ -9,6 +9,7 @@ import diplrad.exceptions.IpException;
 import diplrad.exceptions.ParseException;
 import diplrad.exceptions.TcpException;
 import diplrad.helpers.BlockChainTcpClientHelper;
+import diplrad.helpers.PeerHttpHelper;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
@@ -21,6 +22,8 @@ import diplrad.tcp.TcpServer;
 import java.io.IOException;
 
 import static diplrad.helpers.IpHelper.getOwnIpAddress;
+import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
+import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class PeerMain {
 
@@ -35,9 +38,8 @@ public class PeerMain {
             System.out.println(LogMessages.startedTcpServer);
 
             HttpSender httpSender = new HttpSender();
-            PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
-            Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
-            PeersSingleton.createInstance(httpSender.getPeers(ownPeer));
+            ownPeer = PeerHttpHelper.createOwnPeer(httpSender);
+            PeerHttpHelper.getPeersInitial(httpSender, ownPeer);
             System.out.println(LogMessages.registeredOwnPeer);
 
             BlockChainTcpClientHelper.CreateTcpClientsAndSendBlockChainRequests(gson, ownPeer);
@@ -45,6 +47,7 @@ public class PeerMain {
 
         } catch (IpException | ParseException | HttpException | TcpException e) {
             System.out.println(e.getMessage());
+            tryCreateHttpClientAndDeleteOwnPeer();
             System.exit(1);
         }
 
@@ -60,6 +63,7 @@ public class PeerMain {
             }
         } catch (TcpException e) {
             System.out.println(e.getMessage());
+            tryCreateHttpClientAndDeleteOwnPeer();
             System.exit(1);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

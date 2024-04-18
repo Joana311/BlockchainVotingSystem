@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
 import diplrad.constants.ErrorMessages;
+import diplrad.exceptions.HttpException;
 import diplrad.exceptions.TcpException;
+import diplrad.helpers.PeerHttpHelper;
+import diplrad.http.HttpSender;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 
 import java.io.BufferedReader;
@@ -16,6 +19,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
+import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class TcpServer {
 
@@ -101,6 +107,7 @@ public class TcpServer {
                 server.start(Constants.TCP_SERVER_PORT);
             } catch (TcpException e) {
                 System.out.println(e.getMessage());
+                tryCreateHttpClientAndDeleteOwnPeer();
                 System.exit(1);
             }
         }

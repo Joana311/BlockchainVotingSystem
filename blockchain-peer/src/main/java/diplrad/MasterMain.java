@@ -2,20 +2,18 @@ package diplrad;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import diplrad.constants.Constants;
 import diplrad.constants.LogMessages;
 import diplrad.exceptions.*;
 import diplrad.helpers.BlockChainTcpClientHelper;
+import diplrad.helpers.PeerHttpHelper;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
-import diplrad.models.peer.Peer;
-import diplrad.models.peer.PeerRequest;
-import diplrad.models.peer.PeersSingleton;
 import diplrad.tcp.TcpServer;
 
 import static diplrad.helpers.FileReader.readCandidatesFromFile;
-import static diplrad.helpers.IpHelper.getOwnIpAddress;
+import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
+import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class MasterMain {
 
@@ -33,13 +31,13 @@ public class MasterMain {
             System.out.println(LogMessages.startedTcpServer);
 
             HttpSender httpSender = new HttpSender();
-            PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
-            Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
-            PeersSingleton.createInstance(httpSender.getPeers(ownPeer));
+            ownPeer = PeerHttpHelper.createOwnPeer(httpSender);
+            PeerHttpHelper.getPeersInitial(httpSender, ownPeer);
             System.out.println(LogMessages.registeredOwnPeer);
 
         } catch (InvalidFileException | ReadFromFileException | IpException | ParseException | HttpException e) {
             System.out.println(e.getMessage());
+            tryCreateHttpClientAndDeleteOwnPeer();
             System.exit(1);
         }
 
@@ -55,6 +53,7 @@ public class MasterMain {
             }
         } catch (TcpException e) {
             System.out.println(e.getMessage());
+            tryCreateHttpClientAndDeleteOwnPeer();
             System.exit(1);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

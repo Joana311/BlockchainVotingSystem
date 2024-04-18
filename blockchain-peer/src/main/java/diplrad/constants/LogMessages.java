@@ -16,5 +16,7 @@ public class LogMessages {
     public static final String incompatibleBlockChainLastBlockMessage = "Received blockChain's last block was added after current instance's last block.";
     public static final String receivedBlockChainTooSmallMessage = "Received blockChain is too small.";
     public static final String receivedBlockChainTooBigMessage = "Received blockChain is too big.";
+    public static final String deleteOwnPeer = "Own peer is deregistered.";
+    public static final String unableToDeleteOwnPeer = "Unable to deregister own peer.";
 
 }
