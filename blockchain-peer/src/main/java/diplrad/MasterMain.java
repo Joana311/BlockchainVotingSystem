@@ -2,7 +2,6 @@ package diplrad;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import diplrad.constants.Constants;
 import diplrad.constants.LogMessages;
 import diplrad.exceptions.*;
 import diplrad.helpers.BlockChainTcpClientHelper;
@@ -10,13 +9,10 @@ import diplrad.helpers.PeerHttpHelper;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
-import diplrad.models.peer.Peer;
-import diplrad.models.peer.PeerRequest;
-import diplrad.models.peer.PeersSingleton;
 import diplrad.tcp.TcpServer;
 
 import static diplrad.helpers.FileReader.readCandidatesFromFile;
-import static diplrad.helpers.IpHelper.getOwnIpAddress;
+import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class MasterMain {
 
@@ -24,8 +20,6 @@ public class MasterMain {
     private static HttpSender httpSender;
 
     public static void main(String[] args) {
-
-        Peer ownPeer = null;
 
         try {
 

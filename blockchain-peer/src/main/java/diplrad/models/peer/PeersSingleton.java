@@ -7,6 +7,8 @@ import java.util.List;
 
 public class PeersSingleton {
 
+    public static Peer ownPeer;
+
     private static List<Peer> INSTANCE = new ArrayList<>();
 
     public static List<Peer> createInstance(List<Peer> peers) {

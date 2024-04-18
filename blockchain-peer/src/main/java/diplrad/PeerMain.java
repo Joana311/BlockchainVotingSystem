@@ -22,6 +22,7 @@ import diplrad.tcp.TcpServer;
 import java.io.IOException;
 
 import static diplrad.helpers.IpHelper.getOwnIpAddress;
+import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class PeerMain {
 
@@ -29,8 +30,6 @@ public class PeerMain {
     private static HttpSender httpSender;
 
     public static void main(String[] args) {
-
-        Peer ownPeer = null;
 
         try {
 
