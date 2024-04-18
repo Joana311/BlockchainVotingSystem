@@ -22,12 +22,12 @@ import diplrad.tcp.TcpServer;
 import java.io.IOException;
 
 import static diplrad.helpers.IpHelper.getOwnIpAddress;
+import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
 import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class PeerMain {
 
     private static Gson gson = new GsonBuilder().create();
-    private static HttpSender httpSender;
 
     public static void main(String[] args) {
 
@@ -37,7 +37,7 @@ public class PeerMain {
             tcpServerThread.start();
             System.out.println(LogMessages.startedTcpServer);
 
-            httpSender = new HttpSender();
+            HttpSender httpSender = new HttpSender();
             ownPeer = PeerHttpHelper.createOwnPeer(httpSender);
             PeerHttpHelper.getPeersInitial(httpSender, ownPeer);
             System.out.println(LogMessages.registeredOwnPeer);
@@ -47,7 +47,7 @@ public class PeerMain {
 
         } catch (IpException | ParseException | HttpException | TcpException e) {
             System.out.println(e.getMessage());
-            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
+            tryCreateHttpClientAndDeleteOwnPeer();
             System.exit(1);
         }
 
@@ -63,7 +63,7 @@ public class PeerMain {
             }
         } catch (TcpException e) {
             System.out.println(e.getMessage());
-            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
+            tryCreateHttpClientAndDeleteOwnPeer();
             System.exit(1);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

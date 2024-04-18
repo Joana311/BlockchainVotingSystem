@@ -12,12 +12,12 @@ import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.tcp.TcpServer;
 
 import static diplrad.helpers.FileReader.readCandidatesFromFile;
+import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
 import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class MasterMain {
 
     private static Gson gson = new GsonBuilder().create();
-    private static HttpSender httpSender;
 
     public static void main(String[] args) {
 
@@ -30,14 +30,14 @@ public class MasterMain {
             tcpServerThread.start();
             System.out.println(LogMessages.startedTcpServer);
 
-            httpSender = new HttpSender();
+            HttpSender httpSender = new HttpSender();
             ownPeer = PeerHttpHelper.createOwnPeer(httpSender);
             PeerHttpHelper.getPeersInitial(httpSender, ownPeer);
             System.out.println(LogMessages.registeredOwnPeer);
 
         } catch (InvalidFileException | ReadFromFileException | IpException | ParseException | HttpException e) {
             System.out.println(e.getMessage());
-            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
+            tryCreateHttpClientAndDeleteOwnPeer();
             System.exit(1);
         }
 
@@ -53,7 +53,7 @@ public class MasterMain {
             }
         } catch (TcpException e) {
             System.out.println(e.getMessage());
-            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
+            tryCreateHttpClientAndDeleteOwnPeer();
             System.exit(1);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

@@ -20,6 +20,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
 import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class TcpServer {
@@ -109,15 +110,6 @@ public class TcpServer {
                 tryCreateHttpClientAndDeleteOwnPeer();
                 System.exit(1);
             }
-        }
-    }
-
-    private static void tryCreateHttpClientAndDeleteOwnPeer() {
-        try {
-            HttpSender httpSender = new HttpSender();
-            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
-        } catch (HttpException e) {
-            System.out.println(e.getMessage());
         }
     }
 

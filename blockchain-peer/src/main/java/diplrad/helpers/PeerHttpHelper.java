@@ -11,6 +11,7 @@ import diplrad.models.peer.PeerRequest;
 import diplrad.models.peer.PeersSingleton;
 
 import static diplrad.helpers.IpHelper.getOwnIpAddress;
+import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class PeerHttpHelper {
 
@@ -35,8 +36,17 @@ public class PeerHttpHelper {
             System.out.println(LogMessages.deleteOwnPeer);
         } catch (HttpException e) {
             System.out.println(e.getMessage());
+            System.out.println(LogMessages.unableToDeleteOwnPeer);
         }
-        System.out.println(LogMessages.unableToDeleteOwnPeer);
+    }
+
+    public static void tryCreateHttpClientAndDeleteOwnPeer() {
+        try {
+            HttpSender httpSender = new HttpSender();
+            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
+        } catch (HttpException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
