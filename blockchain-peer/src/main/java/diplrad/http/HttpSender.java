@@ -25,7 +25,7 @@ public class HttpSender {
 
     public HttpSender() throws HttpException {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
-        this.client = new SslDisabledHttpClient().getClient();
+        this.client = HttpClient.newBuilder().build();
     }
 
     public Peer createPeer(PeerRequest peerRequest) throws ParseException, HttpException {
