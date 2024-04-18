@@ -16,6 +16,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.UUID;
 
 public class HttpSender {
 
@@ -27,7 +28,7 @@ public class HttpSender {
         this.client = new SslDisabledHttpClient().getClient();
     }
 
-    public Peer registerPeer(PeerRequest peerRequest) throws ParseException, HttpException {
+    public Peer createPeer(PeerRequest peerRequest) throws ParseException, HttpException {
         try {
             String json = gson.toJson(peerRequest);
             if (json == null) {
@@ -55,6 +56,27 @@ public class HttpSender {
             }
 
             return peer;
+        } catch (URISyntaxException e) {
+            throw new HttpException(ErrorMessages.incorrectUrlErrorMessage);
+        } catch (IOException | InterruptedException e) {
+            throw new HttpException(ErrorMessages.sendHttpRequestErrorMessage);
+        }
+    }
+
+    public void deletePeer(UUID peerId) throws HttpException {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI("https://localhost:7063/api/peers/" + peerId))
+                    .headers("Content-Type", "application/json")
+                    .DELETE()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseStatusCode = response.statusCode();
+            if (responseStatusCode == 400) {
+                throw new HttpException(ErrorMessages.unsuccessfulHttpRequestErrorMessage);
+            }
         } catch (URISyntaxException e) {
             throw new HttpException(ErrorMessages.incorrectUrlErrorMessage);
         } catch (IOException | InterruptedException e) {

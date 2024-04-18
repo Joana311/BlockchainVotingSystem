@@ -6,6 +6,7 @@ import diplrad.constants.Constants;
 import diplrad.constants.LogMessages;
 import diplrad.exceptions.*;
 import diplrad.helpers.BlockChainTcpClientHelper;
+import diplrad.helpers.PeerHttpHelper;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
@@ -20,8 +21,11 @@ import static diplrad.helpers.IpHelper.getOwnIpAddress;
 public class MasterMain {
 
     private static Gson gson = new GsonBuilder().create();
+    private static HttpSender httpSender;
 
     public static void main(String[] args) {
+
+        Peer ownPeer = null;
 
         try {
 
@@ -32,14 +36,14 @@ public class MasterMain {
             tcpServerThread.start();
             System.out.println(LogMessages.startedTcpServer);
 
-            HttpSender httpSender = new HttpSender();
-            PeerRequest ownPeerRequest = new PeerRequest(getOwnIpAddress().getHostAddress(), Constants.TCP_SERVER_PORT);
-            Peer ownPeer = httpSender.registerPeer(ownPeerRequest);
-            PeersSingleton.createInstance(httpSender.getPeers(ownPeer));
+            httpSender = new HttpSender();
+            ownPeer = PeerHttpHelper.createOwnPeer(httpSender);
+            PeerHttpHelper.getPeersInitial(httpSender, ownPeer);
             System.out.println(LogMessages.registeredOwnPeer);
 
         } catch (InvalidFileException | ReadFromFileException | IpException | ParseException | HttpException e) {
             System.out.println(e.getMessage());
+            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
             System.exit(1);
         }
 
