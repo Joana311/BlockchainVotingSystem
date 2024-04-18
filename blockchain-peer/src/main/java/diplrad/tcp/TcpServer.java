@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
 import diplrad.constants.ErrorMessages;
 import diplrad.exceptions.TcpException;
+import diplrad.helpers.PeerHttpHelper;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 
 import java.io.BufferedReader;

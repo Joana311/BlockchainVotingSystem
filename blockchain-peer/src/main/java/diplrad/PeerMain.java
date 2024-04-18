@@ -64,6 +64,7 @@ public class PeerMain {
             }
         } catch (TcpException e) {
             System.out.println(e.getMessage());
+            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
             System.exit(1);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
