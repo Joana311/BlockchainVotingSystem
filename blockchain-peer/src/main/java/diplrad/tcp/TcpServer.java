@@ -98,18 +98,8 @@ public class TcpServer {
                 }
 
                 endChannels();
-            } catch (TcpException e) {
-                handleFatalException(e);
-            } catch (IOException e) {
-                if (e.getMessage().equals("Connection reset")) { // client disconnected, just continue
-                    try {
-                        endChannels();
-                    } catch (IOException ex) {
-                        handleFatalException(e);
-                    }
-                } else {
-                    handleFatalException(e);
-                }
+            } catch (TcpException | IOException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
