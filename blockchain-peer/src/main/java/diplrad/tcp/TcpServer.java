@@ -21,6 +21,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import static diplrad.helpers.ExceptionHandler.handleFatalException;
 import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
 import static diplrad.models.peer.PeersSingleton.getInstance;
 import static diplrad.models.peer.PeersSingleton.ownPeer;
@@ -44,8 +45,6 @@ public class TcpServer {
             throw new TcpException(ErrorMessages.cannotStartTcpServerPortInUseErrorMessage);
         } catch (IOException e) {
             throw new TcpException(ErrorMessages.cannotStartTcpServerErrorMessage);
-        } finally {
-            stop();
         }
     }
 
@@ -105,9 +104,7 @@ public class TcpServer {
 
                 endChannels();
             } catch (TcpException e) {
-                System.out.println(e.getMessage());
-                tryCreateHttpClientAndDeleteOwnPeer();
-                System.exit(1);
+                handleFatalException(e);
             } catch (IOException e) {
                 if (e.getMessage().equals("Connection reset")) {
                     getInstance().remove(ownPeer);
@@ -116,14 +113,10 @@ public class TcpServer {
                     try {
                         endChannels();
                     } catch (IOException ex) {
-                        System.out.println(ex.getMessage());
-                        tryCreateHttpClientAndDeleteOwnPeer();
-                        System.exit(1);
+                        handleFatalException(e);
                     }
                 } else {
-                    System.out.println(ErrorMessages.handleClientErrorMessage);
-                    tryCreateHttpClientAndDeleteOwnPeer();
-                    System.exit(1);
+                    handleFatalException(e);
                 }
             }
         }
@@ -139,6 +132,11 @@ public class TcpServer {
                 server.start(Constants.TCP_SERVER_PORT);
             } catch (TcpException e) {
                 System.out.println(e.getMessage());
+                try {
+                    server.stop();
+                } catch (TcpException ex) {
+                    System.out.println(e.getMessage());
+                }
                 tryCreateHttpClientAndDeleteOwnPeer();
                 System.exit(1);
             }

@@ -11,8 +11,8 @@ import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.tcp.TcpServer;
 
+import static diplrad.helpers.ExceptionHandler.handleFatalException;
 import static diplrad.helpers.FileReader.readCandidatesFromFile;
-import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
 import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class MasterMain {
@@ -36,25 +36,19 @@ public class MasterMain {
             System.out.println(LogMessages.registeredOwnPeer);
 
         } catch (InvalidFileException | ReadFromFileException | IpException | ParseException | HttpException e) {
-            System.out.println(e.getMessage());
-            tryCreateHttpClientAndDeleteOwnPeer();
-            System.exit(1);
+            handleFatalException(e);
         }
 
         // this is vote mocker part, used only for testing purposes
 
         try {
             for (int i = 0; i < 5; i++) {
-
                 Thread.sleep((long)(Math.random() * 20000));
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
                 BlockChainTcpClientHelper.CreateTcpClientsAndSendBlockChains(gson);
-
             }
         } catch (TcpException e) {
-            System.out.println(e.getMessage());
-            tryCreateHttpClientAndDeleteOwnPeer();
-            System.exit(1);
+            handleFatalException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
