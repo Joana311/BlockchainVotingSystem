@@ -42,8 +42,10 @@ public class PeerHttpHelper {
 
     public static void tryCreateHttpClientAndDeleteOwnPeer() {
         try {
-            HttpSender httpSender = new HttpSender();
-            PeerHttpHelper.tryDeleteOwnPeer(httpSender, ownPeer);
+            if (ownPeer != null) {
+                HttpSender httpSender = new HttpSender();
+                deleteOwnPeer(httpSender, ownPeer);
+            }
         } catch (HttpException e) {
             System.out.println(e.getMessage());
         }

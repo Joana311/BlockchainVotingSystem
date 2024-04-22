@@ -46,7 +46,7 @@ public class MasterMain {
         try {
             for (int i = 0; i < 5; i++) {
 
-                Thread.sleep((long)(Math.random() * 10000));
+                Thread.sleep((long)(Math.random() * 20000));
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
                 BlockChainTcpClientHelper.CreateTcpClientsAndSendBlockChains(gson);
 
