@@ -34,14 +34,14 @@ public class PeerMain {
 
         try {
 
-            TcpServer.TcpServerThread tcpServerThread = new TcpServer.TcpServerThread();
-            tcpServerThread.start();
-            System.out.println(LogMessages.startedTcpServer);
-
             HttpSender httpSender = new HttpSender();
             ownPeer = PeerHttpHelper.createOwnPeer(httpSender);
             PeerHttpHelper.getPeersInitial(httpSender, ownPeer);
             System.out.println(LogMessages.registeredOwnPeer);
+
+            TcpServer.TcpServerThread tcpServerThread = new TcpServer.TcpServerThread();
+            tcpServerThread.start();
+            System.out.println(LogMessages.startedTcpServer);
 
             BlockChainTcpClientHelper.CreateTcpClientsAndSendBlockChainRequests(gson, ownPeer);
             System.out.printf((LogMessages.receivedInitialBlockChain) + "%n", gson.toJson(VotingBlockChainSingleton.getInstance()));

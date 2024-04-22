@@ -26,14 +26,14 @@ public class MasterMain {
             VotingBlockChainSingleton.createInstance(readCandidatesFromFile());
             System.out.printf((LogMessages.createdBlockChainMessage) + "%n", gson.toJson(VotingBlockChainSingleton.getInstance()));
 
-            TcpServer.TcpServerThread tcpServerThread = new TcpServer.TcpServerThread();
-            tcpServerThread.start();
-            System.out.println(LogMessages.startedTcpServer);
-
             HttpSender httpSender = new HttpSender();
             ownPeer = PeerHttpHelper.createOwnPeer(httpSender);
             PeerHttpHelper.getPeersInitial(httpSender, ownPeer);
             System.out.println(LogMessages.registeredOwnPeer);
+
+            TcpServer.TcpServerThread tcpServerThread = new TcpServer.TcpServerThread();
+            tcpServerThread.start();
+            System.out.println(LogMessages.startedTcpServer);
 
         } catch (InvalidFileException | ReadFromFileException | IpException | ParseException | HttpException e) {
             handleFatalException(e);
