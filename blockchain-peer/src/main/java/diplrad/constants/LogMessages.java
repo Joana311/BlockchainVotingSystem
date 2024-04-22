@@ -18,7 +18,5 @@ public class LogMessages {
     public static final String receivedBlockChainTooBigMessage = "Received blockChain is too big.";
     public static final String deleteOwnPeer = "Own peer is deregistered.";
     public static final String unableToDeleteOwnPeer = "Unable to deregister own peer.";
-    public static final String connectedPeer = "Connected with a peer.";
-    public static final String disconnectedPeer = "Disconnected with a peer.";
 
 }

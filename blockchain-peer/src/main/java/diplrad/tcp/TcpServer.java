@@ -38,7 +38,6 @@ public class TcpServer {
                 TcpClientHandler clientHandler = new TcpClientHandler(serverSocket.accept());
                 BlockChainTcpMessageObserver messageHandler = new BlockChainTcpMessageObserver(gson);
                 clientHandler.addObserver(messageHandler);
-                System.out.println(LogMessages.connectedPeer);
                 clientHandler.start();
             }
         } catch (BindException e) {
@@ -72,10 +71,6 @@ public class TcpServer {
             this.observers.add(observer);
         }
 
-        public synchronized void clearObservers() {
-            this.observers.clear();
-        }
-
         private void startChannels() throws IOException {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -106,10 +101,7 @@ public class TcpServer {
             } catch (TcpException e) {
                 handleFatalException(e);
             } catch (IOException e) {
-                if (e.getMessage().equals("Connection reset")) {
-                    getInstance().remove(ownPeer);
-                    clearObservers();
-                    System.out.println(LogMessages.disconnectedPeer);
+                if (e.getMessage().equals("Connection reset")) { // client disconnected, just continue
                     try {
                         endChannels();
                     } catch (IOException ex) {
