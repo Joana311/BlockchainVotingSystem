@@ -9,7 +9,6 @@ public class ErrorMessages {
     public static final String cannotStartTcpServerErrorMessage = "Unable to start TCP server.";
     public static final String cannotStartTcpServerPortInUseErrorMessage = "Unable to start TCP server because port is already in use.";
     public static final String cannotStopTcpServerErrorMessage = "Unable to stop TCP server.";
-    public static final String handleClientErrorMessage = "An error occurred while handling a TCP client.";
 
     // ReadFromFileException
     public static final String readFromFileErrorMessage = "Unable to read from file.";
