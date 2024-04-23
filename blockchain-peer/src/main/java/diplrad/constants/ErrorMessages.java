@@ -3,8 +3,9 @@ package diplrad.constants;
 public class ErrorMessages {
 
     // TcpException
-    public static final String sendBlockChainRequestErrorMessage = "Unable to send block chain request to a peer.";
-    public static final String sendBlockChainErrorMessage = "Unable to send block chain to a peer.";
+    public static final String sendConnectErrorMessage = "Unable to send connect TCP message to a peer.";
+    public static final String sendDisconnectErrorMessage = "Unable to send disconnect TCP message to a peer.";
+    public static final String sendBlockChainErrorMessage = "Unable to send block chain TCP message to a peer.";
     public static final String invalidTcpMessageReceivedErrorMessage = "Invalid TCP message is received.";
     public static final String cannotStartTcpServerErrorMessage = "Unable to start TCP server.";
     public static final String cannotStartTcpServerPortInUseErrorMessage = "Unable to start TCP server because port is already in use.";

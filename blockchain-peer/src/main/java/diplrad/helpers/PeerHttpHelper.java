@@ -30,16 +30,6 @@ public class PeerHttpHelper {
         }
     }
 
-    public static void tryDeleteOwnPeer(HttpSender httpSender, Peer ownPeer) {
-        try {
-            deleteOwnPeer(httpSender, ownPeer);
-            System.out.println(LogMessages.deleteOwnPeer);
-        } catch (HttpException e) {
-            System.out.println(e.getMessage());
-            System.out.println(LogMessages.unableToDeleteOwnPeer);
-        }
-    }
-
     public static void tryCreateHttpClientAndDeleteOwnPeer() {
         try {
             if (ownPeer != null) {
