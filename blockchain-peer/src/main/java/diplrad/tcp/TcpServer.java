@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
 import diplrad.constants.ErrorMessages;
+import diplrad.constants.LogMessages;
 import diplrad.exceptions.HttpException;
 import diplrad.exceptions.TcpException;
 import diplrad.helpers.PeerHttpHelper;
 import diplrad.http.HttpSender;
+import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 
 import java.io.BufferedReader;
@@ -20,7 +22,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import static diplrad.helpers.ExceptionHandler.handleFatalException;
 import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
+import static diplrad.models.peer.PeersSingleton.getInstance;
 import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class TcpServer {
@@ -41,8 +45,6 @@ public class TcpServer {
             throw new TcpException(ErrorMessages.cannotStartTcpServerPortInUseErrorMessage);
         } catch (IOException e) {
             throw new TcpException(ErrorMessages.cannotStartTcpServerErrorMessage);
-        } finally {
-            stop();
         }
     }
 
@@ -70,14 +72,24 @@ public class TcpServer {
             this.observers.add(observer);
         }
 
+        private void startChannels() throws IOException {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        }
+
+        private void endChannels() throws IOException {
+            in.close();
+            out.close();
+            clientSocket.close();
+        }
+
         public void run() {
             try {
-                out = new PrintWriter(clientSocket.getOutputStream(), true);
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                startChannels();
 
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
-                    System.out.println("Received: " + inputLine);
+                    System.out.printf((LogMessages.receivedTcpMessage) + "%n", inputLine);
                     for (ITcpMessageObserver observer : observers) {
                         String observerResponse = observer.messageReceived(inputLine);
                         if (observerResponse != null) {
@@ -86,31 +98,33 @@ public class TcpServer {
                     }
                 }
 
-                in.close();
-                out.close();
-                clientSocket.close();
-            } catch (TcpException e) {
+                endChannels();
+            } catch (TcpException | IOException e) {
                 System.out.println(e.getMessage());
-                System.exit(1);
-            } catch (IOException e) {
-                System.out.println(ErrorMessages.handleClientErrorMessage);
-                System.exit(1);
             }
         }
     }
 
     public static class TcpServerThread extends Thread {
 
+        private TcpServer server;
+
         public void run() {
-            TcpServer server = new TcpServer();
+            server = new TcpServer();
             try {
                 server.start(Constants.TCP_SERVER_PORT);
             } catch (TcpException e) {
                 System.out.println(e.getMessage());
+                try {
+                    server.stop();
+                } catch (TcpException ex) {
+                    System.out.println(e.getMessage());
+                }
                 tryCreateHttpClientAndDeleteOwnPeer();
                 System.exit(1);
             }
         }
+
     }
 
 }

@@ -46,7 +46,7 @@ public class HttpSender {
 
             String responseBody = response.body();
             int responseStatusCode = response.statusCode();
-            if (responseStatusCode == 400) {
+            if (responseStatusCode != 200) {
                 throw new HttpException(ErrorMessages.unsuccessfulHttpRequestErrorMessage);
             }
 
@@ -74,7 +74,7 @@ public class HttpSender {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             int responseStatusCode = response.statusCode();
-            if (responseStatusCode == 400) {
+            if (responseStatusCode != 200) {
                 throw new HttpException(ErrorMessages.unsuccessfulHttpRequestErrorMessage);
             }
         } catch (URISyntaxException e) {
@@ -96,21 +96,21 @@ public class HttpSender {
             String responseBody = response.body();
             int responseStatusCode = response.statusCode();
             if (responseStatusCode != 200) {
-                throw new HttpException("Sending HTTP request was unsuccessful.");
+                throw new HttpException(ErrorMessages.unsuccessfulHttpRequestErrorMessage);
             }
 
             List<Peer> peers = ListSerializationHelper.deserializeList(responseBody, Peer.class);
             if (peers == null) {
-                throw new ParseException("Unable to parse peers.");
+                throw new ParseException(ErrorMessages.parsePeerErrorMessage);
             }
 
             peers = peers.stream().filter(peer -> !peer.getId().equals(ownPeer.getId())).toList();
 
             return peers;
         } catch (URISyntaxException e) {
-            throw new HttpException("Url is incorrect.");
+            throw new HttpException(ErrorMessages.incorrectUrlErrorMessage);
         } catch (IOException | InterruptedException e) {
-            throw new HttpException("Unable to send HTTP request.");
+            throw new HttpException(ErrorMessages.sendHttpRequestErrorMessage);
         }
     }
 
