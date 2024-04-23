@@ -44,7 +44,7 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
-    public void messageReceived_whenMessageIsBlockChainRequest_thenRespondWithBlockChainInstance() throws TcpException {
+    public void messageReceived_whenMessageIsConnect_thenRespondWithBlockChainInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 

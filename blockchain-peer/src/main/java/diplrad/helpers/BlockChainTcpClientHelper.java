@@ -11,9 +11,9 @@ import java.io.IOException;
 
 public class BlockChainTcpClientHelper {
 
-    public static void CreateTcpClientsAndSendBlockChainRequests(Gson gson, Peer ownPeer) throws TcpException {
+    public static void CreateTcpClientsAndSendConnects(Gson gson, Peer ownPeer) throws TcpException {
         for (Peer peer : PeersSingleton.getInstance()) {
-            CreateTcpClientAndSendBlockChainRequest(gson, peer, ownPeer);
+            CreateTcpClientAndSendConnect(gson, peer, ownPeer);
         }
     }
 
@@ -23,14 +23,14 @@ public class BlockChainTcpClientHelper {
         }
     }
 
-    public static void CreateTcpClientAndSendBlockChainRequest(Gson gson, Peer peer, Peer ownPeer) throws TcpException {
+    public static void CreateTcpClientAndSendConnect(Gson gson, Peer peer, Peer ownPeer) throws TcpException {
         try {
             BlockChainTcpClient client = new BlockChainTcpClient();
             client.startConnection(peer.getIpAddress(), peer.getPort());
             client.sendConnect(gson, ownPeer);
             client.stopConnection();
         } catch (IOException e) {
-            throw new TcpException(ErrorMessages.sendBlockChainRequestErrorMessage);
+            throw new TcpException(ErrorMessages.sendConnectErrorMessage);
         }
     }
 
