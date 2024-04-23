@@ -2,6 +2,7 @@ package diplrad.models.blockchain;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diplrad.constants.Constants;
 import diplrad.exceptions.TcpException;
 import diplrad.models.peer.Peer;
 import diplrad.models.peer.PeersSingleton;
@@ -44,20 +45,54 @@ public class BlockChainTcpMessageObserverTest {
     }
 
     @Test
+    public void messageReceived_whenMessageIsConnect_thenAddPeer() throws TcpException {
+
+        try (MockedStatic<PeersSingleton> mockedStatic = mockStatic(PeersSingleton.class)) {
+
+            // Arrange
+            Peer peer = new Peer(UUID.randomUUID(), "168.182.1.11", 5000);
+
+            // Act
+            observer.messageReceived(Constants.TCP_CONNECT + " " + gson.toJson(peer));
+
+            // Assert
+            mockedStatic.verify(() -> PeersSingleton.addPeer(any(Peer.class)), times(1));
+
+        }
+
+    }
+
+    @Test
     public void messageReceived_whenMessageIsConnect_thenRespondWithBlockChainInstance() throws TcpException {
 
         try (MockedStatic<VotingBlockChainSingleton> mockedStatic = mockStatic(VotingBlockChainSingleton.class)) {
 
             // Arrange
-            mockedStatic.when(VotingBlockChainSingleton::getInstance).thenReturn(setUpBlockChain());
             Peer peer = new Peer(UUID.randomUUID(), "168.182.1.11", 5000);
 
-            var a = gson.toJson(peer);
             // Act
-            observer.messageReceived(gson.toJson(peer));
+            observer.messageReceived(Constants.TCP_CONNECT + " " + gson.toJson(peer));
 
             // Assert
             mockedStatic.verify(() -> VotingBlockChainSingleton.getInstance(), times(1));
+
+        }
+
+    }
+
+    @Test
+    public void messageReceived_whenMessageIsDisconnect_thenRemovePeer() throws TcpException {
+
+        try (MockedStatic<PeersSingleton> mockedStatic = mockStatic(PeersSingleton.class)) {
+
+            // Arrange
+            Peer peer = new Peer(UUID.randomUUID(), "168.182.1.11", 5000);
+
+            // Act
+            observer.messageReceived(Constants.TCP_DISCONNECT + " " + gson.toJson(peer));
+
+            // Assert
+            mockedStatic.verify(() -> PeersSingleton.removePeer(any(Peer.class)), times(1));
 
         }
 
