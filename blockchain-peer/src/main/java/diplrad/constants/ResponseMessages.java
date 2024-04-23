@@ -1,6 +1,6 @@
 package diplrad.constants;
 
-public class ReceivedBlockChainResponseMessages {
+public class ResponseMessages {
 
     public static final String okMessage = "OK.";
     public static final String invalidBlockChainReceivedMessage = "Received block chain is invalid.";

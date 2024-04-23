@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import diplrad.constants.Constants;
 import diplrad.constants.ErrorMessages;
 import diplrad.constants.LogMessages;
-import diplrad.constants.ReceivedBlockChainResponseMessages;
+import diplrad.constants.ResponseMessages;
 import diplrad.exceptions.TcpException;
 import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
@@ -30,7 +30,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
                 if (messageParts[0].equals(Constants.TCP_CONNECT)) {
                     return connectMessageReceived(peer, gson);
                 } else if (messageParts[0].equals(Constants.TCP_DISCONNECT)) {
-                    return disconnectMessageReceived(peer, gson);
+                    return disconnectMessageReceived(peer);
                 }
             }
         }
@@ -49,9 +49,9 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
         return gson.toJson(VotingBlockChainSingleton.getInstance());
     }
 
-    public String disconnectMessageReceived(Peer peer, Gson gson) {
-        // TODO
-        return "DISCONNECTED";
+    public String disconnectMessageReceived(Peer peer) {
+        PeersSingleton.removePeer(peer);
+        return ResponseMessages.okMessage;
     }
 
     public String blockChainMessageReceived(VotingBlockChain blockchain) {
@@ -62,7 +62,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
         if (!blockchain.validate()) {
             System.out.println(LogMessages.invalidBlockChainReceivedMessage);
-            return ReceivedBlockChainResponseMessages.invalidBlockChainReceivedMessage;
+            return ResponseMessages.invalidBlockChainReceivedMessage;
         }
 
         int currentBlockChainSize;
@@ -76,35 +76,35 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
         if (currentBlockChainSize == 0 || currentBlockChainSize == 1) {
             VotingBlockChainSingleton.setInstance(blockchain);
             System.out.println(LogMessages.overrideBlockChainMessage);
-            return ReceivedBlockChainResponseMessages.okMessage;
+            return ResponseMessages.okMessage;
         }
 
         if (incomingBlockChainSize == currentBlockChainSize + 1) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize)) {
                 System.out.println(LogMessages.incompatibleBlockChainMessage);
-                return ReceivedBlockChainResponseMessages.incompatibleBlockChainMessage;
+                return ResponseMessages.incompatibleBlockChainMessage;
             }
             VotingBlockChainSingleton.setInstance(blockchain);
             System.out.println(LogMessages.overrideBlockChainMessage);
-            return ReceivedBlockChainResponseMessages.okMessage;
+            return ResponseMessages.okMessage;
         } else if (incomingBlockChainSize == currentBlockChainSize) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize - 1)){
                 System.out.println(LogMessages.incompatibleBlockChainMessage);
-                return ReceivedBlockChainResponseMessages.incompatibleBlockChainMessage;
+                return ResponseMessages.incompatibleBlockChainMessage;
             }
             if (blockchain.getLastBlockTimeStamp() > VotingBlockChainSingleton.getInstance().getLastBlockTimeStamp()) {
                 System.out.println(LogMessages.incompatibleBlockChainLastBlockMessage);
-                return ReceivedBlockChainResponseMessages.incompatibleBlockChainLastBlockMessage;
+                return ResponseMessages.incompatibleBlockChainLastBlockMessage;
             }
             VotingBlockChainSingleton.setInstance(blockchain);
             System.out.println(LogMessages.overrideBlockChainDiscardLastBlockMessage);
-            return ReceivedBlockChainResponseMessages.okMessage;
+            return ResponseMessages.okMessage;
         } else if (incomingBlockChainSize < currentBlockChainSize) {
             System.out.println(LogMessages.receivedBlockChainTooSmallMessage);
-            return ReceivedBlockChainResponseMessages.receivedBlockChainTooSmallMessage;
+            return ResponseMessages.receivedBlockChainTooSmallMessage;
         } else {
             System.out.println(LogMessages.receivedBlockChainTooBigMessage);
-            return ReceivedBlockChainResponseMessages.receivedBlockChainTooBigMessage;
+            return ResponseMessages.receivedBlockChainTooBigMessage;
         }
 
     }
