@@ -1,6 +1,7 @@
 package diplrad.tcp.blockchain;
 
 import com.google.gson.Gson;
+import diplrad.constants.Constants;
 import diplrad.constants.ErrorMessages;
 import diplrad.constants.LogMessages;
 import diplrad.constants.ReceivedBlockChainResponseMessages;
@@ -22,9 +23,16 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
     @Override
     public String messageReceived(String message) throws TcpException {
 
-        Peer peer = gson.fromJson(message, Peer.class);
-        if (peer != null && peer.getId() != null) {
-            return blockChainRequestMessageReceived(peer, gson);
+        String[] messageParts = message.split(" ");
+        if (messageParts.length == 2) {
+            Peer peer = gson.fromJson(message, Peer.class);
+            if (peer != null && peer.getId() != null) {
+                if (messageParts[0].equals(Constants.TCP_CONNECT)) {
+                    return connectMessageReceived(peer, gson);
+                } else if (messageParts[0].equals(Constants.TCP_DISCONNECT)) {
+                    return disconnectMessageReceived(peer, gson);
+                }
+            }
         }
 
         VotingBlockChain blockchain = gson.fromJson(message, VotingBlockChain.class);
@@ -36,9 +44,14 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
     }
 
-    public String blockChainRequestMessageReceived(Peer peer, Gson gson) {
+    public String connectMessageReceived(Peer peer, Gson gson) {
         PeersSingleton.addPeer(peer);
         return gson.toJson(VotingBlockChainSingleton.getInstance());
+    }
+
+    public String disconnectMessageReceived(Peer peer, Gson gson) {
+        // TODO
+        return "DISCONNECTED";
     }
 
     public String blockChainMessageReceived(VotingBlockChain blockchain) {

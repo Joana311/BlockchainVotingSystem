@@ -27,7 +27,7 @@ public class BlockChainTcpClientHelper {
         try {
             BlockChainTcpClient client = new BlockChainTcpClient();
             client.startConnection(peer.getIpAddress(), peer.getPort());
-            client.sendBlockchainRequest(gson, ownPeer);
+            client.sendConnect(gson, ownPeer);
             client.stopConnection();
         } catch (IOException e) {
             throw new TcpException(ErrorMessages.sendBlockChainRequestErrorMessage);
