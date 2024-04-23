@@ -34,7 +34,7 @@ public class PeerMain {
             tcpServerThread.start();
             System.out.println(LogMessages.startedTcpServer);
 
-            BlockChainTcpClientHelper.CreateTcpClientsAndSendConnects(gson, ownPeer);
+            BlockChainTcpClientHelper.createTcpClientsAndSendConnects(gson, ownPeer);
             System.out.printf((LogMessages.receivedInitialBlockChain) + "%n", gson.toJson(VotingBlockChainSingleton.getInstance()));
 
         } catch (IpException | ParseException | HttpException | TcpException e) {
@@ -47,7 +47,7 @@ public class PeerMain {
             for (int i = 0; i < 10; i++) {
                 Thread.sleep((long)(Math.random() * 20000));
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
-                BlockChainTcpClientHelper.CreateTcpClientsAndSendBlockChains(gson);
+                BlockChainTcpClientHelper.createTcpClientsAndSendBlockChains(gson);
             }
         } catch (TcpException e) {
             handleFatalException(e);
