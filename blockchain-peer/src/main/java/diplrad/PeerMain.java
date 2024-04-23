@@ -53,7 +53,7 @@ public class PeerMain {
         // this is vote mocker part, used only for testing purposes
 
         try {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 10; i++) {
                 Thread.sleep((long)(Math.random() * 20000));
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
                 BlockChainTcpClientHelper.CreateTcpClientsAndSendBlockChains(gson);

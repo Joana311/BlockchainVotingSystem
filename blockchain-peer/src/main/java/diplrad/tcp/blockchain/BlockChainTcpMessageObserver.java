@@ -72,7 +72,8 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
                 return ReceivedBlockChainResponseMessages.incompatibleBlockChainMessage;
             }
             VotingBlockChainSingleton.setInstance(blockchain);
-            return null;
+            System.out.println(LogMessages.overrideBlockChainMessage);
+            return ReceivedBlockChainResponseMessages.okMessage;
         } else if (incomingBlockChainSize == currentBlockChainSize) {
             if (!blockchain.validateAgainstCurrent(VotingBlockChainSingleton.getInstance(), currentBlockChainSize - 1)){
                 System.out.println(LogMessages.incompatibleBlockChainMessage);
