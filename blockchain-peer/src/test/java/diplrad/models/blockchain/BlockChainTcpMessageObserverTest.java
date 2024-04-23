@@ -74,7 +74,7 @@ public class BlockChainTcpMessageObserverTest {
             observer.messageReceived(Constants.TCP_CONNECT + " " + gson.toJson(peer));
 
             // Assert
-            mockedStatic.verify(() -> VotingBlockChainSingleton.getInstance(), times(1));
+            mockedStatic.verify(VotingBlockChainSingleton::getInstance, times(1));
 
         }
 
