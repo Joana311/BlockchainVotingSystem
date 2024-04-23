@@ -18,5 +18,6 @@ public class LogMessages {
     public static final String receivedBlockChainTooBigMessage = "Received block chain is too big.";
     public static final String deleteOwnPeer = "Own peer is deregistered.";
     public static final String unableToDeleteOwnPeer = "Unable to deregister own peer.";
+    public static final String receivedTcpMessage = "Received TCP message: %s.";
 
 }

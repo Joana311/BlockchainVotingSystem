@@ -9,6 +9,7 @@ import diplrad.exceptions.HttpException;
 import diplrad.exceptions.TcpException;
 import diplrad.helpers.PeerHttpHelper;
 import diplrad.http.HttpSender;
+import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 
 import java.io.BufferedReader;
@@ -88,7 +89,7 @@ public class TcpServer {
 
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
-                    System.out.println("Received: " + inputLine);
+                    System.out.printf((LogMessages.receivedTcpMessage) + "%n", inputLine);
                     for (ITcpMessageObserver observer : observers) {
                         String observerResponse = observer.messageReceived(inputLine);
                         if (observerResponse != null) {
