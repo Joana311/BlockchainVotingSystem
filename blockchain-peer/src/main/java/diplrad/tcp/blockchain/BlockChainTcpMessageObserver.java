@@ -25,7 +25,7 @@ public class BlockChainTcpMessageObserver implements ITcpMessageObserver {
 
         String[] messageParts = message.split(" ");
         if (messageParts.length == 2) {
-            Peer peer = gson.fromJson(message, Peer.class);
+            Peer peer = gson.fromJson(messageParts[1], Peer.class);
             if (peer != null && peer.getId() != null) {
                 if (messageParts[0].equals(Constants.TCP_CONNECT)) {
                     return connectMessageReceived(peer, gson);
