@@ -1,9 +1,12 @@
 package diplrad;
 
+import com.azure.identity.DefaultAzureCredentialBuilder;
 import com.azure.storage.queue.QueueClient;
+import com.azure.storage.queue.QueueClientBuilder;
 import com.azure.storage.queue.QueueServiceClient;
 import com.azure.storage.queue.QueueServiceClientBuilder;
 import com.azure.storage.queue.models.QueueServiceProperties;
+import com.azure.storage.queue.models.SendMessageResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.LogMessages;
@@ -57,9 +60,24 @@ public class MasterMain {
             throw new RuntimeException(e);
         }*/
 
+        String queueName = "myqueue";
+
+        QueueClient queueClient = new QueueClientBuilder()
+                .endpoint("https://127.0.0.1:10001/devstoreaccount1/")
+                .queueName(queueName)
+                .credential(new DefaultAzureCredentialBuilder().build())
+                .buildClient();
+
+        queueClient.sendMessage("First message");
+        queueClient.sendMessage("Second message");
+
+        // Save the result so we can update this message later
+        SendMessageResult result = queueClient.sendMessage("Third message");
+
+
         String queueServiceURL = "http://127.0.0.1:10001";
         QueueServiceClient queueServiceClient = new QueueServiceClientBuilder().endpoint(queueServiceURL).buildClient();
-        QueueClient queueClient = queueServiceClient.createQueue("myQueue");
+        QueueClient queueClient2 = queueServiceClient.createQueue("myQueue");
         QueueServiceProperties properties = queueServiceClient.getProperties();
         queueClient.sendMessage("myMessage");
         queueClient.sendMessage("myMessage2");
