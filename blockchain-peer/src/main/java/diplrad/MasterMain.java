@@ -1,5 +1,9 @@
 package diplrad;
 
+import com.azure.storage.queue.QueueClient;
+import com.azure.storage.queue.QueueServiceClient;
+import com.azure.storage.queue.QueueServiceClientBuilder;
+import com.azure.storage.queue.models.QueueServiceProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.LogMessages;
@@ -41,7 +45,7 @@ public class MasterMain {
 
         // this is vote mocker part, used only for testing purposes
 
-        try {
+        /*try {
             for (int i = 0; i < 10; i++) {
                 Thread.sleep((long)(Math.random() * 20000));
                 VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
@@ -51,7 +55,19 @@ public class MasterMain {
             handleFatalException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        }*/
+
+        String queueServiceURL = "http://127.0.0.1:10001";
+        QueueServiceClient queueServiceClient = new QueueServiceClientBuilder().endpoint(queueServiceURL).buildClient();
+        QueueClient queueClient = queueServiceClient.createQueue("myQueue");
+        QueueServiceProperties properties = queueServiceClient.getProperties();
+        queueClient.sendMessage("myMessage");
+        queueClient.sendMessage("myMessage2");
+        queueClient.sendMessage("myMessage3");
+        queueClient.receiveMessages(10).forEach(message ->
+                System.out.println(message.getBody().toString()));
+
+        var a = 9;
 
     }
 
