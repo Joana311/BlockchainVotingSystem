@@ -7,8 +7,9 @@ import diplrad.exceptions.HttpException;
 import diplrad.exceptions.IpException;
 import diplrad.exceptions.ParseException;
 import diplrad.exceptions.TcpException;
-import diplrad.helpers.BlockChainTcpClientHelper;
-import diplrad.helpers.PeerHttpHelper;
+import diplrad.queue.StorageQueueClient;
+import diplrad.tcp.blockchain.BlockChainTcpClientHelper;
+import diplrad.http.PeerHttpHelper;
 import diplrad.helpers.VoteMocker;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
@@ -41,18 +42,9 @@ public class PeerMain {
             handleFatalException(e);
         }
 
-        // this is vote mocker part, used only for testing purposes
-
-        try {
-            for (int i = 0; i < 10; i++) {
-                Thread.sleep((long)(Math.random() * 20000));
-                VoteMocker.generateRandomVotes(VotingBlockChainSingleton.getInstance());
-                BlockChainTcpClientHelper.createTcpClientsAndSendBlockChains(gson);
-            }
-        } catch (TcpException e) {
-            handleFatalException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        StorageQueueClient storageQueueClient = new StorageQueueClient(gson);
+        while (true) {
+            storageQueueClient.receiveAndHandleQueueMessage();
         }
 
     }

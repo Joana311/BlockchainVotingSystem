@@ -3,8 +3,8 @@ package diplrad.helpers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import static diplrad.helpers.BlockChainTcpClientHelper.tryCreateTcpClientsAndSendDisconnects;
-import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
+import static diplrad.tcp.blockchain.BlockChainTcpClientHelper.tryCreateTcpClientsAndSendDisconnects;
+import static diplrad.http.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
 import static diplrad.models.peer.PeersSingleton.ownPeer;
 
 public class ExceptionHandler {

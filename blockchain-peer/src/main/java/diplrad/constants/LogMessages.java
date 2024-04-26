@@ -2,7 +2,6 @@ package diplrad.constants;
 
 public class LogMessages {
 
-    public static final String voteAddedMessage = "Vote for %s added to block chain.";
     public static final String createdBlockChainMessage = "Created a block chain: %s.";
     public static final String startedTcpServer = "TCP server is started.";
     public static final String registeredOwnPeer = "Own peer is registered.";
@@ -16,8 +15,11 @@ public class LogMessages {
     public static final String incompatibleBlockChainLastBlockMessage = "Received block chain's last block was added after current instance's last block.";
     public static final String receivedBlockChainTooSmallMessage = "Received block chain is too small.";
     public static final String receivedBlockChainTooBigMessage = "Received block chain is too big.";
-    public static final String deleteOwnPeer = "Own peer is deregistered.";
-    public static final String unableToDeleteOwnPeer = "Unable to deregister own peer.";
     public static final String receivedTcpMessage = "Received TCP message: %s.";
+    public static final String voteReceivedMessage = "Vote for %s is received.";
+    public static final String voteInvalidMessage = "Vote for %s is invalid, because it does not represent a valid candidate.";
+    public static final String voteAddedMessage = "Vote for %s added to block chain.";
+    public static final String blockChainSentMessage = "Sent block chain to peers.";
+    public static final String blockChainSendFailMessage = "Unable to send block chain to peers.";
 
 }

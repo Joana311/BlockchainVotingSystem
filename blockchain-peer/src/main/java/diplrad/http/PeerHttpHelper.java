@@ -1,4 +1,4 @@
-package diplrad.helpers;
+package diplrad.http;
 
 import diplrad.constants.Constants;
 import diplrad.constants.LogMessages;
