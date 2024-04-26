@@ -5,6 +5,7 @@ import com.azure.storage.queue.QueueClient;
 import com.azure.storage.queue.QueueClientBuilder;
 import com.azure.storage.queue.models.QueueMessageItem;
 import com.google.gson.Gson;
+import diplrad.constants.Constants;
 import diplrad.constants.LogMessages;
 import diplrad.exceptions.TcpException;
 import diplrad.tcp.blockchain.BlockChainTcpClientHelper;
@@ -23,8 +24,8 @@ public class StorageQueueClient {
 
     public StorageQueueClient(Gson gson) {
         this.queueClient = new QueueClientBuilder()
-                .endpoint("https://votingblockchainstorage.queue.core.windows.net/")
-                .queueName("vote-queue")
+                .endpoint(Constants.AZURE_STORAGE_ENDPOINT)
+                .queueName(Constants.AZURE_STORAGE_QUEUE)
                 .credential(new DefaultAzureCredentialBuilder().build())
                 .buildClient();
         this.gson = gson;
