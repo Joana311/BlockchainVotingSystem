@@ -1,33 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
+using VotingApp.Contracts.Services;
 
-namespace VotingApp.API.Controllers
+namespace VotingApp.API.Controllers;
+
+[ApiController]
+[Route("api/votes")]
+public class VoteController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    private readonly IMessageQueueService _messageQueueService;
+
+    public VoteController(IMessageQueueService messageQueueService)
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        _messageQueueService = messageQueueService;
+    }
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
+    [HttpPost(Name = "CreateVote")]
+    public async Task<IActionResult> CreateAsync([FromBody] String vote)
+    {
+        await _messageQueueService.SendMessage(vote);
+        return Ok();
     }
 }
