@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IMessageQueueService, MessageQueueService>();
+builder.Services.AddScoped<IMessageQueueService, AzureMessageQueueService>();
 
 
 var app = builder.Build();

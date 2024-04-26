@@ -2,7 +2,7 @@
 
 namespace VotingApp.Services;
 
-public class MessageQueueService : IMessageQueueService
+public class AzureMessageQueueService : IMessageQueueService
 {
     public Task SendMessage(string message)
     {
