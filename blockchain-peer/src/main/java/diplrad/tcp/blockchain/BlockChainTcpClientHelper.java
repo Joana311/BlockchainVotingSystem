@@ -1,4 +1,4 @@
-package diplrad.helpers;
+package diplrad.tcp.blockchain;
 
 import com.google.gson.Gson;
 import diplrad.constants.ErrorMessages;

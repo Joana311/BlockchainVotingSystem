@@ -5,11 +5,7 @@ import com.google.gson.GsonBuilder;
 import diplrad.constants.Constants;
 import diplrad.constants.ErrorMessages;
 import diplrad.constants.LogMessages;
-import diplrad.exceptions.HttpException;
 import diplrad.exceptions.TcpException;
-import diplrad.helpers.PeerHttpHelper;
-import diplrad.http.HttpSender;
-import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.tcp.blockchain.BlockChainTcpMessageObserver;
 
 import java.io.BufferedReader;
@@ -22,10 +18,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import static diplrad.helpers.ExceptionHandler.handleFatalException;
-import static diplrad.helpers.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
-import static diplrad.models.peer.PeersSingleton.getInstance;
-import static diplrad.models.peer.PeersSingleton.ownPeer;
+import static diplrad.http.PeerHttpHelper.tryCreateHttpClientAndDeleteOwnPeer;
 
 public class TcpServer {
 

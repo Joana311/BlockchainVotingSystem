@@ -7,7 +7,7 @@ import com.azure.storage.queue.models.QueueMessageItem;
 import com.google.gson.Gson;
 import diplrad.constants.LogMessages;
 import diplrad.exceptions.TcpException;
-import diplrad.helpers.BlockChainTcpClientHelper;
+import diplrad.tcp.blockchain.BlockChainTcpClientHelper;
 import diplrad.models.blockchain.Block;
 import diplrad.models.blockchain.VotingBlockChain;
 import diplrad.models.blockchain.VotingBlockChainSingleton;

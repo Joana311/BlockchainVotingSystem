@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diplrad.constants.LogMessages;
 import diplrad.exceptions.*;
-import diplrad.helpers.PeerHttpHelper;
+import diplrad.http.PeerHttpHelper;
 import diplrad.http.HttpSender;
 import diplrad.models.blockchain.VotingBlockChainSingleton;
 import diplrad.queue.StorageQueueClient;
