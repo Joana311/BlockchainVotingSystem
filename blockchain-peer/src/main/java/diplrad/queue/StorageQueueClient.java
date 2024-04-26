@@ -57,6 +57,7 @@ public class StorageQueueClient {
             BlockChainTcpClientHelper.createTcpClientsAndSendBlockChains(gson);
             System.out.println(LogMessages.blockChainSentMessage);
         } catch (TcpException e) {
+            System.out.println(LogMessages.blockChainSendFailMessage);
             handleFatalException(e);
         }
 
